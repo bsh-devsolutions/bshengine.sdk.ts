@@ -1,4 +1,4 @@
-import { BshError, BshResponse } from "@types";
+import { BshError, BshResponse, BshSearch } from "@types";
 
 export type BshClientFnParams<T = unknown> = {
     path: string,
@@ -6,7 +6,7 @@ export type BshClientFnParams<T = unknown> = {
         method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
         responseType?: 'json' | 'blob' | 'text' | 'arrayBuffer',
         responseFormat?: 'json' | 'text' | 'form',
-        body?: T,
+        body?: T | BshSearch<T> | unknown,
         formData?: FormData,
         queryParams?: Record<string, string>,
         headers?: Record<string, string>,
