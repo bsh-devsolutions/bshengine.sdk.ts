@@ -54,8 +54,14 @@ describe('EntityService', () => {
       expect(instance1).toBe(instance2);
     });
 
-    it('should create client from bshConfigs', () => {
-      EntityService.getInstance();
+    it('should create client from bshConfigs', async () => {
+      const service = EntityService.getInstance();
+      // Access the client by calling a method that uses it
+      mockGet.mockResolvedValue({ data: [], code: 200, status: 'OK', error: '' });
+      await service.findById({
+        entity: 'TestEntity',
+        id: '123',
+      });
       expect(bshConfigs.createClient).toHaveBeenCalled();
     });
   });
