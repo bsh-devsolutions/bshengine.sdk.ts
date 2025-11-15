@@ -7,7 +7,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -18,7 +18,8 @@
     "noEmit": false,
     "baseUrl": ".",
     "paths": {
-      "@types/*": ["src/types/*"],
+      "@types": ["src/types"],
+      "@client": ["src/client"],
       "@src/*": ["src/*"]
     }
   },

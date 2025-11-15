@@ -1,0 +1,20 @@
+import { BshError, BshResponse } from "@types";
+
+export type BshClientFnParams<T = unknown> = {
+    path: string,
+    options: {
+        method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
+        responseType?: 'json' | 'blob' | 'text' | 'arrayBuffer',
+        responseFormat?: 'json' | 'text' | 'form',
+        body?: T,
+        formData?: FormData,
+        queryParams?: Record<string, string>,
+        headers?: Record<string, string>,
+    },
+    bshOptions: {
+        onSuccess?: (response: BshResponse<T>) => void,
+        onError?: (error: BshError) => void,
+    }
+}
+
+export type BshClientFn = <T = unknown>(params: BshClientFnParams<T>) => Promise<Response>;
