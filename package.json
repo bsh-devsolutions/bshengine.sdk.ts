@@ -1,16 +1,18 @@
 {
-  "name": "@bsh/engine",
+  "name": "@bshsolutions/engine",
   "version": "1.0.0",
   "description": "BSH Engine TypeScript library for API services and utilities",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "tsc && tsc-alias",
     "prepublishOnly": "npm run build",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "update-demos": "bash scripts/update-demos.sh"
   },
   "keywords": [
     "bsh",
