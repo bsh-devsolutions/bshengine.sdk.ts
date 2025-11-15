@@ -20,7 +20,6 @@ export class EntityService {
 
     public static getInstance(): EntityService {
         if (!EntityService.instance) {
-            console.log('[LIB] bshConfigs.isConfigured()', bshConfigs.isConfigured());
             const client = bshConfigs.createClient();
             EntityService.instance = new EntityService(client);
         }

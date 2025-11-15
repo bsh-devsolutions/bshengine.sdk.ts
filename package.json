@@ -39,7 +39,10 @@
     "build": "tsup",
     "prepublishOnly": "npm run build",
     "clean": "rm -rf dist",
-    "update-demos": "bash scripts/update-demos.sh"
+    "update-demos": "bash scripts/update-demos.sh",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [
     "bsh",
@@ -58,13 +61,10 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
+    "tsup": "^8.0.0",
     "typescript": "^5.0.0",
-    "tsup": "^8.0.0"
-  },
-  "peerDependencies": {},
-  "dependencies": {
-    "clsx": "^2.0.0",
-    "tailwind-merge": "^2.0.0"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^2.0.0"
   }
 }
-
