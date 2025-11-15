@@ -11,6 +11,9 @@ export class GlobalServiceConfiguration {
     private static instance: GlobalServiceConfiguration;
 
     private config: GlobalServiceConfig | null = null;
+    private lastVersion: number = 0;
+    private configVersion: number = 0; // Track config changes
+    private lastInstance: BshClient | undefined;
 
     public static getInstance(): GlobalServiceConfiguration {
         if (!GlobalServiceConfiguration.instance) {
@@ -27,6 +30,14 @@ export class GlobalServiceConfiguration {
         if (!config.clientFn) throw new Error('BshClientFn is required for global service configuration');
         if (!config.host) throw new Error('Host is required for global service configuration');
         this.config = config;
+        this.configVersion++;
+    }
+
+    /**
+     * Get the current config version
+     */
+    public getConfigVersion(): number {
+        return this.configVersion;
     }
 
     /**
@@ -67,10 +78,14 @@ export class GlobalServiceConfiguration {
      * @throws Error if not configured
      */
     public createClient(): BshClient {
-        const clientFn = this.getClientFn();
-        const clientHost = this.getHost();
-        const authFn = this.getAuthFn();
-        return new BshClient(clientHost, clientFn, authFn);
+        if (this.lastInstance === undefined || this.lastVersion !== this.configVersion) {
+            const clientFn = this.getClientFn();
+            const clientHost = this.getHost();
+            const authFn = this.getAuthFn();
+            this.lastVersion = this.configVersion;
+            this.lastInstance = new BshClient(clientHost, clientFn, authFn);
+        }
+        return this.lastInstance;
     }
 
     /**
@@ -78,6 +93,7 @@ export class GlobalServiceConfiguration {
      */
     public reset(): void {
         this.config = null;
+        this.configVersion++;
     }
 }
 

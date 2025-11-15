@@ -2,28 +2,43 @@ import { BshClient } from "@src/client/bsh-client";
 import { BshError, BshResponse, BshSearch } from "@types";
 import { bshConfigs } from "@config";
 
-export type EntityFnParams<T = unknown, R = T> = {
-    entity: string;
+export type EntityCallbackParams<T = unknown, R = T> = {
     onSuccess?: (response: BshResponse<R>) => void;
     onDownload?: (blob: Blob) => void;
     onError?: (error: BshError) => void;
 }
 
+export type EntityFnParams<T = unknown, R = T> = EntityCallbackParams<T, R> & {entity: string} 
+
 export class EntityService {
     private static instance: EntityService;
-    private readonly client: BshClient;
     private readonly baseEndpoint = '/api/entities';
 
-    private constructor(client: BshClient) {
-        this.client = client;
+    private constructor() {
+        // Private constructor to enforce singleton pattern
+    }
+
+    /**
+     * Get the client instance, always using the current global configuration.
+     * This ensures that if global configs change, the service will use the updated configs.
+     */
+    private get client(): BshClient { // TODO: look for better way to get the client
+        return bshConfigs.createClient();
     }
 
     public static getInstance(): EntityService {
         if (!EntityService.instance) {
-            const client = bshConfigs.createClient();
-            EntityService.instance = new EntityService(client);
+            EntityService.instance = new EntityService();
         }
         return EntityService.instance;
+    }
+
+    /**
+     * Reset the singleton instance. Useful when global configs change
+     * and you want to ensure a fresh instance is created.
+     */
+    public static reset(): void {
+        EntityService.instance = undefined as any;
     }
 
     // Get a single entity by ID
