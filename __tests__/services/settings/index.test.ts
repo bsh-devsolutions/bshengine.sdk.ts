@@ -84,7 +84,7 @@ describe('SettingsService', () => {
         path: '/api/settings',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
         },
         bshOptions: { onSuccess: undefined, onError: undefined },
       });
@@ -186,7 +186,7 @@ describe('SettingsService', () => {
         path: '/api/settings',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: settingsUpdate,
           headers: {
             'Content-Type': 'application/json',

@@ -81,7 +81,7 @@ describe('EntityService', () => {
         path: '/api/entities/TestEntity/123',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -145,7 +145,7 @@ describe('EntityService', () => {
         path: '/api/entities/TestEntity',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: mockData,
           headers: {
             'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ describe('EntityService', () => {
         path: '/api/entities/TestEntity/batch',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: mockData,
           headers: {
             'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ describe('EntityService', () => {
         path: '/api/entities/TestEntity',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: mockData,
           headers: {
             'Content-Type': 'application/json',
@@ -226,7 +226,7 @@ describe('EntityService', () => {
         path: '/api/entities/TestEntity/batch',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: mockData,
           headers: {
             'Content-Type': 'application/json',
@@ -258,7 +258,7 @@ describe('EntityService', () => {
         path: '/api/entities/TestEntity/search',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: searchParams,
           headers: {
             'Content-Type': 'application/json',
@@ -289,7 +289,7 @@ describe('EntityService', () => {
         path: '/api/entities/TestEntity/delete',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: searchParams,
           headers: {
             'Content-Type': 'application/json',
@@ -315,7 +315,7 @@ describe('EntityService', () => {
         path: '/api/entities/TestEntity/123',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -347,7 +347,7 @@ describe('EntityService', () => {
         path: '/api/entities/TestEntity/columns',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -379,7 +379,7 @@ describe('EntityService', () => {
         path: expectedPath,
         options: {
           responseType: 'blob',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: searchParams,
           headers: {
             'Content-Type': 'application/json',
@@ -408,7 +408,7 @@ describe('EntityService', () => {
         path: '/api/entities/TestEntity/export?format=json&filename=custom-export.json',
         options: {
           responseType: 'blob',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: searchParams,
           headers: {
             'Content-Type': 'application/json',

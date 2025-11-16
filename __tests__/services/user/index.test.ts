@@ -87,7 +87,7 @@ describe('UserService', () => {
         path: '/api/users/me',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
         },
         bshOptions: { onSuccess: undefined, onError: undefined },
       });
@@ -162,7 +162,7 @@ describe('UserService', () => {
         path: '/api/users/init',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: userInit,
           headers: {
             'Content-Type': 'application/json',
@@ -241,7 +241,7 @@ describe('UserService', () => {
         path: '/api/users/profile',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: profileUpdate,
           headers: {
             'Content-Type': 'application/json',
@@ -281,7 +281,7 @@ describe('UserService', () => {
         path: '/api/users/picture',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: expect.any(FormData),
         },
         bshOptions: { onSuccess: undefined, onError: undefined },
@@ -310,7 +310,7 @@ describe('UserService', () => {
         path: '/api/users/password',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: passwordUpdate,
           headers: {
             'Content-Type': 'application/json',
@@ -347,7 +347,7 @@ describe('UserService', () => {
         path: '/api/users/user-123',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
         },
         bshOptions: { onSuccess: undefined, onError: undefined },
       });
@@ -388,7 +388,7 @@ describe('UserService', () => {
         path: '/api/users/search',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: searchParams,
           headers: {
             'Content-Type': 'application/json',
@@ -430,7 +430,7 @@ describe('UserService', () => {
         path: '/api/users?page=1&size=10&sort=email',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
         },
         bshOptions: { onSuccess: undefined, onError: undefined },
       });
@@ -460,7 +460,7 @@ describe('UserService', () => {
         path: '/api/users',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
         },
         bshOptions: { onSuccess: undefined, onError: undefined },
       });
@@ -501,7 +501,7 @@ describe('UserService', () => {
         path: '/api/users',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: userUpdate,
           headers: {
             'Content-Type': 'application/json',
@@ -538,7 +538,7 @@ describe('UserService', () => {
         path: '/api/users/user-123',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
         },
         bshOptions: { onSuccess: undefined, onError: undefined },
       });

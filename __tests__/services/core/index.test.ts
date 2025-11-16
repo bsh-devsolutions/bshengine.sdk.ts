@@ -66,7 +66,7 @@ describe('CoreEntityService', () => {
             path: `/api/entities/${entityName}/123`,
             options: {
               responseType: 'json',
-              responseFormat: 'json',
+              requestFormat: 'json',
               headers: {
                 'Content-Type': 'application/json',
               },
@@ -113,7 +113,7 @@ describe('CoreEntityService', () => {
             path: `/api/entities/${entityName}`,
             options: {
               responseType: 'json',
-              responseFormat: 'json',
+              requestFormat: 'json',
               body: mockData,
               headers: {
                 'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ describe('CoreEntityService', () => {
             path: `/api/entities/${entityName}/batch`,
             options: {
               responseType: 'json',
-              responseFormat: 'json',
+              requestFormat: 'json',
               body: mockDataArray,
               headers: {
                 'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ describe('CoreEntityService', () => {
             path: `/api/entities/${entityName}`,
             options: {
               responseType: 'json',
-              responseFormat: 'json',
+              requestFormat: 'json',
               body: updatedData,
               headers: {
                 'Content-Type': 'application/json',
@@ -201,7 +201,7 @@ describe('CoreEntityService', () => {
             path: `/api/entities/${entityName}/batch`,
             options: {
               responseType: 'json',
-              responseFormat: 'json',
+              requestFormat: 'json',
               body: mockDataArray,
               headers: {
                 'Content-Type': 'application/json',
@@ -229,7 +229,7 @@ describe('CoreEntityService', () => {
             path: `/api/entities/${entityName}/search`,
             options: {
               responseType: 'json',
-              responseFormat: 'json',
+              requestFormat: 'json',
               body: searchParams,
               headers: {
                 'Content-Type': 'application/json',
@@ -256,7 +256,7 @@ describe('CoreEntityService', () => {
             path: `/api/entities/${entityName}/delete`,
             options: {
               responseType: 'json',
-              responseFormat: 'json',
+              requestFormat: 'json',
               body: searchParams,
               headers: {
                 'Content-Type': 'application/json',
@@ -278,7 +278,7 @@ describe('CoreEntityService', () => {
             path: `/api/entities/${entityName}/123`,
             options: {
               responseType: 'json',
-              responseFormat: 'json',
+              requestFormat: 'json',
               headers: {
                 'Content-Type': 'application/json',
               },
@@ -307,7 +307,7 @@ describe('CoreEntityService', () => {
             path: `/api/entities/${entityName}/columns`,
             options: {
               responseType: 'json',
-              responseFormat: 'json',
+              requestFormat: 'json',
               headers: {
                 'Content-Type': 'application/json',
               },
@@ -335,7 +335,7 @@ describe('CoreEntityService', () => {
             path: expectedPath,
             options: {
               responseType: 'blob',
-              responseFormat: 'json',
+              requestFormat: 'json',
               body: searchParams,
               headers: {
                 'Content-Type': 'application/json',
@@ -360,7 +360,7 @@ describe('CoreEntityService', () => {
             path: `/api/entities/${entityName}/export?format=json&filename=custom-export.json`,
             options: {
               responseType: 'blob',
-              responseFormat: 'json',
+              requestFormat: 'json',
               body: searchParams,
               headers: {
                 'Content-Type': 'application/json',

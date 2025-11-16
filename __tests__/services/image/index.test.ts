@@ -80,7 +80,7 @@ describe('ImageService', () => {
         path: '/api/images/upload',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: expect.any(FormData),
         },
         bshOptions: { onSuccess: undefined, onError: undefined },

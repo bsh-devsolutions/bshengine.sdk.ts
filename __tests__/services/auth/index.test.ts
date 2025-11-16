@@ -74,7 +74,7 @@ describe('AuthService', () => {
         path: '/api/auth/login',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: loginParams,
           headers: {
             'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ describe('AuthService', () => {
         path: '/api/auth/register',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: userInit,
           headers: {
             'Content-Type': 'application/json',
@@ -249,7 +249,7 @@ describe('AuthService', () => {
         path: '/api/auth/refresh',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: refreshParams,
           headers: {
             'Content-Type': 'application/json',
@@ -305,7 +305,7 @@ describe('AuthService', () => {
         path: '/api/auth/forget-password',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: forgetPasswordParams,
           headers: {
             'Content-Type': 'application/json',
@@ -363,7 +363,7 @@ describe('AuthService', () => {
         path: '/api/auth/reset-password',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: resetPasswordParams,
           headers: {
             'Content-Type': 'application/json',
@@ -422,7 +422,7 @@ describe('AuthService', () => {
         path: '/api/auth/activate-account',
         options: {
           responseType: 'json',
-          responseFormat: 'json',
+          requestFormat: 'json',
           body: activateAccountParams,
           headers: {
             'Content-Type': 'application/json',
