@@ -26,7 +26,7 @@ export class UserService {
             path: `${this.baseEndpoint}/me`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
         });
@@ -37,7 +37,7 @@ export class UserService {
             path: `${this.baseEndpoint}/init`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export class UserService {
             path: `${this.baseEndpoint}/profile`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export class UserService {
             path: `${this.baseEndpoint}/picture`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: formData,
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
@@ -82,7 +82,7 @@ export class UserService {
             path: `${this.baseEndpoint}/password`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ export class UserService {
             path: `${this.baseEndpoint}/${params.id}`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
         });
@@ -109,7 +109,7 @@ export class UserService {
             path: `${this.baseEndpoint}/search`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ export class UserService {
             path: `${this.baseEndpoint}${endpoint}`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
         });
@@ -151,7 +151,7 @@ export class UserService {
             path: `${this.baseEndpoint}`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ export class UserService {
             path: `${this.baseEndpoint}/${params.id}`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
         });

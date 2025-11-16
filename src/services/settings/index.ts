@@ -26,7 +26,7 @@ export class SettingsService {
             path: `${this.baseEndpoint}`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json'
+                requestFormat: 'json'
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
         });
@@ -37,7 +37,7 @@ export class SettingsService {
             path: `${this.baseEndpoint}`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: { ...params.payload, name: 'BshEngine' },
                 headers: {
                     'Content-Type': 'application/json',

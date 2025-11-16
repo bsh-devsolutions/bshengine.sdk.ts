@@ -5,7 +5,7 @@ export type BshClientFnParams<T = unknown> = {
     options: {
         method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
         responseType?: 'json' | 'blob' | 'text' | 'arrayBuffer',
-        responseFormat?: 'json' | 'text' | 'form',
+        requestFormat?: 'json' | 'text' | 'form',
         body?: T | BshSearch<T> | unknown,
         formData?: FormData,
         queryParams?: Record<string, string>,

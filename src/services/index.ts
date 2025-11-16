@@ -4,6 +4,7 @@ import { EntityService } from './entities';
 import { UserService } from './user';
 import { AuthService } from './auth';
 import { SettingsService } from './settings';
+import { ImageService } from './image';
 import { coreEntities } from './core';
 
 export type BshCallbackParams<T = unknown, R = T> = {
@@ -20,11 +21,13 @@ export * from './entities';
 export * from './auth';
 export * from './user';
 export * from './settings';
+export * from './image';
 
 export const services = {
     entities: EntityService.getInstance(),
     core: coreEntities,
     auth: AuthService.getInstance(),
     user: UserService.getInstance(),
-    settings: SettingsService.getInstance()
+    settings: SettingsService.getInstance(),
+    image: ImageService.getInstance()
 }

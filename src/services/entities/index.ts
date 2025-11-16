@@ -30,7 +30,7 @@ export class EntityService {
             path: `${this.baseEndpoint}/${params.entity}/${params.id}`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -47,7 +47,7 @@ export class EntityService {
             path: `${this.baseEndpoint}/${params.entity}`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ export class EntityService {
             path: `${this.baseEndpoint}/${params.entity}/batch`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export class EntityService {
             path: `${this.baseEndpoint}/${params.entity}`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export class EntityService {
             path: `${this.baseEndpoint}/${params.entity}/batch`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ export class EntityService {
             path: `${this.baseEndpoint}/${params.entity}/search`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ export class EntityService {
             path: `${this.baseEndpoint}/${params.entity}/delete`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ export class EntityService {
             path: `${this.baseEndpoint}/${params.entity}/${params.id}`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -172,7 +172,7 @@ export class EntityService {
             path: `${this.baseEndpoint}/${params.entity}/columns`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -195,7 +195,7 @@ export class EntityService {
             path: `${this.baseEndpoint}/${params.entity}/export?format=${params.format}&filename=${exportFilename}`,
             options: {
                 responseType: 'blob',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',

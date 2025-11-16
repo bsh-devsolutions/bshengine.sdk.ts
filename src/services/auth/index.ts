@@ -37,7 +37,7 @@ export class AuthService {
             path: `${this.baseEndpoint}/login`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export class AuthService {
             path: `${this.baseEndpoint}/register`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export class AuthService {
             path: `${this.baseEndpoint}/refresh`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export class AuthService {
             path: `${this.baseEndpoint}/forget-password`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ export class AuthService {
             path: `${this.baseEndpoint}/reset-password`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
@@ -113,7 +113,7 @@ export class AuthService {
             path: `${this.baseEndpoint}/activate-account`,
             options: {
                 responseType: 'json',
-                responseFormat: 'json',
+                requestFormat: 'json',
                 body: params.payload,
                 headers: {
                     'Content-Type': 'application/json',
