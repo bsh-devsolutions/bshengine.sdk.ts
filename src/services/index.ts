@@ -1,5 +1,10 @@
 import { BshResponse } from '@types';
 import { BshError } from '@types';
+import { EntityService } from './entities';
+import { UserService } from './user';
+import { AuthService } from './auth';
+import { SettingsService } from './settings';
+import { coreEntities } from './core';
 
 export type BshCallbackParams<T = unknown, R = T> = {
     onSuccess?: (response: BshResponse<R>) => void;
@@ -15,3 +20,11 @@ export * from './entities';
 export * from './auth';
 export * from './user';
 export * from './settings';
+
+export const services = {
+    entities: EntityService.getInstance(),
+    core: coreEntities,
+    auth: AuthService.getInstance(),
+    user: UserService.getInstance(),
+    settings: SettingsService.getInstance()
+}
