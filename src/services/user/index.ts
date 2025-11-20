@@ -1,24 +1,11 @@
 import { BshClient } from "@src/client/bsh-client";
 import { BshResponse, BshUser, BshUserInit, BshSearch } from "@types";
-import { bshConfigs } from "@config";
 import { BshCallbackParams, BshCallbackParamsWithPayload } from "@src/services";
 
 export class UserService {
-    private static instance: UserService;
     private readonly baseEndpoint = '/api/users';
 
-    private constructor() {
-    }
-
-    private get client(): BshClient {
-        return bshConfigs.createClient();
-    }
-
-    public static getInstance(): UserService {
-        if (!UserService.instance) {
-            UserService.instance = new UserService();
-        }
-        return UserService.instance;
+    public constructor(private readonly client: BshClient) {
     }
 
     public async me(params: BshCallbackParams<unknown, BshUser>): Promise<BshResponse<BshUser> | undefined> {

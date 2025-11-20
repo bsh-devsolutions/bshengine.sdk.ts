@@ -1,6 +1,5 @@
 import { BshClient } from "@src/client/bsh-client";
 import { BshResponse, CacheInfo, BshSearch } from "@types";
-import { bshConfigs } from "@config";
 import { BshCallbackParams, BshCallbackParamsWithPayload } from "@src/services";
 
 export type CacheRemoveResponse = {
@@ -8,21 +7,9 @@ export type CacheRemoveResponse = {
 };
 
 export class CachingService {
-    private static instance: CachingService;
     private readonly baseEndpoint = '/api/caching';
 
-    private constructor() {
-    }
-
-    private get client(): BshClient {
-        return bshConfigs.createClient();
-    }
-
-    public static getInstance(): CachingService {
-        if (!CachingService.instance) {
-            CachingService.instance = new CachingService();
-        }
-        return CachingService.instance;
+    public constructor(private readonly client: BshClient) {
     }
 
     public async findById(params: BshCallbackParams<unknown, CacheInfo> & { id: string }): Promise<BshResponse<CacheInfo> | undefined> {

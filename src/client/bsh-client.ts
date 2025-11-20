@@ -1,12 +1,20 @@
 import { BshResponse, BshError } from "@types";
-import { BshAuthFn, BshClientFn, BshClientFnParams } from "@src/client/types";
+import { BshAuthFn, BshClientFn, BshClientFnParams, defaultClientFn } from "@src/client/types";
 
 export class BshClient {
+    private readonly httpClient: BshClientFn;
+    private readonly authFn?: BshAuthFn;
+    private readonly host: string;
+
     constructor(
-        private readonly host: string,
-        private readonly httpClient: BshClientFn,
-        private readonly authFn?: BshAuthFn
-    ) { }
+        host?: string,
+        httpClient?: BshClientFn,
+        authFn?: BshAuthFn
+    ) { 
+        this.host = host || '';
+        this.httpClient = httpClient || defaultClientFn;
+        this.authFn = authFn;
+    }
 
     private async handleResponse<T = unknown>(response: Response, params: BshClientFnParams<T>, type: 'json'): Promise<BshResponse<T> | undefined>
     private async handleResponse<T = unknown>(response: Response, params: BshClientFnParams<T>, type: 'blob'): Promise<Blob | undefined>
@@ -75,7 +83,7 @@ export class BshClient {
         return this.handleResponse(response, params, 'json');
     }
 
-    async post<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
+    async post<T = unknown, R = T>(params: BshClientFnParams<T, R>): Promise<BshResponse<R> | undefined> {
         const authHeaders = await this.getAuthHeaders();
         const response = await this.httpClient({
             ...params,

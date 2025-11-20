@@ -49,16 +49,6 @@ describe('GlobalServiceConfiguration', () => {
 
       expect(() => config.configure(serviceConfig)).toThrow('BshClientFn is required');
     });
-
-    it('should throw error if host is missing', () => {
-      const config = GlobalServiceConfiguration.getInstance();
-      const serviceConfig = {
-        clientFn: mockClientFn,
-        authFn: mockAuthFn,
-      } as any;
-
-      expect(() => config.configure(serviceConfig)).toThrow('Host is required');
-    });
   });
 
   describe('isConfigured', () => {

@@ -1,33 +1,21 @@
 import { BshClient } from "@src/client/bsh-client";
 import { BshResponse, BshSearch } from "@types";
-import { bshConfigs } from "@config";
 import { BshCallbackParams, BshCallbackParamsWithPayload } from "@src/services";
 
-export type EntityFnParams<T = unknown, R = T> = BshCallbackParams<T, R> & { entity: string }
-export type EntityFnParamsWithPayload<T = unknown, R = T> = BshCallbackParamsWithPayload<T, R> & { entity: string }
+export type EntityFnParams<T = unknown, R = T> = BshCallbackParams<T, R> & { entity?: string }
+export type EntityFnParamsWithPayload<T = unknown, R = T> = BshCallbackParamsWithPayload<T, R> & { entity?: string }
+export type EntitySearchFnParams<T, R = T> = EntityFnParamsWithPayload<BshSearch<T>, R> & { entity?: string }
 
-export class EntityService {
-    private static instance: EntityService;
+export class EntityService<T = unknown> {
     private readonly baseEndpoint = '/api/entities';
 
-    private constructor() {
-    }
-
-    private get client(): BshClient {
-        return bshConfigs.createClient();
-    }
-
-    public static getInstance(): EntityService {
-        if (!EntityService.instance) {
-            EntityService.instance = new EntityService();
-        }
-        return EntityService.instance;
+    public constructor(private readonly client: BshClient, private readonly entity?: string) {
     }
 
     // Get a single entity by ID
-    public async findById<T>(params: EntityFnParams<T> & { id: string }): Promise<BshResponse<T> | undefined> {
-        return this.client.get<T>({
-            path: `${this.baseEndpoint}/${params.entity}/${params.id}`,
+    public async findById<TT = T>(params: EntityFnParams<TT> & { id: string }): Promise<BshResponse<TT> | undefined> {
+        return this.client.get<TT>({
+            path: `${this.baseEndpoint}/${params.entity || this.entity}/${params.id}`,
             options: {
                 responseType: 'json',
                 requestFormat: 'json',
@@ -40,11 +28,11 @@ export class EntityService {
     }
 
     // Create a new entity
-    public async create<T>(
-        params: EntityFnParamsWithPayload<T>
-    ): Promise<BshResponse<T> | undefined> {
-        return this.client.post<T>({
-            path: `${this.baseEndpoint}/${params.entity}`,
+    public async create<TT = T>(
+        params: EntityFnParamsWithPayload<TT>
+    ): Promise<BshResponse<TT> | undefined> {
+        return this.client.post<TT>({
+            path: `${this.baseEndpoint}/${params.entity || this.entity}`,
             options: {
                 responseType: 'json',
                 requestFormat: 'json',
@@ -58,11 +46,11 @@ export class EntityService {
     }
 
     // Create multiple entities in batch
-    public async createMany<T>(
-        params: EntityFnParamsWithPayload<T[], T>
-    ): Promise<BshResponse<T> | undefined> {
-        return this.client.post<T>({
-            path: `${this.baseEndpoint}/${params.entity}/batch`,
+    public async createMany<TT = T>(
+        params: EntityFnParamsWithPayload<TT[], TT>
+    ): Promise<BshResponse<TT> | undefined> {
+        return this.client.post<TT>({
+            path: `${this.baseEndpoint}/${params.entity || this.entity}/batch`,
             options: {
                 responseType: 'json',
                 requestFormat: 'json',
@@ -76,11 +64,11 @@ export class EntityService {
     }
 
     // Update an existing entity
-    public async update<T>(
-        params: EntityFnParamsWithPayload<T>
-    ): Promise<BshResponse<T> | undefined> {
-        return this.client.put<T>({
-            path: `${this.baseEndpoint}/${params.entity}`,
+    public async update<TT = T>(
+        params: EntityFnParamsWithPayload<TT>
+    ): Promise<BshResponse<TT> | undefined> {
+        return this.client.put<TT>({
+            path: `${this.baseEndpoint}/${params.entity || this.entity}`,
             options: {
                 responseType: 'json',
                 requestFormat: 'json',
@@ -94,11 +82,11 @@ export class EntityService {
     }
 
     // Update multiple entities in batch
-    public async updateMany<T>(
-        params: EntityFnParamsWithPayload<T[], T>
-    ): Promise<BshResponse<T> | undefined> {
-        return this.client.put<T>({
-            path: `${this.baseEndpoint}/${params.entity}/batch`,
+    public async updateMany<TT = T>(
+        params: EntityFnParamsWithPayload<TT[], TT>
+    ): Promise<BshResponse<TT> | undefined> {
+        return this.client.put<TT>({
+            path: `${this.baseEndpoint}/${params.entity || this.entity}/batch`,
             options: {
                 responseType: 'json',
                 requestFormat: 'json',
@@ -112,11 +100,11 @@ export class EntityService {
     }
 
     // Search for entities
-    public async search<T>(
-        params: EntityFnParamsWithPayload<BshSearch<T>, T>
-    ): Promise<BshResponse<T> | undefined> {
-        return this.client.post<T>({
-            path: `${this.baseEndpoint}/${params.entity}/search`,
+    public async search<TT = T, R = TT>(
+        params: EntitySearchFnParams<TT, R>
+    ): Promise<BshResponse<R> | undefined> {
+        return this.client.post<TT, R>({
+            path: `${this.baseEndpoint}/${params.entity || this.entity}/search`,
             options: {
                 responseType: 'json',
                 requestFormat: 'json',
@@ -130,11 +118,11 @@ export class EntityService {
     }
 
     // Delete entities by search criteria
-    public async delete<T>(
-        params: EntityFnParamsWithPayload<BshSearch<T>, { effected: number }>
+    public async delete<TT = T>(
+        params: EntitySearchFnParams<TT, { effected: number }>
     ): Promise<BshResponse<{ effected: number }> | undefined> {
-        return this.client.post<{ effected: number }>({
-            path: `${this.baseEndpoint}/${params.entity}/delete`,
+        return this.client.post<TT, { effected: number }>({
+            path: `${this.baseEndpoint}/${params.entity || this.entity}/delete`,
             options: {
                 responseType: 'json',
                 requestFormat: 'json',
@@ -148,11 +136,11 @@ export class EntityService {
     }
 
     // Delete a single entity by ID
-    public async deleteById<T>(
-        params: EntityFnParams<T, { effected: number }> & { id: string }
+    public async deleteById<TT = T>(
+        params: EntityFnParams<TT, { effected: number }> & { id: string }
     ): Promise<BshResponse<{ effected: number }> | undefined> {
         return this.client.delete<{ effected: number }>({
-            path: `${this.baseEndpoint}/${params.entity}/${params.id}`,
+            path: `${this.baseEndpoint}/${params.entity || this.entity}/${params.id}`,
             options: {
                 responseType: 'json',
                 requestFormat: 'json',
@@ -169,7 +157,7 @@ export class EntityService {
         params: EntityFnParams<unknown, { name: string; type: string }>
     ): Promise<BshResponse<{ name: string; type: string }> | undefined> {
         return this.client.get<{ name: string; type: string }>({
-            path: `${this.baseEndpoint}/${params.entity}/columns`,
+            path: `${this.baseEndpoint}/${params.entity || this.entity}/columns`,
             options: {
                 responseType: 'json',
                 requestFormat: 'json',
@@ -182,17 +170,17 @@ export class EntityService {
     }
 
     // Export entities
-    public async export<T>(
-        params: EntityFnParamsWithPayload<BshSearch<T>, Blob> & {
+    public async export<TT = T>(
+        params: EntityFnParamsWithPayload<BshSearch<TT>, Blob> & {
             format: 'csv' | 'json' | 'excel',
             filename?: string,
         }
     ): Promise<void> {
-        const defaultName = `${params.entity}_export_${new Date().toISOString().split('T')[0]}`;
+        const defaultName = `${params.entity || this.entity}_export_${new Date().toISOString().split('T')[0]}`;
         const exportFilename = params.filename || `${defaultName}.${params.format == 'excel' ? 'xlsx' : params.format}`;
 
-        await this.client.download<T>({
-            path: `${this.baseEndpoint}/${params.entity}/export?format=${params.format}&filename=${exportFilename}`,
+        await this.client.download<TT>({
+            path: `${this.baseEndpoint}/${params.entity || this.entity}/export?format=${params.format}&filename=${exportFilename}`,
             options: {
                 responseType: 'blob',
                 requestFormat: 'json',

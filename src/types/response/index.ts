@@ -20,7 +20,7 @@ export type BshResponse<T> = {
     validations?: {field: string, error: string}[]
 }
 
-export const isOk = (response: BshResponse<unknown>) => response.code >= 200 && response.code < 300
+export const isOk = (response: BshResponse<unknown> | undefined) => response == undefined ? false : response?.code >= 200 && response?.code < 300
 
 export class BshError extends Error {
     constructor(

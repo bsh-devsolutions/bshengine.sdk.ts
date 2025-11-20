@@ -1,24 +1,11 @@
 import { BshClient } from "@src/client/bsh-client";
 import { BshResponse, BshSettings } from "@types";
-import { bshConfigs } from "@config";
 import { BshCallbackParams, BshCallbackParamsWithPayload } from "@src/services";
 
 export class SettingsService {
-    private static instance: SettingsService;
     private readonly baseEndpoint = '/api/settings';
 
-    private constructor() {
-    }
-
-    private get client(): BshClient {
-        return bshConfigs.createClient();
-    }
-
-    public static getInstance(): SettingsService {
-        if (!SettingsService.instance) {
-            SettingsService.instance = new SettingsService();
-        }
-        return SettingsService.instance;
+    public constructor(private readonly client: BshClient) {
     }
 
     public async load(params: BshCallbackParams<unknown, BshSettings>): Promise<BshResponse<BshSettings> | undefined> {

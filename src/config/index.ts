@@ -28,7 +28,6 @@ export class GlobalServiceConfiguration {
      */
     public configure(config: GlobalServiceConfig): void {
         if (!config.clientFn) throw new Error('BshClientFn is required for global service configuration');
-        if (!config.host) throw new Error('Host is required for global service configuration');
         this.config = config;
         this.configVersion++;
     }

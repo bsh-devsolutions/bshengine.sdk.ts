@@ -1,15 +1,5 @@
-import { BshResponse } from '@types';
+import { BshResponse, BshSearch } from '@types';
 import { BshError } from '@types';
-import { EntityService } from './entities';
-import { UserService } from './user';
-import { AuthService } from './auth';
-import { SettingsService } from './settings';
-import { ImageService } from './image';
-import { MailingService } from './mailing';
-import { BshUtilsService } from './utils';
-import { CachingService } from './caching';
-import { ApiKeyService } from './api-key';
-import { coreEntities } from './core';
 
 export type BshCallbackParams<T = unknown, R = T> = {
     onSuccess?: (response: BshResponse<R>) => void;
@@ -21,6 +11,8 @@ export type BshCallbackParamsWithPayload<T = unknown, R = T> = BshCallbackParams
     payload: T;
 }
 
+export type BshSearchCallbackParams <T, R = T> = BshCallbackParamsWithPayload<BshSearch<T>, R>
+
 export * from './entities';
 export * from './auth';
 export * from './user';
@@ -30,16 +22,3 @@ export * from './mailing';
 export * from './utils';
 export * from './caching';
 export * from './api-key';
-
-export const services = {
-    entities: EntityService.getInstance(),
-    core: coreEntities,
-    auth: AuthService.getInstance(),
-    user: UserService.getInstance(),
-    settings: SettingsService.getInstance(),
-    image: ImageService.getInstance(),
-    mailing: MailingService.getInstance(),
-    utils: BshUtilsService.getInstance(),
-    caching: CachingService.getInstance(),
-    apiKey: ApiKeyService.getInstance()
-}

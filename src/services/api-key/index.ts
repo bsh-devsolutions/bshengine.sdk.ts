@@ -1,24 +1,11 @@
 import { BshClient } from "@src/client/bsh-client";
 import { BshResponse, BshApiKeys, BshApiKeysForm, BshSearch } from "@types";
-import { bshConfigs } from "@config";
 import { BshCallbackParams, BshCallbackParamsWithPayload } from "@src/services";
 
 export class ApiKeyService {
-    private static instance: ApiKeyService;
     private readonly baseEndpoint = '/api/api-keys';
 
-    private constructor() {
-    }
-
-    private get client(): BshClient {
-        return bshConfigs.createClient();
-    }
-
-    public static getInstance(): ApiKeyService {
-        if (!ApiKeyService.instance) {
-            ApiKeyService.instance = new ApiKeyService();
-        }
-        return ApiKeyService.instance;
+    public constructor(private readonly client: BshClient) {
     }
 
     public async create(params: BshCallbackParamsWithPayload<BshApiKeysForm, BshApiKeys>): Promise<BshResponse<BshApiKeys> | undefined> {

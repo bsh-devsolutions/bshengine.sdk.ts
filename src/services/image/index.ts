@@ -1,37 +1,24 @@
 import { BshClient } from "@src/client/bsh-client";
 import { BshResponse, UploadResponse, UploadOptions } from "@types";
-import { bshConfigs } from "@config";
-import { BshCallbackParams } from "@src/services";
+import { BshCallbackParams, BshCallbackParamsWithPayload } from "@src/services";
 
 export class ImageService {
-    private static instance: ImageService;
     private readonly baseEndpoint = '/api/images';
 
-    private constructor() {
+    public constructor(private readonly client: BshClient) {
     }
 
-    private get client(): BshClient {
-        return bshConfigs.createClient();
-    }
-
-    public static getInstance(): ImageService {
-        if (!ImageService.instance) {
-            ImageService.instance = new ImageService();
-        }
-        return ImageService.instance;
-    }
-
-    public async upload(params: BshCallbackParams<unknown, UploadResponse> & {
+    public async upload(params: BshCallbackParamsWithPayload<{
         file: File;
         namespace?: string;
         assetId?: string;
         options?: UploadOptions;
-    }): Promise<BshResponse<UploadResponse> | undefined> {
+    }, UploadResponse>): Promise<BshResponse<UploadResponse> | undefined> {
         const formData = new FormData();
-        formData.set('file', params.file);
-        if (params.namespace) formData.set('namespace', params.namespace);
-        if (params.assetId) formData.set('assetId', params.assetId);
-        if (params.options) formData.set('options', JSON.stringify(params.options));
+        formData.set('file', params.payload.file);
+        if (params.payload.namespace) formData.set('namespace', params.payload.namespace);
+        if (params.payload.assetId) formData.set('assetId', params.payload.assetId);
+        if (params.payload.options) formData.set('options', JSON.stringify(params.payload.options));
 
         return this.client.post<UploadResponse>({
             path: `${this.baseEndpoint}/upload`,

@@ -1,24 +1,11 @@
 import { BshClient } from "@src/client/bsh-client";
 import { BshResponse, BshTriggerPlugin, BshTriggerAction } from "@types";
-import { bshConfigs } from "@config";
 import { BshCallbackParams } from "@src/services";
 
 export class BshUtilsService {
-    private static instance: BshUtilsService;
     private readonly baseEndpoint = '/api/utils';
 
-    private constructor() {
-    }
-
-    private get client(): BshClient {
-        return bshConfigs.createClient();
-    }
-
-    public static getInstance(): BshUtilsService {
-        if (!BshUtilsService.instance) {
-            BshUtilsService.instance = new BshUtilsService();
-        }
-        return BshUtilsService.instance;
+    public constructor(private readonly client: BshClient) {
     }
 
     public async triggerPlugins(params: BshCallbackParams<unknown, BshTriggerPlugin>): Promise<BshResponse<BshTriggerPlugin> | undefined> {

@@ -1,7 +1,6 @@
 
 import { BshClient } from "@src/client/bsh-client";
 import { BshResponse, BshUser, BshUserInit } from "@types";
-import { bshConfigs } from "@config";
 import { BshCallbackParamsWithPayload } from "@src/services";
 
 export type LoginParams = {
@@ -10,26 +9,14 @@ export type LoginParams = {
 }
 
 export type LoginResponse = {
-    token: string;
+    access: string;
     refresh: string;
 }
 
 export class AuthService {
-    private static instance: AuthService;
     private readonly baseEndpoint = '/api/auth';
 
-    private constructor() {
-    }
-
-    private get client(): BshClient {
-        return bshConfigs.createClient();
-    }
-
-    public static getInstance(): AuthService {
-        if (!AuthService.instance) {
-            AuthService.instance = new AuthService();
-        }
-        return AuthService.instance;
+    public constructor(private readonly client: BshClient) {
     }
 
     public async login(params: BshCallbackParamsWithPayload<LoginParams, LoginResponse>): Promise<BshResponse<LoginResponse> | undefined> {

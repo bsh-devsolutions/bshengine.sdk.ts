@@ -1,6 +1,7 @@
-import { BshError, BshResponse, BshSearch } from "@types";
+import { BshCallbackParams } from "@src/services";
+import { BshSearch } from "@types";
 
-export type BshClientFnParams<T = unknown> = {
+export type BshClientFnParams<T = unknown, R = T> = {
     path: string,
     options: {
         method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
@@ -11,14 +12,21 @@ export type BshClientFnParams<T = unknown> = {
         queryParams?: Record<string, string>,
         headers?: Record<string, string>,
     },
-    bshOptions: {
-        onSuccess?: (response: BshResponse<T>) => void,
-        onError?: (error: BshError) => void,
-        onDownload?: (blob: Blob) => void,
-    }
+    bshOptions: BshCallbackParams<T, R>
 }
 
 export type BshClientFn = <T = unknown>(params: BshClientFnParams<T>) => Promise<Response>;
+
+export const defaultClientFn: BshClientFn = async (params) => {
+    return fetch(
+        params.path,
+        {
+            method: params.options.method,
+            body: params.options.body ? JSON.stringify(params.options.body) : undefined,
+            headers: params.options.headers,
+        }
+    );
+};
 
 export type BshAuthFn = () => Promise<{
     type: 'JWT' | 'APIKEY';

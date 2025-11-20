@@ -1,0 +1,86 @@
+import { BshAuthFn, BshClient, BshClientFn } from "@client";
+import { ApiKeyService, AuthService, BshUtilsService, CachingService, EntityService, ImageService, MailingService, SettingsService, UserService } from "@src/services";
+import { BshEntities, BshPolicy,BshRole, BshEmailTemplate, BshEventLogs, BshSchemas, BshTypes, BshUser, SentEmail, BshTrigger, BshTriggerInstance, BshFiles, BshConfigurations } from "@types";
+
+export class BshEngine {
+    private host?: string;
+    private clientFn?: BshClientFn;
+    private authFn?: BshAuthFn;
+
+    public withHost(hostFn: string) {
+        this.host = hostFn;
+        return this;
+    }
+
+    public withClient(clientFn: BshClientFn) {
+        this.clientFn = clientFn;
+        return this;
+    }
+
+    public withAuth(authFn: BshAuthFn) {
+        this.authFn = authFn;
+        return this;
+    }
+
+    private get client(): BshClient {
+        return new BshClient(this.host, this.clientFn, this.authFn);
+    }
+
+    public get entities() {
+        return new EntityService(this.client);
+    }
+
+    public entity<T>(entity: string) {
+        return new EntityService<T>(this.client, entity);
+    }
+
+    public get core() {
+        return {
+            BshEntities: this.entity<BshEntities>('BshEntities'),
+            BshSchemas: this.entity<BshSchemas>('BshSchemas'),
+            BshTypes: this.entity<BshTypes>('BshTypes'),
+            BshUsers: this.entity<BshUser>('BshUsers'),
+            BshPolicies: this.entity<BshPolicy>('BshPolicies'),
+            BshRoles: this.entity<BshRole>('BshRoles'),
+            BshFiles: this.entity<BshFiles>('BshFiles'),
+            BshConfigurations: this.entity<BshConfigurations>('BshConfigurations'),
+            BshEmails: this.entity<SentEmail>('BshEmails'),
+            BshEmailTemplates: this.entity<BshEmailTemplate>('BshEmailTemplates'),
+            BshEventLogs: this.entity<BshEventLogs>('BshEventLogs'),
+            BshTriggers: this.entity<BshTrigger>('BshTriggers'),
+            BshTriggerInstances: this.entity<BshTriggerInstance>('BshTriggerInstances'),
+        }
+    }
+
+    public get auth() {
+        return new AuthService(this.client);
+    }
+
+    public get user() {
+        return new UserService(this.client);
+    }
+
+    public get settings() {
+        return new SettingsService(this.client);
+    }
+
+    public get image() {
+        return new ImageService(this.client);
+    }
+
+    public get mailing() {
+        return new MailingService(this.client);
+    }
+
+    public get utils() {
+        return new BshUtilsService(this.client);
+    }
+
+    public get caching() {
+        return new CachingService(this.client);
+    }
+
+    public get apiKey() {
+        return new ApiKeyService(this.client);
+    }
+}
