@@ -4,7 +4,7 @@ import { BshCallbackParams, BshCallbackParamsWithPayload } from "@src/services";
 
 export type EntityFnParams<T = unknown, R = T> = BshCallbackParams<T, R> & { entity?: string }
 export type EntityFnParamsWithPayload<T = unknown, R = T> = BshCallbackParamsWithPayload<T, R> & { entity?: string }
-export type EntitySearchFnParams<T, R = T> = EntityFnParamsWithPayload<BshSearch<T>, R> & { entity?: string }
+export type EntitySearchFnParams<T, R = T> = EntityFnParamsWithPayload<BshSearch<T>, R>
 
 export class EntityService<T = unknown> {
     private readonly baseEndpoint = '/api/entities';
@@ -100,7 +100,7 @@ export class EntityService<T = unknown> {
     }
 
     // Search for entities
-    public async search<TT = T, R = TT>(
+    public async search<TT extends T = T, R = TT>(
         params: EntitySearchFnParams<TT, R>
     ): Promise<BshResponse<R> | undefined> {
         return this.client.post<TT, R>({
