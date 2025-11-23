@@ -26,9 +26,6 @@ export class ImageService {
                 responseType: 'json',
                 requestFormat: 'form',
                 body: formData,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
         });
