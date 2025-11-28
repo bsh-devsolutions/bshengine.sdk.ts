@@ -57,6 +57,7 @@ describe('UserService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'user.me',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -103,6 +104,7 @@ describe('UserService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'user.init',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -144,6 +146,7 @@ describe('UserService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'user.updateProfile',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -216,6 +219,7 @@ describe('UserService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'user.updatePassword',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -252,6 +256,7 @@ describe('UserService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'user.getById',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -297,6 +302,7 @@ describe('UserService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'user.search',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -338,6 +344,7 @@ describe('UserService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'user.list',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -371,6 +378,7 @@ describe('UserService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'user.list',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -414,6 +422,7 @@ describe('UserService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'user.update',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -450,6 +459,7 @@ describe('UserService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'user.deleteById',
             });
             expect(result).toEqual(mockResponse);
         });

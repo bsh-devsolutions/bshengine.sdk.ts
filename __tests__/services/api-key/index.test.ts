@@ -57,6 +57,7 @@ describe('ApiKeyService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'api-key.create',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -121,6 +122,7 @@ describe('ApiKeyService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'api-key.revoke',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -153,6 +155,7 @@ describe('ApiKeyService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'api-key.getById',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -194,6 +197,7 @@ describe('ApiKeyService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'api-key.search',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -225,6 +229,7 @@ describe('ApiKeyService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'api-key.list',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -260,6 +265,7 @@ describe('ApiKeyService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'api-key.list',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -292,6 +298,7 @@ describe('ApiKeyService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'api-key.deleteById',
             });
             expect(result).toEqual(mockResponse);
         });

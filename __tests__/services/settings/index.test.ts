@@ -52,6 +52,7 @@ describe('SettingsService', () => {
                     requestFormat: 'json'
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'settings.load',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -95,6 +96,7 @@ describe('SettingsService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'settings.update',
             });
             expect(result).toEqual(mockResponse);
         });

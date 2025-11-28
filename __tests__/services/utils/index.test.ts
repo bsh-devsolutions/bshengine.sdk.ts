@@ -50,6 +50,7 @@ describe('BshUtilsService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'utils.triggerPlugins',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -84,6 +85,7 @@ describe('BshUtilsService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'utils.triggerActions',
             });
             expect(result).toEqual(mockResponse);
         });

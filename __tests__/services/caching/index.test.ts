@@ -52,6 +52,7 @@ describe('CachingService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'caching.findById',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -93,6 +94,7 @@ describe('CachingService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'caching.search',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -123,6 +125,7 @@ describe('CachingService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'caching.names',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -154,6 +157,7 @@ describe('CachingService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'caching.clearById',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -184,6 +188,7 @@ describe('CachingService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'caching.clearAll',
             });
             expect(result).toEqual(mockResponse);
         });

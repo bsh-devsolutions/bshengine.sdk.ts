@@ -53,6 +53,7 @@ describe('AuthService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'auth.login',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -121,6 +122,7 @@ describe('AuthService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'auth.register',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -156,6 +158,7 @@ describe('AuthService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'auth.refreshToken',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -191,6 +194,7 @@ describe('AuthService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'auth.forgetPassword',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -230,6 +234,7 @@ describe('AuthService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'auth.resetPassword',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -268,6 +273,7 @@ describe('AuthService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'auth.activateAccount',
             });
             expect(result).toEqual(mockResponse);
         });

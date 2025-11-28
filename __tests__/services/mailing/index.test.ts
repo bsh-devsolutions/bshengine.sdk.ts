@@ -56,6 +56,7 @@ describe('MailingService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'mailing.send',
             });
             expect(result).toEqual(mockResponse);
         });
