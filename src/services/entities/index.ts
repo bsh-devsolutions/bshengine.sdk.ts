@@ -24,7 +24,7 @@ export class EntityService<T = unknown> {
                 },
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: `entities.${params.entity || this.entity}.${params.entity || this.entity}.findById`,
+            api: `entities.${params.entity || this.entity}.findById`,
         });
     }
 
