@@ -46,17 +46,23 @@ jobs:
             exit 1
           fi
 
-          echo "version=$VERSION"
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-
           if [[ -z "$TAG" ]]; then
             NPM_TAG="latest"
           else
             NPM_TAG="$TAG"
           fi
 
-          echo "npm_tag=$NPM_TAG"
-          echo "npm_tag=$NPM_TAG" >> $GITHUB_OUTPUT
+          if [ "$NPM_TAG" = "latest" ]; then
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "npm_tag=latest" >> $GITHUB_OUTPUT
+            echo "version=$VERSION"
+            echo "npm_tag=latest"
+          else
+            echo "version=$VERSION-$NPM_TAG" >> $GITHUB_OUTPUT
+            echo "npm_tag=$NPM_TAG" >> $GITHUB_OUTPUT
+            echo "version=$VERSION-$NPM_TAG"
+            echo "npm_tag=$NPM_TAG"
+          fi
         
       - name: Update package.json version
         run: |
@@ -70,15 +76,7 @@ jobs:
           NPM_TAG=${{ steps.tag_version.outputs.npm_tag }}
           PACKAGE_NAME=$(node -p "require('./package.json').name")
 
-          if [ "$NPM_TAG" = "latest" ]; then
-            echo "npm publish --tag $VERSION --access public"
-            # npm publish --tag $VERSION --access public
-            echo "npm publish --tag latest --access public"
-            # npm publish --tag latest --access public
-          else
-            echo "Publishing as version: $VERSION-$NPM_TAG and tag: $NPM_TAG"
-            echo "npm publish --tag $VERSION-$NPM_TAG --access public"
-            # npm publish --tag $VERSION-$NPM_TAG --access public
-            echo "npm publish --tag $NPM_TAG --access public"
-            # npm publish --tag $NPM_TAG --access public
-          fi
+          echo "npm publish --tag $VERSION --access public"
+          # npm publish --tag $VERSION --access public
+          echo "npm publish --tag $NPM_TAG --access public"
+          # npm publish --tag $NPM_TAG --access public
