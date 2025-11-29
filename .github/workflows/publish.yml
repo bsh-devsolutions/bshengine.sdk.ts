@@ -71,14 +71,14 @@ jobs:
           PACKAGE_NAME=$(node -p "require('./package.json').name")
 
           if [ "$NPM_TAG" = "latest" ]; then
-            each "npm publish --tag $VERSION --access public"
+            echo "npm publish --tag $VERSION --access public"
             # npm publish --tag $VERSION --access public
-            each "npm publish --tag latest --access public"
+            echo "npm publish --tag latest --access public"
             # npm publish --tag latest --access public
           else
             echo "Publishing as version: $VERSION-$NPM_TAG and tag: $NPM_TAG"
-            each "npm publish --tag $VERSION-$NPM_TAG --access public"
+            echo "npm publish --tag $VERSION-$NPM_TAG --access public"
             # npm publish --tag $VERSION-$NPM_TAG --access public
-            each "npm publish --tag $NPM_TAG --access public"
+            echo "npm publish --tag $NPM_TAG --access public"
             # npm publish --tag $NPM_TAG --access public
           fi
