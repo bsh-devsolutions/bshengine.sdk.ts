@@ -1,10 +1,11 @@
 name: Publish to npm
 
-# on:
-#   push:
-#     tags:
-#       - 'v*.*.*'
-#       - 'v*.*.*.*'
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - 'v*.*.*-beta'
+      - 'v*.*.*-alpha'
 
 jobs:
   publish:
@@ -55,9 +56,13 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           VERSION=${{ steps.tag_version.outputs.version }}
-          npm publish --tag $VERSION --access public
+          NPM_TAG=${{ steps.tag_version.outputs.npm_tag }}
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          echo "npm publish --tag $NPM_TAG --access public"
+          # npm publish --tag $NPM_TAG --access public
           
           # If it's a 3-part version, also tag as latest
           if [ "${{ steps.tag_version.outputs.is_latest }}" == "true" ]; then
-            npm dist-tag add @bshsolutions/sdk@$VERSION latest
+            echo "npm dist-tag add $PACKAGE_NAME@$VERSION latest"
+            # npm dist-tag add $PACKAGE_NAME@$VERSION latest
           fi

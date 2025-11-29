@@ -1,5 +1,5 @@
 {
-  "name": "@bshsolutions/sdk",
+  "name": "@bshsolutions/sdk-beta",
   "version": "0.0.1",
   "description": "TypeScript SDK for integrating with BSH Engine - API services and utilities",
   "type": "module",
@@ -52,11 +52,11 @@
     "typescript",
     "client"
   ],
-  "author": "",
+  "author": "Bousalih Hamza <hamza.bousalih.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/bshgenerator/bshengine.sdk.ts"
   },
   "publishConfig": {
     "access": "public"
