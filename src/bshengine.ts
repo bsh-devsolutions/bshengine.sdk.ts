@@ -12,12 +12,31 @@ export class BshEngine {
     private preInterceptors: BshPreInterceptor<unknown>[] = [];
     private errorInterceptors: BshErrorInterceptor<unknown>[] = [];
 
-    // Configuration
-    public withHost(hostFn: string) {
-        this.host = hostFn;
-        return this;
+    constructor(params: {
+        host?: string;
+        apiKey?: string;
+        jwtToken?: string;
+        refreshToken?: string;
+        clientFn?: BshClientFn;
+        authFn?: BshAuthFn;
+        refreshTokenFn?: BshRefreshTokenFn;
+        postInterceptors?: BshPostInterceptor<unknown>[];
+        preInterceptors?: BshPreInterceptor<unknown>[];
+        errorInterceptors?: BshErrorInterceptor<unknown>[];
+    } = {}) {
+        this.host = params.host;
+        if (params.apiKey) this.authFn = async () => ({ type: 'APIKEY', token: params.apiKey! });
+        if (params.jwtToken) this.authFn = async () => ({ type: 'JWT', token: params.jwtToken! });
+        if (params.refreshToken) this.refreshTokenFn = async () => params.refreshToken!;
+        this.clientFn = params.clientFn || fetchClientFn;
+        this.authFn = params.authFn;
+        this.refreshTokenFn = params.refreshTokenFn;
+        this.postInterceptors = params.postInterceptors || [];
+        this.preInterceptors = params.preInterceptors || [];
+        this.errorInterceptors = params.errorInterceptors || [];
     }
 
+    // Configuration
     public withClient(clientFn: BshClientFn) {
         this.clientFn = clientFn;
         return this;
