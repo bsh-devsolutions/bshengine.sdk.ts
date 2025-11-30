@@ -123,10 +123,19 @@ export class BshClient {
         return authHeaders;
     }
 
+    private async applyPreInterceptors<T = unknown, R = T>(params: BshClientFnParams<T, R>): Promise<BshClientFnParams<T, R>> {
+        if (!this.bshEngine?.getPreInterceptors().length) return params;
+        for (const interceptor of this.bshEngine.getPreInterceptors()) {
+            const newParams = await interceptor(params as BshClientFnParams<unknown, unknown>);
+            if (newParams) return newParams as BshClientFnParams<T, R>;
+        }
+        return params;
+    }
+
     async get<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
         const authHeaders = await this.getAuthHeaders(params);
 
-        const response = await this.httpClient({
+        let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
             options: {
@@ -137,13 +146,17 @@ export class BshClient {
                     ...authHeaders
                 }
             }
-        });
-        return this.handleResponse(response, params, 'json');
+        } as BshClientFnParams<T>;
+
+        clientParams = await this.applyPreInterceptors<T>(clientParams);
+        const response = await this.httpClient(clientParams);
+        return this.handleResponse(response, clientParams, 'json');
     }
 
     async post<T = unknown, R = T>(params: BshClientFnParams<T, R>): Promise<BshResponse<R> | undefined> {
         const authHeaders = await this.getAuthHeaders(params);
-        const response = await this.httpClient({
+
+        let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
             options: {
@@ -154,64 +167,76 @@ export class BshClient {
                     ...authHeaders
                 }
             }
-        });
-        return this.handleResponse(response, params, 'json');
+        } as BshClientFnParams<T, R>;
+
+        clientParams = await this.applyPreInterceptors<T, R>(clientParams);
+        const response = await this.httpClient(clientParams);
+        return this.handleResponse(response, clientParams, 'json');
     }
 
     async put<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
         const authHeaders = await this.getAuthHeaders(params);
-        const response = await this.httpClient({
+        let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
             options: {
                 ...params.options,
-                method: 'PUT',
+                method: 'PUT',   
                 headers: {
                     ...params.options.headers,
                     ...authHeaders
                 }
             }
-        });
-        return this.handleResponse(response, params, 'json');
+        } as BshClientFnParams<T>;
+
+        clientParams = await this.applyPreInterceptors<T>(clientParams);
+        const response = await this.httpClient(clientParams);
+        return this.handleResponse(response, clientParams, 'json');
     }
 
     async delete<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
         const authHeaders = await this.getAuthHeaders(params);
-        const response = await this.httpClient({
+        let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
             options: {
                 ...params.options,
-                method: 'DELETE',
+                method: 'DELETE',   
                 headers: {
                     ...params.options.headers,
                     ...authHeaders
                 }
             }
-        });
-        return this.handleResponse(response, params, 'json');
+        } as BshClientFnParams<T>;
+
+        clientParams = await this.applyPreInterceptors<T>(clientParams);
+        const response = await this.httpClient(clientParams);
+        return this.handleResponse(response, clientParams, 'json');
     }
 
     async patch<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
         const authHeaders = await this.getAuthHeaders(params);
-        const response = await this.httpClient({
+        let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
             options: {
                 ...params.options,
-                method: 'PATCH',
+                method: 'PATCH',   
                 headers: {
                     ...params.options.headers,
                     ...authHeaders
                 }
             }
-        });
-        return this.handleResponse(response, params, 'json');
+        } as BshClientFnParams<T>;
+
+        clientParams = await this.applyPreInterceptors<T>(clientParams);
+        const response = await this.httpClient(clientParams);
+        return this.handleResponse(response, clientParams, 'json');
     }
 
     async download<T = unknown>(params: BshClientFnParams<T>): Promise<Blob | undefined> {
         const authHeaders = await this.getAuthHeaders(params);
-        const response = await this.httpClient({
+        let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
             options: {
@@ -221,7 +246,10 @@ export class BshClient {
                     ...authHeaders
                 }
             }
-        });
-        return this.handleResponse(response, params, 'blob');
+        } as BshClientFnParams<T>;
+
+        clientParams = await this.applyPreInterceptors<T>(clientParams);
+        const response = await this.httpClient(clientParams);
+        return this.handleResponse(response, clientParams, 'blob');
     }
 }
