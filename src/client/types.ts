@@ -23,7 +23,9 @@ export const defaultClientFn: BshClientFn = async (params) => {
         params.path,
         {
             method: params.options.method,
-            body: params.options.body ? JSON.stringify(params.options.body) : undefined,
+            body: params.options.requestFormat === 'form' ?
+                params.options.body as BodyInit : params.options.body ?
+                    JSON.stringify(params.options.body) : undefined,
             headers: params.options.headers,
         }
     );
