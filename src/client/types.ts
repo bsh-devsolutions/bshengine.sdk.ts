@@ -40,6 +40,6 @@ export type BshAuthFn = () => Promise<AuthToken | undefined | null>;
 
 export type BshRefreshTokenFn = () => Promise<string | undefined | null>;
 
-export type BshPostInterceptor<T = any> = (result: BshResponse<T>, params?: BshClientFnParams<T>) => Promise<BshResponse<T>>;
+export type BshPostInterceptor<T = any> = (response: BshResponse<T>, params?: BshClientFnParams<T>) => Promise<BshResponse<T>>;
 export type BshPreInterceptor<T = any, R = T> = (params: BshClientFnParams<T, R>) => Promise<BshClientFnParams<T, R>>;
 export type BshErrorInterceptor<T = any> = (error: BshError, response?: BshResponse<T>, params?: BshClientFnParams<T>) => Promise<BshError | undefined>;
