@@ -4,7 +4,6 @@ export * from './types';
 export * from './bsh-client';
 
 export const fetchClientFn: BshClientFn = async (params) => {
-    console.log(params);
     return fetch(
         params.path,
         {
