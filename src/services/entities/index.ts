@@ -178,6 +178,24 @@ export class EntityService<T = unknown> {
         });
     }
 
+    // Count entities
+    public async count(
+        params: EntityFnParams<unknown, { count: number }>
+    ): Promise<BshResponse<{ count: number }> | undefined> {
+        return this.client.get<{ count: number }>({
+            path: `${this.baseEndpoint}/${params.entity || this.entity}/count`,
+            options: {
+                responseType: 'json',
+                requestFormat: 'json',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            },
+            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            api: `entities.${params.entity || this.entity}.count`,
+        });
+    }
+
     // Export entities
     public async export<TT = T>(
         params: EntityFnParamsWithPayload<BshSearch<TT>, Blob> & {

@@ -390,6 +390,66 @@ describe('EntityService', () => {
         });
     });
 
+    describe('count', () => {
+        it('should call client.get with count endpoint', async () => {
+            const mockResponse = {
+                data: [{ count: 42 }],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockGet.mockResolvedValue(mockResponse);
+
+            const params = {
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await entityService.count(params);
+
+            expect(mockGet).toHaveBeenCalledWith({
+                path: '/api/entities/TestEntity/count',
+                options: {
+                    responseType: 'json',
+                    requestFormat: 'json',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                },
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'entities.TestEntity.count',
+            });
+            expect(result).toEqual(mockResponse);
+        });
+
+        it('should use entity from params when provided', async () => {
+            const mockResponse = {
+                data: [{ count: 10 }],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockGet.mockResolvedValue(mockResponse);
+
+            const params = {
+                entity: 'CustomEntity',
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            await entityService.count(params);
+
+            expect(mockGet).toHaveBeenCalledWith({
+                path: '/api/entities/CustomEntity/count',
+                options: expect.any(Object),
+                bshOptions: expect.any(Object),
+                api: 'entities.CustomEntity.count',
+            });
+        });
+    });
+
     describe('export', () => {
         it('should call client.download with export endpoint', async () => {
             const blob = new Blob(['test'], { type: 'application/json' });
