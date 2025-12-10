@@ -3,12 +3,19 @@ export type BshResponse<T> = {
     timestamp: number
     code: number
     status: string
-    error: string
+    error?: string
     meta?: {
         type?: string,
         sql?: string,
         error?: string,
         tips?: {[key: string]: string}
+    }
+    pagination?: {
+        current: number,
+        total: number,
+        pages: number,
+        first: boolean,
+        last: boolean
     }
     endpoint?: string,
     api?: string,
