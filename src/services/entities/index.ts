@@ -196,6 +196,25 @@ export class EntityService<T = unknown> {
         });
     }
 
+    // Count entities with search criteria
+    public async countFiltered<TT extends T = T, R = TT>(
+        params: EntitySearchFnParams<TT, R>
+    ): Promise<BshResponse<R> | undefined> {
+        return this.client.post<TT, R>({
+            path: `${this.baseEndpoint}/${params.entity || this.entity}/count`,
+            options: {
+                responseType: 'json',
+                requestFormat: 'json',
+                body: params.payload,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            },
+            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            api: `entities.${params.entity || this.entity}.countBySearch`,
+        });
+    }
+
     // Export entities
     public async export<TT = T>(
         params: EntityFnParamsWithPayload<BshSearch<TT>, Blob> & {

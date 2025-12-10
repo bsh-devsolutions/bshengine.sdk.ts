@@ -450,6 +450,79 @@ describe('EntityService', () => {
         });
     });
 
+    describe('countFiltered', () => {
+        it('should call client.post with count endpoint and search payload', async () => {
+            const mockResponse = {
+                data: [{ count: 15 }],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockPost.mockResolvedValue(mockResponse);
+
+            const searchParams: BshSearch = {
+                filters: [{ field: 'name', operator: 'eq', value: 'Test' }],
+                sort: [{ field: 'id', direction: 1 }],
+                pagination: { page: 1, size: 10 }
+            };
+            const params = {
+                payload: searchParams,
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await entityService.countFiltered(params);
+
+            expect(mockPost).toHaveBeenCalledWith({
+                path: '/api/entities/TestEntity/count',
+                options: {
+                    responseType: 'json',
+                    requestFormat: 'json',
+                    body: searchParams,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                },
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'entities.TestEntity.countBySearch',
+            });
+            expect(result).toEqual(mockResponse);
+        });
+
+        it('should use entity from params when provided', async () => {
+            const mockResponse = {
+                data: [{ count: 8 }],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockPost.mockResolvedValue(mockResponse);
+
+            const searchParams: BshSearch = {
+                filters: [],
+                sort: [],
+                pagination: { page: 1, size: 10 }
+            };
+            const params = {
+                payload: searchParams,
+                entity: 'CustomEntity',
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            await entityService.countFiltered(params);
+
+            expect(mockPost).toHaveBeenCalledWith({
+                path: '/api/entities/CustomEntity/count',
+                options: expect.any(Object),
+                bshOptions: expect.any(Object),
+                api: 'entities.CustomEntity.countBySearch',
+            });
+        });
+    });
+
     describe('export', () => {
         it('should call client.download with export endpoint', async () => {
             const blob = new Blob(['test'], { type: 'application/json' });
