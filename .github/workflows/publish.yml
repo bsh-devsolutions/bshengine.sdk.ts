@@ -6,6 +6,7 @@ on:
       - 'v*.*.*'
       - 'v*.*.*-beta'
       - 'v*.*.*-alpha'
+  workflow_dispatch:
 
 jobs:
   publish:
