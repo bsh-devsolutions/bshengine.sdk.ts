@@ -397,5 +397,77 @@ describe('ApiKeyService', () => {
             expect(result).toEqual(mockResponse);
         });
     });
+
+    describe('count', () => {
+        it('should call client.get with correct parameters', async () => {
+            const mockResponse = {
+                data: [{ count: 42 }],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockGet.mockResolvedValue(mockResponse);
+
+            const params = {
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await apiKeyService.count(params);
+
+            expect(mockGet).toHaveBeenCalledWith({
+                path: '/api/api-keys/count',
+                options: {
+                    responseType: 'json',
+                    requestFormat: 'json',
+                },
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'api-key.count',
+            });
+            expect(result).toEqual(mockResponse);
+        });
+    });
+
+    describe('countFiltered', () => {
+        it('should call client.post with correct parameters', async () => {
+            const mockResponse = {
+                data: [{ count: 10 }],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockPost.mockResolvedValue(mockResponse);
+
+            const searchParams: BshSearch<BshApiKeys> = {
+                filters: [],
+                sort: [],
+                pagination: { page: 1, size: 10 }
+            };
+            const params = {
+                payload: searchParams,
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await apiKeyService.countFiltered(params);
+
+            expect(mockPost).toHaveBeenCalledWith({
+                path: '/api/api-keys/count',
+                options: {
+                    responseType: 'json',
+                    requestFormat: 'json',
+                    body: searchParams,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                },
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'api-key.countFiltered',
+            });
+            expect(result).toEqual(mockResponse);
+        });
+    });
 });
 

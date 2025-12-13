@@ -494,5 +494,77 @@ describe('UserService', () => {
             expect(result).toEqual(mockResponse);
         });
     });
+
+    describe('count', () => {
+        it('should call client.get with correct parameters', async () => {
+            const mockResponse = {
+                data: [{ count: 100 }],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockGet.mockResolvedValue(mockResponse);
+
+            const params = {
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await userService.count(params);
+
+            expect(mockGet).toHaveBeenCalledWith({
+                path: '/api/users/count',
+                options: {
+                    responseType: 'json',
+                    requestFormat: 'json',
+                },
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'user.count',
+            });
+            expect(result).toEqual(mockResponse);
+        });
+    });
+
+    describe('countFiltered', () => {
+        it('should call client.post with correct parameters', async () => {
+            const mockResponse = {
+                data: [{ count: 25 }],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockPost.mockResolvedValue(mockResponse);
+
+            const searchParams: BshSearch<BshUser> = {
+                filters: [],
+                sort: [],
+                pagination: { page: 1, size: 10 }
+            };
+            const params = {
+                payload: searchParams,
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await userService.countFiltered(params);
+
+            expect(mockPost).toHaveBeenCalledWith({
+                path: '/api/users/count',
+                options: {
+                    responseType: 'json',
+                    requestFormat: 'json',
+                    body: searchParams,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                },
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'user.countFiltered',
+            });
+            expect(result).toEqual(mockResponse);
+        });
+    });
 });
 

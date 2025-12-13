@@ -1,6 +1,6 @@
 import { BshClient } from "@src/client/bsh-client";
 import { BshResponse, BshUser, BshUserInit, BshSearch } from "@types";
-import { BshCallbackParams, BshCallbackParamsWithPayload } from "@src/services";
+import { BshCallbackParams, BshCallbackParamsWithPayload, BshSearchCallbackParams } from "@src/services";
 
 export class UserService {
     private readonly baseEndpoint = '/api/users';
@@ -20,8 +20,8 @@ export class UserService {
         });
     }
 
-    public async init(params: BshCallbackParamsWithPayload<BshUserInit, BshUser>): Promise<BshResponse<BshUser> | undefined> {
-        return this.client.post<BshUser>({
+    public async init<T = BshUser>(params: BshCallbackParamsWithPayload<BshUserInit, T>): Promise<BshResponse<T> | undefined> {
+        return this.client.post<T>({
             path: `${this.baseEndpoint}/init`,
             options: {
                 responseType: 'json',
@@ -36,8 +36,8 @@ export class UserService {
         });
     }
 
-    public async updateProfile(params: BshCallbackParamsWithPayload<Partial<BshUser['profile']>, BshUser>): Promise<BshResponse<BshUser> | undefined> {
-        return this.client.put<BshUser>({
+    public async updateProfile<T = BshUser>(params: BshCallbackParamsWithPayload<Partial<BshUser['profile']>, T>): Promise<BshResponse<T> | undefined> {
+        return this.client.put<T>({
             path: `${this.baseEndpoint}/profile`,
             options: {
                 responseType: 'json',
@@ -52,11 +52,11 @@ export class UserService {
         });
     }
 
-    public async updatePicture(params: BshCallbackParamsWithPayload<File, BshUser>): Promise<BshResponse<BshUser> | undefined> {
+    public async updatePicture<T = BshUser>(params: BshCallbackParamsWithPayload<File, T>): Promise<BshResponse<T> | undefined> {
         const formData = new FormData();
         formData.set('picture', params.payload);
 
-        return this.client.post<BshUser>({
+        return this.client.post<T>({
             path: `${this.baseEndpoint}/picture`,
             options: {
                 responseType: 'json',
@@ -85,8 +85,8 @@ export class UserService {
     }
 
     // CRUD
-    public async getById(params: BshCallbackParams<unknown, BshUser> & { id: string }): Promise<BshResponse<BshUser> | undefined> {
-        return this.client.get<BshUser>({
+    public async getById<T = BshUser>(params: BshCallbackParams<unknown, T> & { id: string }): Promise<BshResponse<T> | undefined> {
+        return this.client.get<T>({
             path: `${this.baseEndpoint}/${params.id}`,
             options: {
                 responseType: 'json',
@@ -97,8 +97,8 @@ export class UserService {
         });
     }
 
-    public async search<R = BshUser>(params: BshCallbackParamsWithPayload<BshSearch<BshUser> | undefined, R>): Promise<BshResponse<R> | undefined> {
-        return this.client.post<BshUser, R>({
+    public async search<T = BshUser, R = BshUser>(params: BshSearchCallbackParams<T, R>): Promise<BshResponse<R> | undefined> {
+        return this.client.post<T, R>({
             path: `${this.baseEndpoint}/search`,
             options: {
                 responseType: 'json',
@@ -141,8 +141,8 @@ export class UserService {
         });
     }
 
-    public async update(params: BshCallbackParamsWithPayload<Partial<BshUser>, BshUser>): Promise<BshResponse<BshUser> | undefined> {
-        return this.client.put<BshUser>({
+    public async update<T = BshUser>(params: BshCallbackParamsWithPayload<Partial<BshUser>, T>): Promise<BshResponse<T> | undefined> {
+        return this.client.put<T>({
             path: `${this.baseEndpoint}`,
             options: {
                 responseType: 'json',
@@ -157,8 +157,8 @@ export class UserService {
         });
     }
 
-    public async deleteById(params: BshCallbackParams<unknown, BshUser> & { id: string }): Promise<BshResponse<BshUser> | undefined> {
-        return this.client.delete<BshUser>({
+    public async deleteById<T = BshUser>(params: BshCallbackParams<unknown, T> & { id: string }): Promise<BshResponse<T> | undefined> {
+        return this.client.delete<T>({
             path: `${this.baseEndpoint}/${params.id}`,
             options: {
                 responseType: 'json',
@@ -168,5 +168,34 @@ export class UserService {
             api: 'user.deleteById',
         });
     }
-}
 
+    public async count(
+        params: BshCallbackParams<unknown, {count: number}>
+    ): Promise<BshResponse<{count: number}> | undefined> {
+        return this.client.get<{count: number}>({
+            path: `${this.baseEndpoint}/count`,
+            options: {
+                responseType: 'json',
+                requestFormat: 'json',
+            },
+            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            api: 'user.count',
+        });
+    }
+
+    public async countFiltered(params: BshSearchCallbackParams<BshUser, {count: number}>): Promise<BshResponse<{count: number}> | undefined> {
+        return this.client.post<{count: number}>({
+            path: `${this.baseEndpoint}/count`,
+            options: {
+                responseType: 'json',
+                requestFormat: 'json',
+                body: params.payload,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            },
+            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            api: 'user.countFiltered',
+        });
+    }    
+}

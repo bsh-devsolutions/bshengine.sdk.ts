@@ -1,6 +1,6 @@
 import { BshClient } from "@src/client/bsh-client";
 import { BshResponse, BshApiKeys, BshApiKeysForm, BshSearch } from "@types";
-import { BshCallbackParams, BshCallbackParamsWithPayload } from "@src/services";
+import { BshCallbackParams, BshCallbackParamsWithPayload, BshSearchCallbackParams, EntitySearchFnParams } from "@src/services";
 
 export class ApiKeyService {
     private readonly baseEndpoint = '/api/api-keys';
@@ -60,7 +60,7 @@ export class ApiKeyService {
         });
     }
 
-    public async search(params: BshCallbackParamsWithPayload<BshSearch<BshApiKeys> | undefined, BshApiKeys>): Promise<BshResponse<BshApiKeys> | undefined> {
+    public async search(params: BshSearchCallbackParams<BshApiKeys, BshApiKeys>): Promise<BshResponse<BshApiKeys> | undefined> {
         return this.client.post<BshApiKeys>({
             path: `${this.baseEndpoint}/search`,
             options: {
@@ -113,6 +113,36 @@ export class ApiKeyService {
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
             api: 'api-key.deleteById',
+        });
+    }
+
+    public async count(
+        params: BshCallbackParams<unknown, {count: number}>
+    ): Promise<BshResponse<{count: number}> | undefined> {
+        return this.client.get<{count: number}>({
+            path: `${this.baseEndpoint}/count`,
+            options: {
+                responseType: 'json',
+                requestFormat: 'json',
+            },
+            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            api: 'api-key.count',
+        });
+    }
+
+    public async countFiltered(params: BshSearchCallbackParams<BshApiKeys, {count: number}>): Promise<BshResponse<{count: number}> | undefined> {
+        return this.client.post<{count: number}>({
+            path: `${this.baseEndpoint}/count`,
+            options: {
+                responseType: 'json',
+                requestFormat: 'json',
+                body: params.payload,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            },
+            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            api: 'api-key.countFiltered',
         });
     }
 }
