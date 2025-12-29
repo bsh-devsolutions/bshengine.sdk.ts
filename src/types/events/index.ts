@@ -19,6 +19,7 @@ export type BshTrigger<Event = BshTriggerEvent> = {
     action: ('READ' | 'INSERT' | 'UPDATE' | 'SEARCH' | 'DELETE' | 'COLUMNS' | 'EXPORT')[]
     events: Event[]
     enabled: boolean
+    bshPlugin?: string;
 } & BshObject;
 
 export type BshTriggerPure = BshObjectPure<BshTrigger<BshTriggerEventPure>>

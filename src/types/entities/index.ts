@@ -9,7 +9,7 @@ export type BshEntities = {
     updateStrategy: 'Replace' | 'Upsert'
     insertDuplicate: 'Upsert' | 'Error'
     bshSchema?: string
-    plugin?: string
+    bshPlugin?: string
     auditable?: boolean
     pks: {
         key: string
@@ -37,7 +37,7 @@ export type BshSchemas = {
     name: string
     label: string
     description: string
-    plugin: string
+    bshPlugin: string
     properties: {
         type: string
 
@@ -63,7 +63,7 @@ export type BshSchemaProperty = BshSchemas['properties'][number];
 export type BshTypes = {
     name: string
     label: string
-    plugin?: string
+    bshPlugin?: string
     baseType?: string
     schema?: string
     meta?: {

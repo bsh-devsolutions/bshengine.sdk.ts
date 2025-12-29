@@ -12,6 +12,7 @@ export type BshEmailTemplate = {
     subject: string;
     body: string;
     html: boolean;
+    bshPlugin?: string;
 } & BshObject;
 
 export type BshEmailTemplatePure = BshObjectPure<BshEmailTemplate>;

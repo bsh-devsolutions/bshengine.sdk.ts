@@ -29,6 +29,7 @@ export type BshRole = {
     name: string
     public?: boolean
     description?: string
+    bshPlugin?: string;
 } & BshObject;
 
 export type BshRolePure = BshObjectPure<BshRole>;
@@ -48,6 +49,7 @@ export type BshPolicy = {
     enabled: boolean
     priority?: number
     apiKeyId?: number
+    bshPlugin?: string;
 } & BshObject;
 
 export type BshPolicyPure = BshObjectPure<BshPolicy>;
