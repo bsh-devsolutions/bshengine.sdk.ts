@@ -1,6 +1,6 @@
 import { BshAuthFn, BshClient, BshClientFn, BshErrorInterceptor, BshPostInterceptor, BshPreInterceptor, BshRefreshTokenFn, fetchClientFn } from "@client";
 import { ApiKeyService, AuthService, BshUtilsService, CachingService, EntityService, ImageService, MailingService, SettingsService, UserService } from "@src/services";
-import { BshEntities, BshPolicy,BshRole, BshEmailTemplate, BshEventLogs, BshSchemas, BshTypes, BshUser, SentEmail, BshTrigger, BshTriggerInstance, BshFiles, BshConfigurations } from "@types";
+import { BshEntities, BshPolicy,BshRole, BshEmailTemplate, BshEventLogs, BshSchemas, BshTypes, BshUser, SentEmail, BshTrigger, BshTriggerInstance, BshFiles, BshConfigurations, BshPlugin } from "@types";
 
 export class BshEngine {
     private host?: string;
@@ -110,6 +110,7 @@ export class BshEngine {
             BshEventLogs: this.entity<BshEventLogs>('BshEventLogs'),
             BshTriggers: this.entity<BshTrigger>('BshTriggers'),
             BshTriggerInstances: this.entity<BshTriggerInstance>('BshTriggerInstances'),
+            BshPlugins: this.entity<BshPlugin>('BshPlugins'),
         }
     }
 
