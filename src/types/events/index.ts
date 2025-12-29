@@ -59,13 +59,3 @@ export type BshTriggerPlugin = {
 export type BshTriggerAction = {
     name: string
 }
-
-export type BshPlugin = {
-    id: string
-    name: string
-    description: string
-    version: string
-    author: string
-    license: string
-    variables: Record<string, unknown>
-} & BshObject;
