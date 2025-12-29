@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AuthService } from '../../../src/services/auth';
 import { BshClient } from '../../../src/client/bsh-client';
 import { BshUser, BshUserInit } from '../../../src/types';
+import { CoreEntities } from '../../../src/types/core';
 
 describe('AuthService', () => {
     let authService: AuthService;
@@ -125,6 +126,7 @@ describe('AuthService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'auth.register',
             });
             expect(result).toEqual(mockResponse);

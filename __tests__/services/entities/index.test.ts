@@ -58,6 +58,7 @@ describe('EntityService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: 'TestEntity',
                 api: 'entities.TestEntity.findById',
             });
             expect(result).toEqual(mockResponse);
@@ -86,6 +87,7 @@ describe('EntityService', () => {
                 path: '/api/entities/CustomEntity/1',
                 options: expect.any(Object),
                 bshOptions: expect.any(Object),
+                entity: 'CustomEntity',
                 api: 'entities.CustomEntity.findById',
             });
         });
@@ -122,6 +124,7 @@ describe('EntityService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: 'TestEntity',
                 api: 'entities.TestEntity.create',
             });
             expect(result).toEqual(mockResponse);
@@ -159,6 +162,7 @@ describe('EntityService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: 'TestEntity',
                 api: 'entities.TestEntity.createMany',
             });
             expect(result).toEqual(mockResponse);
@@ -196,6 +200,7 @@ describe('EntityService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: 'TestEntity',
                 api: 'entities.TestEntity.update',
             });
             expect(result).toEqual(mockResponse);
@@ -233,6 +238,7 @@ describe('EntityService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: 'TestEntity',
                 api: 'entities.TestEntity.updateMany',
             });
             expect(result).toEqual(mockResponse);
@@ -274,6 +280,7 @@ describe('EntityService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: 'TestEntity',
                 api: 'entities.TestEntity.delete',
             });
             expect(result).toEqual(mockResponse);
@@ -315,6 +322,7 @@ describe('EntityService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: 'TestEntity',
                 api: 'entities.TestEntity.delete',
             });
             expect(result).toEqual(mockResponse);
@@ -350,6 +358,7 @@ describe('EntityService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: 'TestEntity',
                 api: 'entities.TestEntity.deleteById',
             });
             expect(result).toEqual(mockResponse);
@@ -384,6 +393,7 @@ describe('EntityService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: 'TestEntity',
                 api: 'entities.TestEntity.columns',
             });
             expect(result).toEqual(mockResponse);
@@ -418,6 +428,7 @@ describe('EntityService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: 'TestEntity',
                 api: 'entities.TestEntity.count',
             });
             expect(result).toEqual(mockResponse);
@@ -445,6 +456,7 @@ describe('EntityService', () => {
                 path: '/api/entities/CustomEntity/count',
                 options: expect.any(Object),
                 bshOptions: expect.any(Object),
+                entity: 'CustomEntity',
                 api: 'entities.CustomEntity.count',
             });
         });
@@ -485,6 +497,7 @@ describe('EntityService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: 'TestEntity',
                 api: 'entities.TestEntity.countBySearch',
             });
             expect(result).toEqual(mockResponse);
@@ -518,6 +531,7 @@ describe('EntityService', () => {
                 path: '/api/entities/CustomEntity/count',
                 options: expect.any(Object),
                 bshOptions: expect.any(Object),
+                entity: 'CustomEntity',
                 api: 'entities.CustomEntity.countBySearch',
             });
         });

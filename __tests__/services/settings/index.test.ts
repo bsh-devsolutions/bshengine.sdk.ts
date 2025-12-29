@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { SettingsService } from '../../../src/services/settings';
 import { BshClient } from '../../../src/client/bsh-client';
 import { BshSettings } from '../../../src/types';
+import { CoreEntities } from '../../../src/types/core';
 
 describe('SettingsService', () => {
     let settingsService: SettingsService;
@@ -52,6 +53,7 @@ describe('SettingsService', () => {
                     requestFormat: 'json'
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshConfigurations,
                 api: 'settings.load',
             });
             expect(result).toEqual(mockResponse);
@@ -101,6 +103,7 @@ describe('SettingsService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshConfigurations,
                 api: 'settings.update',
             });
             expect(result).toEqual(mockResponse);

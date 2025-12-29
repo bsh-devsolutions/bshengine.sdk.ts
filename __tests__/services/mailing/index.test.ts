@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MailingService } from '../../../src/services/mailing';
 import { BshClient } from '../../../src/client/bsh-client';
 import { MailingPayload } from '../../../src/types';
+import { CoreEntities } from '../../../src/types/core';
 
 describe('MailingService', () => {
     let mailingService: MailingService;
@@ -56,6 +57,7 @@ describe('MailingService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshEmails,
                 api: 'mailing.send',
             });
             expect(result).toEqual(mockResponse);

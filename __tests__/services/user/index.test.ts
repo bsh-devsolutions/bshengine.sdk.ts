@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { UserService } from '../../../src/services/user';
 import { BshClient } from '../../../src/client/bsh-client';
 import { BshUser, BshUserInit, BshSearch } from '../../../src/types';
+import { CoreEntities } from '../../../src/types/core';
 
 describe('UserService', () => {
     let userService: UserService;
@@ -60,6 +61,7 @@ describe('UserService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'user.me',
             });
             expect(result).toEqual(mockResponse);
@@ -110,6 +112,7 @@ describe('UserService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'user.init',
             });
             expect(result).toEqual(mockResponse);
@@ -155,6 +158,7 @@ describe('UserService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'user.updateProfile',
             });
             expect(result).toEqual(mockResponse);
@@ -231,6 +235,7 @@ describe('UserService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'user.updatePassword',
             });
             expect(result).toEqual(mockResponse);
@@ -271,6 +276,7 @@ describe('UserService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'user.getById',
             });
             expect(result).toEqual(mockResponse);
@@ -320,6 +326,7 @@ describe('UserService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'user.search',
             });
             expect(result).toEqual(mockResponse);
@@ -365,6 +372,7 @@ describe('UserService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'user.list',
             });
             expect(result).toEqual(mockResponse);
@@ -402,6 +410,7 @@ describe('UserService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'user.list',
             });
             expect(result).toEqual(mockResponse);
@@ -449,6 +458,7 @@ describe('UserService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'user.update',
             });
             expect(result).toEqual(mockResponse);
@@ -489,6 +499,7 @@ describe('UserService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'user.deleteById',
             });
             expect(result).toEqual(mockResponse);
@@ -520,6 +531,7 @@ describe('UserService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'user.count',
             });
             expect(result).toEqual(mockResponse);
@@ -561,6 +573,7 @@ describe('UserService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
                 api: 'user.countFiltered',
             });
             expect(result).toEqual(mockResponse);

@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ApiKeyService } from '../../../src/services/api-key';
 import { BshClient } from '../../../src/client/bsh-client';
 import { BshApiKeys, BshApiKeysForm, BshSearch } from '../../../src/types';
+import { CoreEntities } from '../../../src/types/core';
 
 describe('ApiKeyService', () => {
     let apiKeyService: ApiKeyService;
@@ -74,6 +75,7 @@ describe('ApiKeyService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshApiKeys,
                 api: 'api-key.create',
             });
             expect(result).toEqual(mockResponse);
@@ -118,6 +120,8 @@ describe('ApiKeyService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshApiKeys,
+                api: 'api-key.details',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -161,6 +165,7 @@ describe('ApiKeyService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshApiKeys,
                 api: 'api-key.revoke',
             });
             expect(result).toEqual(mockResponse);
@@ -205,6 +210,7 @@ describe('ApiKeyService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshApiKeys,
                 api: 'api-key.getById',
             });
             expect(result).toEqual(mockResponse);
@@ -258,6 +264,7 @@ describe('ApiKeyService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshApiKeys,
                 api: 'api-key.search',
             });
             expect(result).toEqual(mockResponse);
@@ -301,6 +308,7 @@ describe('ApiKeyService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshApiKeys,
                 api: 'api-key.list',
             });
             expect(result).toEqual(mockResponse);
@@ -348,6 +356,7 @@ describe('ApiKeyService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshApiKeys,
                 api: 'api-key.list',
             });
             expect(result).toEqual(mockResponse);
@@ -392,6 +401,7 @@ describe('ApiKeyService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshApiKeys,
                 api: 'api-key.deleteById',
             });
             expect(result).toEqual(mockResponse);
@@ -423,6 +433,7 @@ describe('ApiKeyService', () => {
                     requestFormat: 'json',
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshApiKeys,
                 api: 'api-key.count',
             });
             expect(result).toEqual(mockResponse);
@@ -464,6 +475,7 @@ describe('ApiKeyService', () => {
                     },
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshApiKeys,
                 api: 'api-key.countFiltered',
             });
             expect(result).toEqual(mockResponse);
