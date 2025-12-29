@@ -1,7 +1,7 @@
 import {BshObject, BshObjectPure, BshConfigurations} from '@types';
 
 export type SentEmail = {
-    Id: string;
+    id: string;
     subject: string;
     from: string;
     to: string;

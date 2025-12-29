@@ -38,7 +38,7 @@ export type BshTriggerEvent = {
 export type BshTriggerEventPure = BshObjectPure<BshTriggerEvent>
 
 export type BshTriggerInstance = {
-    Id: number
+    id: number
     trigger: { name: string, entity: string }
     event: { name: string, plugin: string }
     payload: object
