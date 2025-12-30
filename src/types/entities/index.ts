@@ -1,4 +1,4 @@
-import {BshObject, BshObjectPure} from '@types';
+import { BshObject, BshObjectPure } from '@types';
 
 export type BshEntities = {
     name: string
@@ -40,20 +40,22 @@ export type BshSchemas = {
     bshPlugin: string
     properties: {
         type: string
-
         name: string
-        displayName: string
-        description: string
+        label: string
 
-        required: boolean
-        unique: boolean
-        default: string
+        meta?: {
+            description?: string
 
-        length: number
-        maxLength: number
-        minLength: number
+            required?: boolean
+            unique?: boolean
+            default?: string
 
-        pattern: string
+            length?: number
+            maxLength?: number
+            minLength?: number
+
+            pattern?: string
+        }
     }[]
 } & BshObject;
 
