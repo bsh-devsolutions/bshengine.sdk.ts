@@ -1,7 +1,7 @@
 
 import { BshClient } from "@src/client/bsh-client";
 import { BshResponse, BshUser, BshUserInit, LoginParams, AuthTokens } from "@types";
-import { BshCallbackParamsWithPayload } from "@src/services";
+import { BshCallbackParams, BshCallbackParamsWithPayload } from "@src/services";
 import { CoreEntities } from "@src/types/core";
 
 export class AuthService {
@@ -23,6 +23,18 @@ export class AuthService {
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
             api: 'auth.login',
+        });
+    }
+
+    public async logout(params: BshCallbackParams<unknown>): Promise<BshResponse<unknown> | undefined> {
+        return this.client.post<unknown>({
+            path: `${this.baseEndpoint}/logout`,
+            options: {
+                responseType: 'json',
+                requestFormat: 'json',
+            },
+            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            api: 'auth.logout',
         });
     }
 

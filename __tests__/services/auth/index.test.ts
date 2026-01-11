@@ -320,5 +320,57 @@ describe('AuthService', () => {
             expect(result).toEqual(mockResponse);
         });
     });
+
+    describe('logout', () => {
+        it('should call client.post with correct parameters', async () => {
+            const mockResponse = {
+                data: [{}],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockPost.mockResolvedValue(mockResponse);
+
+            const params = {
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await authService.logout(params);
+
+            expect(mockPost).toHaveBeenCalledWith({
+                path: '/api/auth/logout',
+                options: {
+                    responseType: 'json',
+                    requestFormat: 'json',
+                },
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'auth.logout',
+            });
+            expect(result).toEqual(mockResponse);
+        });
+
+        it('should handle logout with callbacks', async () => {
+            const mockResponse = {
+                data: [{}],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockPost.mockResolvedValue(mockResponse);
+
+            const onSuccess = vi.fn();
+            const onError = vi.fn();
+
+            await authService.logout({
+                onSuccess,
+                onError
+            });
+
+            expect(mockPost).toHaveBeenCalled();
+        });
+    });
 });
 
