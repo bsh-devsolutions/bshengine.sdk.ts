@@ -1,4 +1,4 @@
-import { BshDate, BshObject } from "../core";
+import { BshDate, BshObject, BshObjectPure } from "../core";
 
 export type BshPlugin = {
     id: string
@@ -11,3 +11,14 @@ export type BshPlugin = {
     variables: Record<string, unknown>,
     image: string;
 } & BshObject;
+
+export type BshPluginPure = {
+    id: string
+    name: string
+    description?: string
+    version?: string
+    author?: string
+    license?: string
+    variables?: Record<string, unknown>,
+    image?: string;
+}
