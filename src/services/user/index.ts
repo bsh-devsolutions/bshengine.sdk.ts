@@ -81,7 +81,7 @@ export class UserService {
             path: `${this.baseEndpoint}/picture`,
             options: {
                 responseType: 'json',
-                requestFormat: 'json',
+                requestFormat: 'form',
                 body: formData,
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
