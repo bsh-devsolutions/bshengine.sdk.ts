@@ -69,7 +69,7 @@ describe('UserService', () => {
     });
 
     describe('init', () => {
-        it('should call client.post with correct parameters', async () => {
+        it('should call client.post with generatePassword=false by default', async () => {
             const mockUser: BshUser = {
                 userId: '1',
                 email: 'test@example.com',
@@ -102,7 +102,56 @@ describe('UserService', () => {
             const result = await userService.init(params);
 
             expect(mockPost).toHaveBeenCalledWith({
-                path: '/api/users/init',
+                path: '/api/users/init?generatePassword=false',
+                options: {
+                    responseType: 'json',
+                    requestFormat: 'json',
+                    body: userInit,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                },
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                entity: CoreEntities.BshUsers,
+                api: 'user.init',
+            });
+            expect(result).toEqual(mockResponse);
+        });
+
+        it('should call client.post with generatePassword=true when specified', async () => {
+            const mockUser: BshUser = {
+                userId: '1',
+                email: 'test@example.com',
+                roles: [],
+                status: 'ACTIVATED',
+                profile: { firstName: 'Test', lastName: 'User' },
+                persistenceId: '1'
+            };
+            const mockResponse = {
+                data: [mockUser],
+                code: 201,
+                status: 'Created',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockPost.mockResolvedValue(mockResponse);
+
+            const userInit: BshUserInit = {
+                email: 'test@example.com',
+                profile: { firstName: 'Test', lastName: 'User' }
+            } as BshUserInit;
+
+            const params = {
+                payload: userInit,
+                generatePassword: true,
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await userService.init(params);
+
+            expect(mockPost).toHaveBeenCalledWith({
+                path: '/api/users/init?generatePassword=true',
                 options: {
                     responseType: 'json',
                     requestFormat: 'json',

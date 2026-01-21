@@ -22,9 +22,9 @@ export class UserService {
         });
     }
 
-    public async init<T = BshUser>(params: BshCallbackParamsWithPayload<BshUserInit, T>): Promise<BshResponse<T> | undefined> {
+    public async init<T = BshUser>(params: BshCallbackParamsWithPayload<BshUserInit, T> & { generatePassword?: boolean }): Promise<BshResponse<T> | undefined> {
         return this.client.post<T>({
-            path: `${this.baseEndpoint}/init`,
+            path: `${this.baseEndpoint}/init?generatePassword=${params.generatePassword === true ? 'true' : 'false'}`,
             options: {
                 responseType: 'json',
                 requestFormat: 'json',
@@ -198,9 +198,9 @@ export class UserService {
     }
 
     public async count(
-        params: BshCallbackParams<unknown, {count: number}>
-    ): Promise<BshResponse<{count: number}> | undefined> {
-        return this.client.get<{count: number}>({
+        params: BshCallbackParams<unknown, { count: number }>
+    ): Promise<BshResponse<{ count: number }> | undefined> {
+        return this.client.get<{ count: number }>({
             path: `${this.baseEndpoint}/count`,
             options: {
                 responseType: 'json',
@@ -212,8 +212,8 @@ export class UserService {
         });
     }
 
-    public async countFiltered(params: BshSearchCallbackParams<BshUser, {count: number}>): Promise<BshResponse<{count: number}> | undefined> {
-        return this.client.post<{count: number}>({
+    public async countFiltered(params: BshSearchCallbackParams<BshUser, { count: number }>): Promise<BshResponse<{ count: number }> | undefined> {
+        return this.client.post<{ count: number }>({
             path: `${this.baseEndpoint}/count`,
             options: {
                 responseType: 'json',
@@ -227,5 +227,5 @@ export class UserService {
             api: 'user.countFiltered',
             entity: CoreEntities.BshUsers,
         });
-    }    
+    }
 }
