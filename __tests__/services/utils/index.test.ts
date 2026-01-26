@@ -170,5 +170,36 @@ describe('BshUtilsService', () => {
             expect(result).toEqual(mockResponse);
         });
     });
+
+    describe('version', () => {
+        it('should call client.get with correct parameters', async () => {
+            const mockResponse = {
+                data: { version: '1.0.0' },
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockGet.mockResolvedValue(mockResponse);
+
+            const params = {
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await utilsService.version(params);
+
+            expect(mockGet).toHaveBeenCalledWith({
+                path: '/api/utils/version',
+                options: {
+                    responseType: 'json',
+                    requestFormat: 'json',
+                },
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'utils.version',
+            });
+            expect(result).toEqual(mockResponse);
+        });
+    });
 });
 
