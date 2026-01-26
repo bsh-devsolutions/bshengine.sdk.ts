@@ -28,14 +28,8 @@ export type BshPluginHistory = {
     pluginId: string;
     pluginName: string;
     version: string;
+    source: string;
     status: 'PENDING' | 'IN_PROGRESS' | 'SUCCESS' | 'FAILED';
-    currentStep: 'Discovery' | 'Parsing' | 'DependencyCheck' | 'Installation';
-    steps: {
-        step: 'Discovery' | 'Parsing' | 'DependencyCheck' | 'Installation';
-        status: 'PENDING' | 'IN_PROGRESS' | 'SUCCESS' | 'FAILED';
-        startedAt: BshDate;
-        completedAt?: BshDate;
-    }[];
     startedAt: BshDate;
     completedAt?: BshDate;
     totalFiles: number;
@@ -48,3 +42,12 @@ export type BshPluginHistory = {
     >;
     errors: unknown[];
 } & BshObject;
+
+export type PluginInstalledResponse = {
+    history: number,
+    pluginId: string,
+    pluginName: string,
+    totalFiles: number,
+    successCount: number,
+    failedCount: number,
+}
