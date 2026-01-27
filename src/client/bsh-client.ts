@@ -55,10 +55,6 @@ export class BshClient {
 
         if (type === 'json') {
             const data = await response.json();
-            if (params.bshOptions.onSuccess) {
-                params.bshOptions.onSuccess(data);
-                return undefined;
-            }
             let result = data as BshResponse<T>;
             result.api = params.api;
             if (this.bshEngine?.getPostInterceptors().length) {
@@ -66,6 +62,10 @@ export class BshClient {
                     const newResult = await interceptor(result, params as BshClientFnParams<any>);
                     if (newResult) result = newResult as BshResponse<T>;
                 }
+            }
+            if (params.bshOptions.onSuccess) {
+                params.bshOptions.onSuccess(data);
+                return undefined;
             }
             return result;
         }
