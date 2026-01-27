@@ -3,6 +3,7 @@ export type BshResponse<T> = {
     timestamp: number
     code: number
     status: string
+    message?: string
     error?: string
     meta?: {
         type?: string,
