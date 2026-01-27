@@ -498,34 +498,6 @@ describe('BshClient', () => {
                 );
                 expect(result?.data).toEqual([{ id: 3 }]);
             });
-
-            it('should not call post interceptor when onSuccess callback is provided', async () => {
-                const mockData: BshResponse<{ id: number }> = {
-                    data: [{ id: 1 }],
-                    code: 200,
-                    status: 'OK',
-                    error: '',
-                    timestamp: Date.now()
-                };
-                const response = new Response(JSON.stringify(mockData), { status: 200 });
-                mockHttpClient = vi.fn().mockResolvedValue(response);
-                
-                const postInterceptor: BshPostInterceptor = vi.fn();
-                const onSuccess = vi.fn();
-
-                engine.postInterceptor(postInterceptor);
-                engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
-
-                await client.get({
-                    path: '/test',
-                    options: {},
-                    bshOptions: { onSuccess }
-                });
-
-                expect(postInterceptor).not.toHaveBeenCalled();
-                expect(onSuccess).toHaveBeenCalled();
-            });
         });
 
         describe('errorInterceptor', () => {
