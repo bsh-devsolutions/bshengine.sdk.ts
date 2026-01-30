@@ -1,6 +1,6 @@
 import { BshClient } from "@src/client/bsh-client";
 import { BshResponse, PluginInstalledResponse } from "@types";
-import { BshCallbackParamsWithPayload } from "@src/services";
+import { BshCallbackParams, BshCallbackParamsWithPayload } from "@src/services";
 import { CoreEntities } from "@src/types/core";
 
 export class PluginService {
@@ -29,7 +29,7 @@ export class PluginService {
     }
 
     public async installCore(
-        params: BshCallbackParamsWithPayload<PluginInstalledResponse>
+        params: BshCallbackParams<PluginInstalledResponse>
     ): Promise<BshResponse<PluginInstalledResponse> | undefined> {
         return this.client.post<PluginInstalledResponse>({
             path: `${this.baseEndpoint}/install/core`,
