@@ -33,6 +33,9 @@ export type BshTriggerEvent = {
     output?: object
     failed?: object
     enabled: boolean
+    infiniteLoop?: {
+        maxDeep: number // default: 100
+    }
 } & BshObject;
 
 export type BshTriggerEventPure = BshObjectPure<BshTriggerEvent>
@@ -40,14 +43,15 @@ export type BshTriggerEventPure = BshObjectPure<BshTriggerEvent>
 export type BshTriggerInstance = {
     id: number
     trigger: { name: string, entity: string }
-    event: { name: string, plugin: string }
+    event: { name: string, function: string, entity: string }
     payload: object
     output: object
     input: object
-    status: 'InProgress' | 'Success' | 'Failed'
+    status: 'InProgress' | 'Success' | 'Failed' | 'InfiniteLoop' | 'Interrupted'
     error?: string
     trac?: string
     entityUpdateError?: object
+    infiniteLoopCause?: string
 } & BshObject;
 
 export type BshTriggerFunction = {
