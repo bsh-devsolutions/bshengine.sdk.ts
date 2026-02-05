@@ -28,6 +28,7 @@ export type BshUserPure = BshObjectPure<BshUser>;
 export type BshRole = {
     name: string
     public?: boolean
+    admin?: boolean
     description?: string
     bshPlugin?: string;
 } & BshObject;

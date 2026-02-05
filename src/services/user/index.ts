@@ -3,6 +3,43 @@ import { BshResponse, BshUser, BshUserInit, BshSearch } from "@types";
 import { BshCallbackParams, BshCallbackParamsWithPayload, BshSearchCallbackParams } from "@src/services";
 import { CoreEntities } from "@src/types/core";
 
+export class AdminUserService {
+    private readonly baseEndpoint = '/api/users/admin';
+
+    public constructor(private readonly client: BshClient) {
+    }
+
+    public async resetPassword<T = BshUser>(params: BshCallbackParams<Partial<BshUser>, T> & { email: string }): Promise<BshResponse<T> | undefined> {
+        return this.client.put<T>({
+            path: `${this.baseEndpoint}/forget-password/${params.email}`,
+            options: { responseType: 'json' },
+            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            api: 'users.admin.resetPassword',
+            entity: CoreEntities.BshUsers,
+        });
+    }
+
+    public async activateAccount<T = BshUser>(params: BshCallbackParams<Partial<BshUser>, T> & { email: string }): Promise<BshResponse<T> | undefined> {
+        return this.client.put<T>({
+            path: `${this.baseEndpoint}/activate-account/${params.email}`,
+            options: { responseType: 'json' },
+            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            api: 'users.admin.activateAccount',
+            entity: CoreEntities.BshUsers,
+        });
+    }
+
+    public async resendActivationCode<T = BshUser>(params: BshCallbackParams<Partial<BshUser>, T> & { email: string }): Promise<BshResponse<T> | undefined> {
+        return this.client.put<T>({
+            path: `${this.baseEndpoint}/resend-activation-email/${params.email}`,
+            options: { responseType: 'json' },
+            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            api: 'users.admin.resendActivationCode',
+            entity: CoreEntities.BshUsers,
+        });
+    }
+}
+
 export class UserService {
     private readonly baseEndpoint = '/api/users';
 
@@ -17,7 +54,7 @@ export class UserService {
                 requestFormat: 'json',
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.me',
+            api: 'users.me',
             entity: CoreEntities.BshUsers,
         });
     }
@@ -34,7 +71,7 @@ export class UserService {
                 },
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.init',
+            api: 'users.init',
             entity: CoreEntities.BshUsers,
         });
     }
@@ -51,7 +88,7 @@ export class UserService {
                 },
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.invite',
+            api: 'users.invite',
             entity: CoreEntities.BshUsers,
         });
     }
@@ -68,7 +105,7 @@ export class UserService {
                 },
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.updateProfile',
+            api: 'users.updateProfile',
             entity: CoreEntities.BshUsers,
         });
     }
@@ -85,7 +122,7 @@ export class UserService {
                 body: formData,
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.updatePicture',
+            api: 'users.updatePicture',
             entity: CoreEntities.BshUsers,
         });
     }
@@ -102,9 +139,14 @@ export class UserService {
                 },
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.updatePassword',
+            api: 'users.updatePassword',
             entity: CoreEntities.BshUsers,
         });
+    }
+
+    // Admin
+    public get admin() {
+        return new AdminUserService(this.client);
     }
 
     // CRUD
@@ -116,7 +158,7 @@ export class UserService {
                 requestFormat: 'json',
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.getById',
+            api: 'users.getById',
             entity: CoreEntities.BshUsers,
         });
     }
@@ -133,7 +175,7 @@ export class UserService {
                 },
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.search',
+            api: 'users.search',
             entity: CoreEntities.BshUsers,
         });
     }
@@ -162,7 +204,7 @@ export class UserService {
                 requestFormat: 'json',
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.list',
+            api: 'users.list',
             entity: CoreEntities.BshUsers,
         });
     }
@@ -179,7 +221,7 @@ export class UserService {
                 },
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.update',
+            api: 'users.update',
             entity: CoreEntities.BshUsers,
         });
     }
@@ -192,7 +234,7 @@ export class UserService {
                 requestFormat: 'json',
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.deleteById',
+            api: 'users.deleteById',
             entity: CoreEntities.BshUsers,
         });
     }
@@ -207,7 +249,7 @@ export class UserService {
                 requestFormat: 'json',
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.count',
+            api: 'users.count',
             entity: CoreEntities.BshUsers,
         });
     }
@@ -224,7 +266,7 @@ export class UserService {
                 },
             },
             bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
-            api: 'user.countFiltered',
+            api: 'users.countFiltered',
             entity: CoreEntities.BshUsers,
         });
     }

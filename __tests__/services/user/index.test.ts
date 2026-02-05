@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { UserService } from '../../../src/services/user';
+import { AdminUserService, UserService } from '../../../src/services/user';
 import { BshClient } from '../../../src/client/bsh-client';
 import { BshUser, BshUserInit, BshSearch } from '../../../src/types';
 import { CoreEntities } from '../../../src/types/core';
@@ -62,7 +62,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.me',
+                api: 'users.me',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -113,7 +113,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.init',
+                api: 'users.init',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -162,7 +162,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.init',
+                api: 'users.init',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -203,7 +203,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.invite',
+                api: 'users.invite',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -241,7 +241,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.invite',
+                api: 'users.invite',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -287,7 +287,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.updateProfile',
+                api: 'users.updateProfile',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -364,7 +364,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.updatePassword',
+                api: 'users.updatePassword',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -405,7 +405,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.getById',
+                api: 'users.getById',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -455,7 +455,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.search',
+                api: 'users.search',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -501,7 +501,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.list',
+                api: 'users.list',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -539,7 +539,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.list',
+                api: 'users.list',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -587,7 +587,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.update',
+                api: 'users.update',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -628,7 +628,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.deleteById',
+                api: 'users.deleteById',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -660,7 +660,7 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.count',
+                api: 'users.count',
             });
             expect(result).toEqual(mockResponse);
         });
@@ -702,10 +702,151 @@ describe('UserService', () => {
                 },
                 bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 entity: CoreEntities.BshUsers,
-                api: 'user.countFiltered',
+                api: 'users.countFiltered',
             });
             expect(result).toEqual(mockResponse);
         });
     });
 });
 
+describe('AdminUserService', () => {
+    let userService: UserService;
+    let adminService: AdminUserService;
+    let mockClient: BshClient;
+    let mockPut: ReturnType<typeof vi.fn>;
+
+    beforeEach(() => {
+        mockPut = vi.fn();
+        mockClient = {
+            get: vi.fn(),
+            post: vi.fn(),
+            put: mockPut,
+            delete: vi.fn(),
+            patch: vi.fn(),
+            download: vi.fn(),
+        } as unknown as BshClient;
+        userService = new UserService(mockClient);
+        adminService = userService.admin;
+    });
+
+    describe('resetPassword', () => {
+        it('should call client.put with correct parameters', async () => {
+            const mockUser: BshUser = {
+                userId: '1',
+                email: 'test@example.com',
+                roles: [],
+                status: 'ACTIVATED',
+                profile: { firstName: 'Test', lastName: 'User' },
+                persistenceId: '1'
+            };
+            const mockResponse = {
+                data: [mockUser],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockPut.mockResolvedValue(mockResponse);
+
+            const params = {
+                email: 'test@example.com',
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await adminService.resetPassword(params);
+
+            expect(mockPut).toHaveBeenCalledWith({
+                path: '/api/users/admin/forget-password/test@example.com',
+                options: { responseType: 'json' },
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'users.admin.resetPassword',
+                entity: CoreEntities.BshUsers,
+            });
+            expect(result).toEqual(mockResponse);
+        });
+    });
+
+    describe('activateAccount', () => {
+        it('should call client.put with correct parameters', async () => {
+            const mockUser: BshUser = {
+                userId: '1',
+                email: 'test@example.com',
+                roles: [],
+                status: 'ACTIVATED',
+                profile: { firstName: 'Test', lastName: 'User' },
+                persistenceId: '1'
+            };
+            const mockResponse = {
+                data: [mockUser],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockPut.mockResolvedValue(mockResponse);
+
+            const params = {
+                email: 'test@example.com',
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await adminService.activateAccount(params);
+
+            expect(mockPut).toHaveBeenCalledWith({
+                path: '/api/users/admin/activate-account/test@example.com',
+                options: { responseType: 'json' },
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'users.admin.activateAccount',
+                entity: CoreEntities.BshUsers,
+            });
+            expect(result).toEqual(mockResponse);
+        });
+    });
+
+    describe('resendActivationCode', () => {
+        it('should call client.put with correct parameters', async () => {
+            const mockUser: BshUser = {
+                userId: '1',
+                email: 'test@example.com',
+                roles: [],
+                status: 'REQUIRED_ACTIVATION',
+                profile: { firstName: 'Test', lastName: 'User' },
+                persistenceId: '1'
+            };
+            const mockResponse = {
+                data: [mockUser],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockPut.mockResolvedValue(mockResponse);
+
+            const params = {
+                email: 'test@example.com',
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await adminService.resendActivationCode(params);
+
+            expect(mockPut).toHaveBeenCalledWith({
+                path: '/api/users/admin/resend-activation-email/test@example.com',
+                options: { responseType: 'json' },
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                api: 'users.admin.resendActivationCode',
+                entity: CoreEntities.BshUsers,
+            });
+            expect(result).toEqual(mockResponse);
+        });
+    });
+
+    describe('admin getter', () => {
+        it('should return AdminUserService instance', () => {
+            const admin = userService.admin;
+            expect(admin).toBeInstanceOf(AdminUserService);
+        });
+    });
+});
