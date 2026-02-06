@@ -74,7 +74,7 @@ describe('ApiKeyService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshApiKeys,
                 api: 'api-key.create',
             });
@@ -119,7 +119,7 @@ describe('ApiKeyService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshApiKeys,
                 api: 'api-key.details',
             });
@@ -164,7 +164,7 @@ describe('ApiKeyService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshApiKeys,
                 api: 'api-key.revoke',
             });
@@ -209,7 +209,7 @@ describe('ApiKeyService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshApiKeys,
                 api: 'api-key.getById',
             });
@@ -263,7 +263,7 @@ describe('ApiKeyService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshApiKeys,
                 api: 'api-key.search',
             });
@@ -307,7 +307,7 @@ describe('ApiKeyService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshApiKeys,
                 api: 'api-key.list',
             });
@@ -355,7 +355,7 @@ describe('ApiKeyService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshApiKeys,
                 api: 'api-key.list',
             });
@@ -400,7 +400,7 @@ describe('ApiKeyService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshApiKeys,
                 api: 'api-key.deleteById',
             });
@@ -432,7 +432,7 @@ describe('ApiKeyService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshApiKeys,
                 api: 'api-key.count',
             });
@@ -474,7 +474,7 @@ describe('ApiKeyService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshApiKeys,
                 api: 'api-key.countFiltered',
             });

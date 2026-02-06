@@ -13,7 +13,7 @@ export class AdminUserService {
         return this.client.put<T>({
             path: `${this.baseEndpoint}/forget-password/${params.email}`,
             options: { responseType: 'json' },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.admin.resetPassword',
             entity: CoreEntities.BshUsers,
         });
@@ -23,7 +23,7 @@ export class AdminUserService {
         return this.client.put<T>({
             path: `${this.baseEndpoint}/activate-account/${params.email}`,
             options: { responseType: 'json' },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.admin.activateAccount',
             entity: CoreEntities.BshUsers,
         });
@@ -33,7 +33,7 @@ export class AdminUserService {
         return this.client.put<T>({
             path: `${this.baseEndpoint}/resend-activation-email/${params.email}`,
             options: { responseType: 'json' },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.admin.resendActivationCode',
             entity: CoreEntities.BshUsers,
         });
@@ -53,7 +53,7 @@ export class UserService {
                 responseType: 'json',
                 requestFormat: 'json',
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.me',
             entity: CoreEntities.BshUsers,
         });
@@ -70,7 +70,7 @@ export class UserService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.init',
             entity: CoreEntities.BshUsers,
         });
@@ -87,7 +87,7 @@ export class UserService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.invite',
             entity: CoreEntities.BshUsers,
         });
@@ -104,7 +104,7 @@ export class UserService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.updateProfile',
             entity: CoreEntities.BshUsers,
         });
@@ -121,7 +121,7 @@ export class UserService {
                 requestFormat: 'form',
                 body: formData,
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.updatePicture',
             entity: CoreEntities.BshUsers,
         });
@@ -138,7 +138,7 @@ export class UserService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.updatePassword',
             entity: CoreEntities.BshUsers,
         });
@@ -157,7 +157,7 @@ export class UserService {
                 responseType: 'json',
                 requestFormat: 'json',
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.getById',
             entity: CoreEntities.BshUsers,
         });
@@ -174,7 +174,7 @@ export class UserService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.search',
             entity: CoreEntities.BshUsers,
         });
@@ -203,7 +203,7 @@ export class UserService {
                 responseType: 'json',
                 requestFormat: 'json',
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.list',
             entity: CoreEntities.BshUsers,
         });
@@ -220,7 +220,7 @@ export class UserService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.update',
             entity: CoreEntities.BshUsers,
         });
@@ -233,7 +233,7 @@ export class UserService {
                 responseType: 'json',
                 requestFormat: 'json',
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.deleteById',
             entity: CoreEntities.BshUsers,
         });
@@ -248,7 +248,7 @@ export class UserService {
                 responseType: 'json',
                 requestFormat: 'json',
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.count',
             entity: CoreEntities.BshUsers,
         });
@@ -265,7 +265,7 @@ export class UserService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'users.countFiltered',
             entity: CoreEntities.BshUsers,
         });

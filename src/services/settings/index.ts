@@ -16,7 +16,7 @@ export class SettingsService {
                 responseType: 'json',
                 requestFormat: 'json'
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'settings.load',
             entity: CoreEntities.BshConfigurations,
         });
@@ -33,7 +33,7 @@ export class SettingsService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'settings.update',
             entity: CoreEntities.BshConfigurations,
         });

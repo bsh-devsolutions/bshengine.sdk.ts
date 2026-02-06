@@ -20,7 +20,7 @@ export class MailingService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'mailing.send',
             entity: CoreEntities.BshEmails,
         });

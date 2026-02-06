@@ -60,7 +60,7 @@ describe('UserService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.me',
             });
@@ -111,7 +111,7 @@ describe('UserService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.init',
             });
@@ -160,7 +160,7 @@ describe('UserService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.init',
             });
@@ -201,7 +201,7 @@ describe('UserService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.invite',
             });
@@ -239,7 +239,7 @@ describe('UserService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.invite',
             });
@@ -285,7 +285,7 @@ describe('UserService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.updateProfile',
             });
@@ -362,7 +362,7 @@ describe('UserService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.updatePassword',
             });
@@ -403,7 +403,7 @@ describe('UserService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.getById',
             });
@@ -453,7 +453,7 @@ describe('UserService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.search',
             });
@@ -499,7 +499,7 @@ describe('UserService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.list',
             });
@@ -537,7 +537,7 @@ describe('UserService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.list',
             });
@@ -585,7 +585,7 @@ describe('UserService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.update',
             });
@@ -626,7 +626,7 @@ describe('UserService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.deleteById',
             });
@@ -658,7 +658,7 @@ describe('UserService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.count',
             });
@@ -700,7 +700,7 @@ describe('UserService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'users.countFiltered',
             });
@@ -759,7 +759,7 @@ describe('AdminUserService', () => {
             expect(mockPut).toHaveBeenCalledWith({
                 path: '/api/users/admin/forget-password/test@example.com',
                 options: { responseType: 'json' },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'users.admin.resetPassword',
                 entity: CoreEntities.BshUsers,
             });
@@ -797,7 +797,7 @@ describe('AdminUserService', () => {
             expect(mockPut).toHaveBeenCalledWith({
                 path: '/api/users/admin/activate-account/test@example.com',
                 options: { responseType: 'json' },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'users.admin.activateAccount',
                 entity: CoreEntities.BshUsers,
             });
@@ -835,7 +835,7 @@ describe('AdminUserService', () => {
             expect(mockPut).toHaveBeenCalledWith({
                 path: '/api/users/admin/resend-activation-email/test@example.com',
                 options: { responseType: 'json' },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'users.admin.resendActivationCode',
                 entity: CoreEntities.BshUsers,
             });

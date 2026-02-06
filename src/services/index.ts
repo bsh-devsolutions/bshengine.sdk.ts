@@ -5,6 +5,13 @@ export type BshCallbackParams<T = unknown, R = T> = {
     onSuccess?: (response: BshResponse<R>) => void;
     onDownload?: (blob: Blob) => void;
     onError?: (error: BshError) => void;
+    byPass?: {
+        interceptors?: {
+            pre?: boolean
+            post?: boolean
+            error?: boolean
+        }
+    }
 }
 
 export type BshCallbackParamsWithPayload<T = unknown, R = T> = BshCallbackParams<T, R> & {

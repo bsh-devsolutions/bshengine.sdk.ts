@@ -56,7 +56,7 @@ describe('MailingService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshEmails,
                 api: 'mailing.send',
             });

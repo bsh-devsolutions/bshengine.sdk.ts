@@ -71,7 +71,7 @@ describe('CachingService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'caching.findById',
             });
             expect(result).toEqual(mockResponse);
@@ -133,7 +133,7 @@ describe('CachingService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'caching.search',
             });
             expect(result).toEqual(mockResponse);
@@ -164,7 +164,7 @@ describe('CachingService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'caching.names',
             });
             expect(result).toEqual(mockResponse);
@@ -196,7 +196,7 @@ describe('CachingService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'caching.clearById',
             });
             expect(result).toEqual(mockResponse);
@@ -227,7 +227,7 @@ describe('CachingService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'caching.clearAll',
             });
             expect(result).toEqual(mockResponse);

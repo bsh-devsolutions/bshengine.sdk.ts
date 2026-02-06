@@ -21,7 +21,7 @@ export class AuthService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'auth.login',
         });
     }
@@ -33,7 +33,7 @@ export class AuthService {
                 responseType: 'json',
                 requestFormat: 'json',
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'auth.logout',
         });
     }
@@ -49,7 +49,7 @@ export class AuthService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'auth.register',
             entity: CoreEntities.BshUsers,
         });
@@ -66,7 +66,7 @@ export class AuthService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'auth.refreshToken',
         });
     }
@@ -83,7 +83,7 @@ export class AuthService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'auth.forgetPassword',
         });
     }
@@ -99,7 +99,7 @@ export class AuthService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'auth.resetPassword',
         });
     }
@@ -115,7 +115,7 @@ export class AuthService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'auth.activateAccount',
         });
     }
@@ -131,7 +131,7 @@ export class AuthService {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'auth.resendActivationEmail',
             entity: CoreEntities.BshUsers,
         });

@@ -57,7 +57,7 @@ describe('EntityService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: 'TestEntity',
                 api: 'entities.TestEntity.findById',
             });
@@ -123,7 +123,7 @@ describe('EntityService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: 'TestEntity',
                 api: 'entities.TestEntity.create',
             });
@@ -161,7 +161,7 @@ describe('EntityService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: 'TestEntity',
                 api: 'entities.TestEntity.createMany',
             });
@@ -199,7 +199,7 @@ describe('EntityService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: 'TestEntity',
                 api: 'entities.TestEntity.update',
             });
@@ -237,7 +237,7 @@ describe('EntityService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: 'TestEntity',
                 api: 'entities.TestEntity.updateMany',
             });
@@ -279,7 +279,7 @@ describe('EntityService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: 'TestEntity',
                 api: 'entities.TestEntity.search',
             });
@@ -321,7 +321,7 @@ describe('EntityService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: 'TestEntity',
                 api: 'entities.TestEntity.delete',
             });
@@ -357,7 +357,7 @@ describe('EntityService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: 'TestEntity',
                 api: 'entities.TestEntity.deleteById',
             });
@@ -392,7 +392,7 @@ describe('EntityService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: 'TestEntity',
                 api: 'entities.TestEntity.columns',
             });
@@ -427,7 +427,7 @@ describe('EntityService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: 'TestEntity',
                 api: 'entities.TestEntity.count',
             });
@@ -496,7 +496,7 @@ describe('EntityService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: 'TestEntity',
                 api: 'entities.TestEntity.countBySearch',
             });

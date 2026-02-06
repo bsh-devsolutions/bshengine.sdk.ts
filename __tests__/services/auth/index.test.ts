@@ -53,7 +53,7 @@ describe('AuthService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'auth.login',
             });
             expect(result).toEqual(mockResponse);
@@ -125,7 +125,7 @@ describe('AuthService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshUsers,
                 api: 'auth.register',
             });
@@ -162,7 +162,7 @@ describe('AuthService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'auth.refreshToken',
             });
             expect(result).toEqual(mockResponse);
@@ -198,7 +198,7 @@ describe('AuthService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'auth.forgetPassword',
             });
             expect(result).toEqual(mockResponse);
@@ -238,7 +238,7 @@ describe('AuthService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'auth.resetPassword',
             });
             expect(result).toEqual(mockResponse);
@@ -277,7 +277,7 @@ describe('AuthService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'auth.activateAccount',
             });
             expect(result).toEqual(mockResponse);
@@ -313,7 +313,7 @@ describe('AuthService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'auth.resendActivationEmail',
                 entity: CoreEntities.BshUsers,
             });
@@ -345,7 +345,7 @@ describe('AuthService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'auth.logout',
             });
             expect(result).toEqual(mockResponse);

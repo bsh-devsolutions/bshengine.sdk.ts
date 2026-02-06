@@ -22,7 +22,7 @@ export class PluginService {
                 requestFormat: 'form',
                 body: formData,
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'plugins.installZip',
             entity: CoreEntities.BshPlugins,
         });
@@ -36,7 +36,7 @@ export class PluginService {
             options: {
                 responseType: 'json'
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'plugins.installZip',
             entity: CoreEntities.BshPlugins,
         });

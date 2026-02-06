@@ -23,7 +23,7 @@ export class EntityService<T = unknown> {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: `entities.${params.entity || this.entity}.findById`,
             entity: params.entity || this.entity,
         });
@@ -43,7 +43,7 @@ export class EntityService<T = unknown> {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: `entities.${params.entity || this.entity}.create`,
             entity: params.entity || this.entity,
         });
@@ -63,7 +63,7 @@ export class EntityService<T = unknown> {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: `entities.${params.entity || this.entity}.createMany`,
             entity: params.entity || this.entity,
         });
@@ -83,7 +83,7 @@ export class EntityService<T = unknown> {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: `entities.${params.entity || this.entity}.update`,
             entity: params.entity || this.entity,
         });
@@ -103,7 +103,7 @@ export class EntityService<T = unknown> {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: `entities.${params.entity || this.entity}.updateMany`,
             entity: params.entity || this.entity,
         });
@@ -123,7 +123,7 @@ export class EntityService<T = unknown> {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: `entities.${params.entity || this.entity}.search`,
             entity: params.entity || this.entity,
         });
@@ -143,7 +143,7 @@ export class EntityService<T = unknown> {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: `entities.${params.entity || this.entity}.delete`,
             entity: params.entity || this.entity,
         });
@@ -162,7 +162,7 @@ export class EntityService<T = unknown> {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: `entities.${params.entity || this.entity}.deleteById`,
             entity: params.entity || this.entity,
         });
@@ -181,7 +181,7 @@ export class EntityService<T = unknown> {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: `entities.${params.entity || this.entity}.columns`,
             entity: params.entity || this.entity,
         });
@@ -200,7 +200,7 @@ export class EntityService<T = unknown> {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: `entities.${params.entity || this.entity}.count`,
             entity: params.entity || this.entity,
         });
@@ -220,7 +220,7 @@ export class EntityService<T = unknown> {
                     'Content-Type': 'application/json',
                 },
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: `entities.${params.entity || this.entity}.countBySearch`,
             entity: params.entity || this.entity,
         });

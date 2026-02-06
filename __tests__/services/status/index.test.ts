@@ -54,7 +54,7 @@ describe('StatusService', () => {
                     responseType: 'json',
                     requestFormat: 'json'
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'status.load',
             });
             expect(result).toEqual(mockResponse);
@@ -125,7 +125,7 @@ describe('StatusService', () => {
                     responseType: 'json',
                     requestFormat: 'json'
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 api: 'status.health',
             });
             expect(result).toEqual(mockResponse);

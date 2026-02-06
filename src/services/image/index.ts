@@ -28,7 +28,7 @@ export class ImageService {
                 requestFormat: 'form',
                 body: formData,
             },
-            bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+            bshOptions: params,
             api: 'image.upload',
             entity: CoreEntities.BshFiles,
         });

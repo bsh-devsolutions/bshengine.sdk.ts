@@ -52,7 +52,7 @@ describe('SettingsService', () => {
                     responseType: 'json',
                     requestFormat: 'json'
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshConfigurations,
                 api: 'settings.load',
             });
@@ -102,7 +102,7 @@ describe('SettingsService', () => {
                         'Content-Type': 'application/json',
                     },
                 },
-                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
+                bshOptions: params,
                 entity: CoreEntities.BshConfigurations,
                 api: 'settings.update',
             });
