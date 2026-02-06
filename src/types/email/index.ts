@@ -5,6 +5,8 @@ export type SentEmail = {
     subject: string;
     from: string;
     to: string;
+    bcc: string[];
+    cc: string[];
 } & BshObject;
 
 export type BshEmailTemplate = {
@@ -19,9 +21,13 @@ export type BshEmailTemplatePure = BshObjectPure<BshEmailTemplate>;
 
 export type MailingPayload = {
     to: string;
+    bcc?: string[];
+    cc?: string[];
     subject: string;
     body: string;
-    html: boolean
+    html: boolean;
+    template?: string;
+    data?: object;
 }
 
 export type GmailConfig = {
