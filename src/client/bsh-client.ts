@@ -40,7 +40,8 @@ export class BshClient {
                 }
             }
             let error = new BshError(response.status, params.path, data);
-            if (this.bshEngine?.getErrorInterceptors().length) {
+            const byPassErrorInterceptor = params.bshOptions.byPass?.interceptors?.error;
+            if ((byPassErrorInterceptor == undefined || !byPassErrorInterceptor) && this.bshEngine?.getErrorInterceptors().length) {
                 for (const interceptor of this.bshEngine.getErrorInterceptors()) {
                     const newError = await interceptor(error, error.response, params as BshClientFnParams<any>);
                     if (newError) error = newError;
@@ -57,7 +58,8 @@ export class BshClient {
             const data = await response.json();
             let result = data as BshResponse<T>;
             result.api = params.api;
-            if (this.bshEngine?.getPostInterceptors().length) {
+            const byPassPostInterceptors = params.bshOptions.byPass?.interceptors?.post;
+            if ((byPassPostInterceptors == undefined || !byPassPostInterceptors) && this.bshEngine?.getPostInterceptors().length) {
                 for (const interceptor of this.bshEngine.getPostInterceptors()) {
                     const newResult = await interceptor(result, params as BshClientFnParams<any>);
                     if (newResult) result = newResult as BshResponse<T>;
@@ -136,7 +138,8 @@ export class BshClient {
     }
 
     private async applyPreInterceptors<T = unknown, R = T>(params: BshClientFnParams<T, R>): Promise<BshClientFnParams<T, R>> {
-        if (!this.bshEngine?.getPreInterceptors().length) return params;
+        const byPassPreInterceptors = params.bshOptions.byPass?.interceptors?.pre;
+        if (byPassPreInterceptors == true || !this.bshEngine?.getPreInterceptors().length) return params;
         for (const interceptor of this.bshEngine.getPreInterceptors()) {
             const newParams = await interceptor(params as BshClientFnParams<unknown, unknown>);
             if (newParams) return newParams as BshClientFnParams<T, R>;
