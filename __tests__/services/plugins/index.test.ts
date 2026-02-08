@@ -58,7 +58,7 @@ describe('PluginService', () => {
             expect(callArgs.options.responseType).toBe('json');
             expect(callArgs.options.requestFormat).toBe('form');
             expect(callArgs.options.body).toBeInstanceOf(FormData);
-            expect(callArgs.bshOptions).toEqual({ onSuccess: params.onSuccess, onError: params.onError });
+            expect(callArgs.bshOptions).toEqual(params);
             expect(callArgs.api).toBe('plugins.installZip');
             expect(callArgs.entity).toBe(CoreEntities.BshPlugins);
             expect(result).toEqual(mockResponse);
@@ -156,7 +156,7 @@ describe('PluginService', () => {
             const callArgs = mockPost.mock.calls[0][0];
             expect(callArgs.path).toBe('/api/plugins/install/core');
             expect(callArgs.options.responseType).toBe('json');
-            expect(callArgs.bshOptions).toEqual({ onSuccess: params.onSuccess, onError: params.onError });
+            expect(callArgs.bshOptions).toEqual(params);
             expect(callArgs.api).toBe('plugins.installZip');
             expect(callArgs.entity).toBe(CoreEntities.BshPlugins);
             expect(result).toEqual(mockResponse);

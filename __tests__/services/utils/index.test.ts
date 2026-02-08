@@ -51,7 +51,7 @@ describe('BshUtilsService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: params,
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 api: 'utils.triggerFunctions',
             });
             expect(result).toEqual(mockResponse);
@@ -86,7 +86,7 @@ describe('BshUtilsService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: params,
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 api: 'utils.triggerActions',
             });
             expect(result).toEqual(mockResponse);
@@ -126,7 +126,7 @@ describe('BshUtilsService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: params,
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 api: 'utils.secretsEnv',
             });
             expect(result).toEqual(mockResponse);
@@ -164,7 +164,7 @@ describe('BshUtilsService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: params,
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 api: 'utils.secretsEnv',
             });
             expect(result).toEqual(mockResponse);
@@ -195,7 +195,7 @@ describe('BshUtilsService', () => {
                     responseType: 'json',
                     requestFormat: 'json',
                 },
-                bshOptions: params,
+                bshOptions: { onSuccess: params.onSuccess, onError: params.onError },
                 api: 'utils.version',
             });
             expect(result).toEqual(mockResponse);
