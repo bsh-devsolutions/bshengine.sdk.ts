@@ -51,7 +51,7 @@ export type Aggregate<T = unknown> = {
 
 export type Sort<T> = {
     field?: string | keyof T
-    direction?: -1 | 1
+    direction?: -1 | 1 | 0
 }
 
 export type Pagination = {
