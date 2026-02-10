@@ -52,6 +52,19 @@ export class ApiKeyService {
         });
     }
 
+    public async rotate(params: BshCallbackParams<unknown, BshApiKeys> & { id: number }): Promise<BshResponse<BshApiKeys> | undefined> {
+        return this.client.post<BshApiKeys>({
+            path: `${this.baseEndpoint}/${params.id}/rotate`,
+            options: {
+                responseType: 'json',
+                requestFormat: 'json',
+            },
+            bshOptions: params,
+            entity: CoreEntities.BshApiKeys,
+            api: 'api-key.rotate',
+        });
+    }
+
     // CRUD
     public async getById(params: BshCallbackParams<unknown, BshApiKeys> & { id: string }): Promise<BshResponse<BshApiKeys> | undefined> {
         return this.client.get<BshApiKeys>({

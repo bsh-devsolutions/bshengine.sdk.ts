@@ -172,6 +172,51 @@ describe('ApiKeyService', () => {
         });
     });
 
+    describe('rotate', () => {
+        it('should call client.delete with correct parameters', async () => {
+            const mockApiKey: BshApiKeys = {
+                id: 1,
+                name: 'Test Key',
+                description: 'Test description',
+                duration: 3600,
+                type: 'PERSONAL',
+                scopes: [],
+                apiKey: 'bsh_1234567890',
+                startedAt: { $date: new Date().toISOString() },
+                status: 'ACTIVE',
+                persistenceId: '1'
+            };
+            const mockResponse = {
+                data: [mockApiKey],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now()
+            };
+            mockPost.mockResolvedValue(mockResponse);
+
+            const params = {
+                id: 1,
+                onSuccess: vi.fn(),
+                onError: vi.fn()
+            };
+
+            const result = await apiKeyService.rotate(params);
+
+            expect(mockPost).toHaveBeenCalledWith({
+                path: '/api/api-keys/1/rotate',
+                options: {
+                    responseType: 'json',
+                    requestFormat: 'json',
+                },
+                bshOptions: params,
+                entity: CoreEntities.BshApiKeys,
+                api: 'api-key.rotate',
+            });
+            expect(result).toEqual(mockResponse);
+        });
+    });
+
     describe('getById', () => {
         it('should call client.get with correct parameters', async () => {
             const mockApiKey: BshApiKeys = {
