@@ -23,6 +23,7 @@ export type BshSearchCallbackParams <T, R = T> = BshCallbackParamsWithPayload<Bs
 export * from './entities';
 export * from './auth';
 export * from './user';
+export * from './tenant';
 export * from './settings';
 export * from './image';
 export * from './mailing';

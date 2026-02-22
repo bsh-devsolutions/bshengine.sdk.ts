@@ -81,3 +81,14 @@ export type BshApiKeys = BshApiKeysForm & {
     userId?: string
 } & BshObject;
 
+export type BshTenant = {
+    tenantId: string;
+    name: string;
+    status: 'Active' | 'Inactive' | 'Blocked';
+    description?: string;
+    domain?: string;
+    adminId?: string;
+    settings?: Record<string, unknown>;
+} & BshObject;
+
+export type BshTenantPure = BshObjectPure<BshTenant>;

@@ -22,6 +22,8 @@ export const CoreEntities = {
 
     BshFiles: 'BshFiles',
 
+    BshTenants: 'BshTenants',
+
     BshConfigurations: 'BshConfigurations',
 
     BshEmails: 'BshEmails',

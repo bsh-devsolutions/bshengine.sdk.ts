@@ -1,6 +1,6 @@
 import { BshAuthFn, BshClient, BshClientFn, BshErrorInterceptor, BshPostInterceptor, BshPreInterceptor, BshRefreshTokenFn, fetchClientFn } from "@client";
-import { ApiKeyService, AuthService, BshUtilsService, CachingService, EntityService, ImageService, MailingService, SettingsService, UserService } from "@src/services";
-import { BshEntities, BshPolicy,BshRole, BshEmailTemplate, BshEventLogs, BshSchemas, BshTypes, BshUser, SentEmail, BshTrigger, BshTriggerInstance, BshFiles, BshConfigurations, BshPlugin } from "@types";
+import { ApiKeyService, AuthService, BshUtilsService, CachingService, EntityService, ImageService, MailingService, SettingsService, TenantService, UserService } from "@src/services";
+import { BshEntities, BshPolicy,BshRole, BshEmailTemplate, BshEventLogs, BshSchemas, BshTypes, BshUser, SentEmail, BshTrigger, BshTriggerInstance, BshFiles, BshConfigurations, BshPlugin, BshTenant } from "@types";
 import { PluginService } from "./services/plugins";
 import { StatusService } from "./services/status";
 
@@ -122,6 +122,10 @@ export class BshEngine {
 
     public get users() {
         return new UserService(this.client);
+    }
+
+    public get tenants() {
+        return new TenantService(this.client);
     }
 
     public get settings() {
