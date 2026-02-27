@@ -2,6 +2,7 @@ import {BshDate, BshObject, BshObjectPure} from '@types';
 
 export type BshUser = {
     userId: string
+    tenantId: string
     email: string
     password?: string
     roles: string[]
