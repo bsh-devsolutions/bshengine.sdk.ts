@@ -88,6 +88,7 @@ export type BshTenant = {
     status: 'Active' | 'Inactive' | 'Blocked';
     description?: string;
     domain?: string;
+    email?: string;
     adminId?: string;
     settings?: Record<string, unknown>;
 } & BshObject;

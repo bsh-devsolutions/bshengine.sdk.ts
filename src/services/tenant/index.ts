@@ -123,7 +123,7 @@ export class TenantService {
         });
     }
 
-    public async update<T = BshTenant>(params: BshCallbackParamsWithPayload<Partial<BshTenant>, T>): Promise<BshResponse<T> | undefined> {
+    public async update<T = BshTenant>(params: BshCallbackParamsWithPayload<Partial<T>, T>): Promise<BshResponse<T> | undefined> {
         return this.client.put<T>({
             path: this.baseEndpoint,
             options: {
