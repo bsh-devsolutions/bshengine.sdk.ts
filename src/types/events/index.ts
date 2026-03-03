@@ -11,7 +11,7 @@ export type BshEventLogs = {
     plugin?: string
 } & BshObject;
 
-export type BshTriggerGuard = {
+export type BshTriggerSanitizer = {
     payload?: Record<string, any>;
     logPayload?: Record<string, any>;
     block?: {
@@ -29,7 +29,7 @@ export type BshTrigger<Event = BshTriggerEvent> = {
     events: Event[]
     enabled: boolean
     bshPlugin?: string;
-    guard?: BshTriggerGuard;
+    sanitizer?: BshTriggerSanitizer;
 } & BshObject;
 
 export type BshTriggerPure = BshObjectPure<BshTrigger<BshTriggerEventPure>>
