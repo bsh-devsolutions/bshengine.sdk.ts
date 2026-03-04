@@ -12,12 +12,7 @@ export type BshEventLogs = {
 } & BshObject;
 
 export type BshTriggerSanitizer = {
-    payload?: Record<string, any>;
-    logPayload?: Record<string, any>;
-    block?: {
-        condition?: string;
-        reason?: string;
-    };
+    mask?: Record<string, string>;
 }
 
 export type BshTrigger<Event = BshTriggerEvent> = {
