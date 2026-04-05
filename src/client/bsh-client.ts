@@ -189,7 +189,7 @@ export class BshClient {
         return this.handleResponse(response, clientParams, 'json');
     }
 
-    async put<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
+    async put<T = unknown, R = T>(params: BshClientFnParams<T, R>): Promise<BshResponse<R> | undefined> {
         const authHeaders = await this.getAuthHeaders(params);
         let clientParams = {
             ...params,
@@ -202,9 +202,9 @@ export class BshClient {
                     ...authHeaders
                 }
             }
-        } as BshClientFnParams<T>;
+        } as BshClientFnParams<T, R>;
 
-        clientParams = await this.applyPreInterceptors<T>(clientParams);
+        clientParams = await this.applyPreInterceptors<T, R>(clientParams);
         const response = await this.httpClient(clientParams);
         return this.handleResponse(response, clientParams, 'json');
     }
