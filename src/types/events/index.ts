@@ -11,6 +11,10 @@ export type BshEventLogs = {
     plugin?: string
 } & BshObject;
 
+export type BshTriggerSanitizer = {
+    mask?: Record<string, string>;
+}
+
 export type BshTrigger<Event = BshTriggerEvent> = {
     name: string
     label: string
@@ -20,6 +24,7 @@ export type BshTrigger<Event = BshTriggerEvent> = {
     events: Event[]
     enabled: boolean
     bshPlugin?: string;
+    sanitizer?: BshTriggerSanitizer;
 } & BshObject;
 
 export type BshTriggerPure = BshObjectPure<BshTrigger<BshTriggerEventPure>>

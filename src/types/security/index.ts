@@ -19,6 +19,7 @@ export type BshUser = {
 
 export type BshUserInit = {
     email: string
+    tenantId?: string
     password?: string
     roles?: string[]
     profile: BshUser['profile']
