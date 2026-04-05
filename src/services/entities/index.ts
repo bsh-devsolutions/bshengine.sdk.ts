@@ -30,10 +30,10 @@ export class EntityService<T = unknown> {
     }
 
     // Create a new entity
-    public async create<TT = T>(
-        params: EntityFnParamsWithPayload<TT>
-    ): Promise<BshResponse<TT> | undefined> {
-        return this.client.post<TT>({
+    public async create<TT = T, R = TT>(
+        params: EntityFnParamsWithPayload<TT, R>
+    ): Promise<BshResponse<R> | undefined> {
+        return this.client.post<TT, R>({
             path: `${this.baseEndpoint}/${params.entity || this.entity}`,
             options: {
                 responseType: 'json',
@@ -50,10 +50,10 @@ export class EntityService<T = unknown> {
     }
 
     // Create multiple entities in batch
-    public async createMany<TT = T>(
-        params: EntityFnParamsWithPayload<TT[], TT>
-    ): Promise<BshResponse<TT> | undefined> {
-        return this.client.post<TT>({
+    public async createMany<TT = T, R = TT>(
+        params: EntityFnParamsWithPayload<TT[], R>
+    ): Promise<BshResponse<R> | undefined> {
+        return this.client.post<TT, R>({
             path: `${this.baseEndpoint}/${params.entity || this.entity}/batch`,
             options: {
                 responseType: 'json',
@@ -70,10 +70,10 @@ export class EntityService<T = unknown> {
     }
 
     // Update an existing entity
-    public async update<TT = T>(
-        params: EntityFnParamsWithPayload<TT>
-    ): Promise<BshResponse<TT> | undefined> {
-        return this.client.put<TT>({
+    public async update<TT = T, R = TT>(
+        params: EntityFnParamsWithPayload<TT, R>
+    ): Promise<BshResponse<R> | undefined> {
+        return this.client.put<TT, R>({
             path: `${this.baseEndpoint}/${params.entity || this.entity}`,
             options: {
                 responseType: 'json',
@@ -90,10 +90,10 @@ export class EntityService<T = unknown> {
     }
 
     // Update multiple entities in batch
-    public async updateMany<TT = T>(
-        params: EntityFnParamsWithPayload<TT[], TT>
-    ): Promise<BshResponse<TT> | undefined> {
-        return this.client.put<TT>({
+    public async updateMany<TT = T, R = TT>(
+        params: EntityFnParamsWithPayload<TT[], R>
+    ): Promise<BshResponse<R> | undefined> {
+        return this.client.put<TT, R>({
             path: `${this.baseEndpoint}/${params.entity || this.entity}/batch`,
             options: {
                 responseType: 'json',

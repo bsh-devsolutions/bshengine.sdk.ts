@@ -369,7 +369,7 @@ describe('BshClient', () => {
 
                 engine.postInterceptor(postInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.get({
                     path: '/test',
@@ -410,7 +410,7 @@ describe('BshClient', () => {
 
                 engine.postInterceptor(postInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 const result = await client.get({
                     path: '/test',
@@ -446,7 +446,7 @@ describe('BshClient', () => {
                 engine.postInterceptor(interceptor1);
                 engine.postInterceptor(interceptor2);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.get({
                     path: '/test',
@@ -480,7 +480,7 @@ describe('BshClient', () => {
                 engine.postInterceptor(interceptor1);
                 engine.postInterceptor(interceptor2);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 const result = await client.get({
                     path: '/test',
@@ -518,7 +518,7 @@ describe('BshClient', () => {
 
                 engine.errorInterceptor(errorInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await expect(client.get({
                     path: '/test',
@@ -560,7 +560,7 @@ describe('BshClient', () => {
 
                 engine.errorInterceptor(errorInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await expect(client.get({
                     path: '/test',
@@ -599,7 +599,7 @@ describe('BshClient', () => {
                 engine.errorInterceptor(interceptor1);
                 engine.errorInterceptor(interceptor2);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await expect(client.get({
                     path: '/test',
@@ -634,7 +634,7 @@ describe('BshClient', () => {
 
                 engine.errorInterceptor(errorInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.get({
                     path: '/test',
@@ -662,7 +662,7 @@ describe('BshClient', () => {
 
                 engine.errorInterceptor(errorInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await expect(client.get({
                     path: '/test',
@@ -692,7 +692,7 @@ describe('BshClient', () => {
 
                 engine.preInterceptor(preInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.get({
                     path: '/test',
@@ -734,7 +734,7 @@ describe('BshClient', () => {
 
                 engine.preInterceptor(preInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('https://api.test.com', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('https://api.test.com', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.get({
                     path: '/test',
@@ -775,7 +775,7 @@ describe('BshClient', () => {
 
                 engine.preInterceptor(preInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.get({
                     path: '/test',
@@ -815,7 +815,7 @@ describe('BshClient', () => {
                 engine.preInterceptor(interceptor1);
                 engine.preInterceptor(interceptor2);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.get({
                     path: '/test',
@@ -867,7 +867,7 @@ describe('BshClient', () => {
                 engine.preInterceptor(interceptor1);
                 engine.preInterceptor(interceptor2);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.get({
                     path: '/test',
@@ -893,7 +893,7 @@ describe('BshClient', () => {
                 const response = new Response(JSON.stringify(mockData), { status: 200 });
                 mockHttpClient = vi.fn().mockResolvedValue(response);
                 
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.get({
                     path: '/test',
@@ -921,7 +921,7 @@ describe('BshClient', () => {
 
                 engine.preInterceptor(preInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.post({
                     path: '/test',
@@ -951,7 +951,7 @@ describe('BshClient', () => {
 
                 engine.preInterceptor(preInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.put({
                     path: '/test',
@@ -981,7 +981,7 @@ describe('BshClient', () => {
 
                 engine.preInterceptor(preInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.delete({
                     path: '/test',
@@ -1009,7 +1009,7 @@ describe('BshClient', () => {
 
                 engine.preInterceptor(preInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.patch({
                     path: '/test',
@@ -1033,7 +1033,7 @@ describe('BshClient', () => {
 
                 engine.preInterceptor(preInterceptor);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.download({
                     path: '/files/1',
@@ -1063,7 +1063,7 @@ describe('BshClient', () => {
                 engine.preInterceptor(preInterceptor);
                 engine.preInterceptor(preInterceptor2);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.get({
                     path: '/test',
@@ -1094,7 +1094,7 @@ describe('BshClient', () => {
 
                 engine.preInterceptor(preInterceptor as BshPreInterceptor<unknown>);
                 engine.withClient(mockHttpClient);
-                const client = new BshClient('', mockHttpClient, undefined, undefined, engine);
+                const client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
 
                 await client.post<{ name: string }, { id: number; name: string }>({
                     path: '/test',

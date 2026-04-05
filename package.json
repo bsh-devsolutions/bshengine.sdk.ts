@@ -36,6 +36,7 @@
     "clean": "rm -rf dist",
     "update-demos": "bash scripts/update-demos.sh",
     "test": "vitest run",
+    "watch": "tsup --watch",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
   },

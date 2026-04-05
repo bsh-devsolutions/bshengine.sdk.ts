@@ -12,7 +12,7 @@ describe('BshClient Bypass Options', () => {
     beforeEach(() => {
         engine = new BshEngine();
         mockHttpClient = vi.fn();
-        client = new BshClient('https://api.test.com', mockHttpClient, undefined, undefined, engine);
+        client = new BshClient('https://api.test.com', mockHttpClient, undefined, undefined, undefined, engine);
     });
 
     describe('pre interceptor bypass', () => {

@@ -1,11 +1,12 @@
 import { BshResponse, BshError } from "@types";
-import { AuthToken, BshAuthFn, BshClientFn, BshClientFnParams, BshRefreshTokenFn, defaultClientFn } from "@src/client/types";
+import { AuthToken, BshAuthFn, BshClientFn, BshClientFnParams, BshRefreshTokenFn, BshTenantFn, defaultClientFn } from "@src/client/types";
 import { BshEngine } from "@src/bshengine";
 
 export class BshClient {
     private readonly httpClient: BshClientFn;
     private readonly authFn?: BshAuthFn;
     private readonly refreshTokenFn?: BshRefreshTokenFn;
+    private readonly tenantFn?: BshTenantFn;
     private readonly host: string;
     private readonly bshEngine?: BshEngine;
 
@@ -14,12 +15,14 @@ export class BshClient {
         httpClient?: BshClientFn,
         authFn?: BshAuthFn,
         refreshTokenFn?: BshRefreshTokenFn,
+        tenantFn?: BshTenantFn,
         bshEngine?: BshEngine
     ) {
         this.host = host || '';
         this.httpClient = httpClient || defaultClientFn;
         this.authFn = authFn;
         this.refreshTokenFn = refreshTokenFn;
+        this.tenantFn = tenantFn;
         this.bshEngine = bshEngine;
     }
 
@@ -99,7 +102,7 @@ export class BshClient {
 
             const response = await this.bshEngine.auth.refreshToken({
                 payload: { refresh: refreshToken },
-                onError: () => {}
+                onError: () => { }
             });
 
             if (response) return {
@@ -117,24 +120,26 @@ export class BshClient {
         if (params.path.includes('/api/auth/')) return {};
 
         let auth = this.authFn ? await this.authFn() : undefined;
-        if (auth) {
-            auth = await this.refreshTokenIfNeeded(auth, this.refreshTokenFn);
-        }
+        if (auth) auth = await this.refreshTokenIfNeeded(auth, this.refreshTokenFn);
 
         let authHeaders = {};
         if (auth) {
-            if (auth.type === 'JWT') {
-                authHeaders = {
-                    Authorization: `Bearer ${auth.token}`
-                };
-            }
-            else if (auth.type === 'APIKEY') {
-                authHeaders = {
-                    'X-BSH-APIKEY': auth.token
-                };
-            }
+            if (auth.type === 'JWT') authHeaders = { Authorization: `Bearer ${auth.token}` };
+            else if (auth.type === 'APIKEY') authHeaders = { 'X-BSH-APIKEY': auth.token };
         }
-        return authHeaders;
+        return { ...authHeaders };
+    }
+
+    private async getTenantHeaders(params: BshClientFnParams<any>): Promise<Record<string, string>> {
+        const tenant = await this.tenantFn?.();
+        if (!tenant) return {};
+        return { 'X-Tenant-Id': tenant };
+    }
+
+    private async injectHeaders(params: BshClientFnParams<any>): Promise<Record<string, string>> {
+        const authHeaders = await this.getAuthHeaders(params);
+        const tenantHeaders = await this.getTenantHeaders(params);
+        return { ...authHeaders, ...tenantHeaders };
     }
 
     private async applyPreInterceptors<T = unknown, R = T>(params: BshClientFnParams<T, R>): Promise<BshClientFnParams<T, R>> {
@@ -148,7 +153,7 @@ export class BshClient {
     }
 
     async get<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
-        const authHeaders = await this.getAuthHeaders(params);
+        const authHeaders = await this.injectHeaders(params);
 
         let clientParams = {
             ...params,
@@ -169,7 +174,7 @@ export class BshClient {
     }
 
     async post<T = unknown, R = T>(params: BshClientFnParams<T, R>): Promise<BshResponse<R> | undefined> {
-        const authHeaders = await this.getAuthHeaders(params);
+        const authHeaders = await this.injectHeaders(params);
 
         let clientParams = {
             ...params,
@@ -189,34 +194,34 @@ export class BshClient {
         return this.handleResponse(response, clientParams, 'json');
     }
 
-    async put<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
-        const authHeaders = await this.getAuthHeaders(params);
+    async put<T = unknown, R = T>(params: BshClientFnParams<T, R>): Promise<BshResponse<R> | undefined> {
+        const authHeaders = await this.injectHeaders(params);
         let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
             options: {
                 ...params.options,
-                method: 'PUT',   
+                method: 'PUT',
                 headers: {
                     ...params.options.headers,
                     ...authHeaders
                 }
             }
-        } as BshClientFnParams<T>;
+        } as BshClientFnParams<T, R>;
 
-        clientParams = await this.applyPreInterceptors<T>(clientParams);
+        clientParams = await this.applyPreInterceptors<T, R>(clientParams);
         const response = await this.httpClient(clientParams);
         return this.handleResponse(response, clientParams, 'json');
     }
 
     async delete<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
-        const authHeaders = await this.getAuthHeaders(params);
+        const authHeaders = await this.injectHeaders(params);
         let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
             options: {
                 ...params.options,
-                method: 'DELETE',   
+                method: 'DELETE',
                 headers: {
                     ...params.options.headers,
                     ...authHeaders
@@ -230,13 +235,13 @@ export class BshClient {
     }
 
     async patch<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
-        const authHeaders = await this.getAuthHeaders(params);
+        const authHeaders = await this.injectHeaders(params);
         let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
             options: {
                 ...params.options,
-                method: 'PATCH',   
+                method: 'PATCH',
                 headers: {
                     ...params.options.headers,
                     ...authHeaders
@@ -250,7 +255,7 @@ export class BshClient {
     }
 
     async download<T = unknown>(params: BshClientFnParams<T>): Promise<Blob | undefined> {
-        const authHeaders = await this.getAuthHeaders(params);
+        const authHeaders = await this.injectHeaders(params);
         let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
