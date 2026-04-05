@@ -1,6 +1,6 @@
-import { BshAuthFn, BshClient, BshClientFn, BshErrorInterceptor, BshPostInterceptor, BshPreInterceptor, BshRefreshTokenFn, fetchClientFn } from "@client";
+import { BshAuthFn, BshClient, BshClientFn, BshErrorInterceptor, BshPostInterceptor, BshPreInterceptor, BshRefreshTokenFn, BshTenantFn, fetchClientFn } from "@client";
 import { ApiKeyService, AuthService, BshUtilsService, CachingService, EntityService, ImageService, MailingService, SettingsService, TenantService, UserService } from "@src/services";
-import { BshEntities, BshPolicy,BshRole, BshEmailTemplate, BshEventLogs, BshSchemas, BshTypes, BshUser, SentEmail, BshTrigger, BshTriggerInstance, BshFiles, BshConfigurations, BshPlugin, BshTenant } from "@types";
+import { BshEntities, BshPolicy, BshRole, BshEmailTemplate, BshEventLogs, BshSchemas, BshTypes, BshUser, SentEmail, BshTrigger, BshTriggerInstance, BshFiles, BshConfigurations, BshPlugin, BshTenant } from "@types";
 import { PluginService } from "./services/plugins";
 import { StatusService } from "./services/status";
 
@@ -9,7 +9,8 @@ export class BshEngine {
     private clientFn: BshClientFn = fetchClientFn;
     private authFn?: BshAuthFn;
     private refreshTokenFn?: BshRefreshTokenFn;
-
+    private tenantFn?: BshTenantFn;
+    
     private postInterceptors: BshPostInterceptor<unknown>[] = [];
     private preInterceptors: BshPreInterceptor<unknown>[] = [];
     private errorInterceptors: BshErrorInterceptor<unknown>[] = [];
@@ -21,6 +22,7 @@ export class BshEngine {
         refreshToken?: string;
         clientFn?: BshClientFn;
         authFn?: BshAuthFn;
+        tenantFn?: BshTenantFn;
         refreshTokenFn?: BshRefreshTokenFn;
         postInterceptors?: BshPostInterceptor<unknown>[];
         preInterceptors?: BshPreInterceptor<unknown>[];
@@ -33,6 +35,7 @@ export class BshEngine {
         this.clientFn = params.clientFn || this.clientFn || fetchClientFn;
         this.authFn = params.authFn || this.authFn;
         this.refreshTokenFn = params.refreshTokenFn || this.refreshTokenFn;
+        this.tenantFn = params.tenantFn || this.tenantFn;
         this.postInterceptors = params.postInterceptors || [];
         this.preInterceptors = params.preInterceptors || [];
         this.errorInterceptors = params.errorInterceptors || [];
@@ -51,6 +54,11 @@ export class BshEngine {
 
     public withRefreshToken(refreshTokenFn: BshRefreshTokenFn) {
         this.refreshTokenFn = refreshTokenFn;
+        return this;
+    }
+
+    public withTenant(tenantFn: BshTenantFn) {
+        this.tenantFn = tenantFn;
         return this;
     }
 
@@ -85,7 +93,14 @@ export class BshEngine {
 
     // Client
     private get client(): BshClient {
-        return new BshClient(this.host, this.clientFn, this.authFn, this.refreshTokenFn, this);
+        return new BshClient(
+            this.host, 
+            this.clientFn, 
+            this.authFn, 
+            this.refreshTokenFn, 
+            this.tenantFn, 
+            this
+        );
     }
 
     // Services
