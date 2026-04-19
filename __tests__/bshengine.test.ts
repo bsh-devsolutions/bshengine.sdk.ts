@@ -10,22 +10,18 @@ import { MailingService } from '../src/services/mailing';
 import { BshUtilsService } from '../src/services/utils';
 import { CachingService } from '../src/services/caching';
 import { ApiKeyService } from '../src/services/api-key';
-import { BshResponse } from '../src/types';
-import { BshError } from '../src/types';
 import { fetchClientFn } from '@client';
 
-// Mock the client module
 vi.mock('../src/client/bsh-client', () => {
-    return {
-        BshClient: vi.fn().mockImplementation(() => ({
-            get: vi.fn(),
-            post: vi.fn(),
-            put: vi.fn(),
-            delete: vi.fn(),
-            patch: vi.fn(),
-            download: vi.fn(),
-        }))
-    };
+    class MockBshClient {
+        get = vi.fn();
+        post = vi.fn();
+        put = vi.fn();
+        delete = vi.fn();
+        patch = vi.fn();
+        download = vi.fn();
+    }
+    return { BshClient: MockBshClient };
 });
 
 describe('BshEngine', () => {
