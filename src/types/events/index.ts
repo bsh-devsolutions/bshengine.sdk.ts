@@ -1,4 +1,4 @@
-import {BshDate, BshObject, BshObjectPure} from '@types';
+import {BshDate, BshObject, BshObjectPure, BshSearch} from '@types';
 
 export type BshEventLogs = {
     id: string
@@ -21,6 +21,10 @@ export type BshTrigger<Event = BshTriggerEvent> = {
     criteria?: string
     entity: string
     action: ('READ' | 'INSERT' | 'UPDATE' | 'SEARCH' | 'DELETE' | 'COLUMNS' | 'EXPORT')[]
+    lookups: {
+        key: string
+        search: BshSearch
+    }[]
     events: Event[]
     enabled: boolean
     bshPlugin?: string;
