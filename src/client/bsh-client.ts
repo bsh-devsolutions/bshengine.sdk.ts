@@ -116,6 +116,32 @@ export class BshClient {
         }
     }
 
+    private getCookie(name: string): string | undefined {
+        if (typeof document === 'undefined') return undefined;
+    
+        const cookies = document.cookie.split(';');
+    
+        for (const cookie of cookies) {
+            const [key, ...valueParts] = cookie.trim().split('=');
+            if (key === name) return decodeURIComponent(valueParts.join('='));
+        }
+    
+        return undefined;
+    }
+
+    private getCsrfHeaders(params: BshClientFnParams<any>): Record<string, string> {        
+        const method = params.options?.method?.toUpperCase() || 'GET';
+        if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') {return {}; }
+    
+        const csrfToken = this.getCookie('XSRF-TOKEN');
+    
+        if (!csrfToken) return {};
+    
+        return {
+            'X-XSRF-TOKEN': csrfToken
+        };
+    }
+
     private async getAuthHeaders(params: BshClientFnParams<any>): Promise<Record<string, string>> {
         if (params.path.includes('/api/auth/')) return {};
 
@@ -126,6 +152,7 @@ export class BshClient {
         if (auth) {
             if (auth.type === 'JWT') authHeaders = { Authorization: `Bearer ${auth.token}` };
             else if (auth.type === 'APIKEY') authHeaders = { 'X-BSH-APIKEY': auth.token };
+            else authHeaders = this.getCsrfHeaders(params);
         }
         return { ...authHeaders };
     }
@@ -139,7 +166,13 @@ export class BshClient {
     private async injectHeaders(params: BshClientFnParams<any>): Promise<Record<string, string>> {
         const authHeaders = await this.getAuthHeaders(params);
         const tenantHeaders = await this.getTenantHeaders(params);
-        return { ...authHeaders, ...tenantHeaders };
+        const csrfHeaders = this.getCsrfHeaders(params);
+    
+        return {
+            ...authHeaders,
+            ...tenantHeaders,
+            ...csrfHeaders
+        };
     }
 
     private async applyPreInterceptors<T = unknown, R = T>(params: BshClientFnParams<T, R>): Promise<BshClientFnParams<T, R>> {
