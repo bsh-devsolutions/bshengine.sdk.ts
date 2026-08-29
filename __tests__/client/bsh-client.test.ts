@@ -317,7 +317,8 @@ describe('BshClient', () => {
             expect(mockHttpClient).toHaveBeenCalledWith({
                 path: 'https://api.test.com/files/1',
                 options: {
-                    headers: {}
+                    headers: {},
+                    method: 'GET',
                 },
                 bshOptions: {}
             });
