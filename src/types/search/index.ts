@@ -11,17 +11,11 @@ export type BshSearch<T = unknown> = {
     from?: BshSearch<unknown>
 }
 
-export type LogicalOperator = CaseInsensitive<"and" | "or">;
-export type ComparisonOperator = CaseInsensitive<
-    | "eq" | "ne"
-    | "gt" | "gte"
-    | "lt" | "lte"
-    | "like" | "ilike"
-    | "contains" | "icontains"
-    | "starts" | "istarts"
-    | "in" | "nin"
-    | "between"
-    | "isnull" | "notnull">;
+export const LogicalOperators = ["and", "or", "not"] as const;
+export type LogicalOperator = CaseInsensitive<typeof LogicalOperators[number]>;
+
+export const ComparisonOperators = ["eq", "ne", "gt", "gte", "lt", "lte", "like", "ilike", "contains", "icontains", "starts", "istarts", "in", "nin", "between", "isnull", "notnull"] as const;
+export type ComparisonOperator = CaseInsensitive<typeof ComparisonOperators[number]>;
 
 export type Filter<T = unknown> = {
     operator?: ComparisonOperator | LogicalOperator;
@@ -36,12 +30,8 @@ export type GroupBy<T = unknown> = {
     aggregate?: Aggregate<T>[]
 }
 
-export type AggregateFunction =
-    | "COUNT"
-    | "SUM"
-    | "AVG"
-    | "MIN"
-    | "MAX"
+export const AggregateFunctions = ["COUNT", "SUM", "AVG", "MIN", "MAX"] as const;
+export type AggregateFunction = CaseInsensitive<typeof AggregateFunctions[number]>;
 
 export type Aggregate<T = unknown> = {
     function?: AggregateFunction
