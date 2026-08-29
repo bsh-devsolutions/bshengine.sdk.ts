@@ -10,7 +10,6 @@ export class TenantService {
     }
 
     public async create<T = BshTenant, F = BshTenantPure>(params: BshCallbackParamsWithPayload<F, T>): Promise<BshResponse<T> | undefined> {
-        console.log('params', params);
         return this.client.post<T>({
             path: this.baseEndpoint,
             options: {

@@ -118,28 +118,23 @@ export class BshClient {
 
     private getCookie(name: string): string | undefined {
         if (typeof document === 'undefined') return undefined;
-    
+
         const cookies = document.cookie.split(';');
-    
+
         for (const cookie of cookies) {
             const [key, ...valueParts] = cookie.trim().split('=');
             if (key === name) return decodeURIComponent(valueParts.join('='));
         }
-    
+
         return undefined;
     }
 
-    private getCsrfHeaders(params: BshClientFnParams<any>): Record<string, string> {        
+    private getCsrfHeaders(params: BshClientFnParams<any>): Record<string, string> {
         const method = params.options?.method?.toUpperCase() || 'GET';
-        if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') {return {}; }
-    
+        if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') return {};
         const csrfToken = this.getCookie('XSRF-TOKEN');
-    
         if (!csrfToken) return {};
-    
-        return {
-            'X-XSRF-TOKEN': csrfToken
-        };
+        return { 'X-XSRF-TOKEN': csrfToken };
     }
 
     private async getAuthHeaders(params: BshClientFnParams<any>): Promise<Record<string, string>> {
@@ -153,7 +148,8 @@ export class BshClient {
             if (auth.type === 'JWT') authHeaders = { Authorization: `Bearer ${auth.token}` };
             else if (auth.type === 'APIKEY') authHeaders = { 'X-BSH-APIKEY': auth.token };
             else authHeaders = this.getCsrfHeaders(params);
-        }
+        } else authHeaders = this.getCsrfHeaders(params);
+
         return { ...authHeaders };
     }
 
@@ -166,12 +162,10 @@ export class BshClient {
     private async injectHeaders(params: BshClientFnParams<any>): Promise<Record<string, string>> {
         const authHeaders = await this.getAuthHeaders(params);
         const tenantHeaders = await this.getTenantHeaders(params);
-        const csrfHeaders = this.getCsrfHeaders(params);
-    
+
         return {
             ...authHeaders,
             ...tenantHeaders,
-            ...csrfHeaders
         };
     }
 
@@ -186,7 +180,7 @@ export class BshClient {
     }
 
     async get<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
-        const authHeaders = await this.injectHeaders(params);
+        const authHeaders = await this.injectHeaders({ ...params, options: { ...params.options, method: 'GET' } });
 
         let clientParams = {
             ...params,
@@ -207,7 +201,7 @@ export class BshClient {
     }
 
     async post<T = unknown, R = T>(params: BshClientFnParams<T, R>): Promise<BshResponse<R> | undefined> {
-        const authHeaders = await this.injectHeaders(params);
+        const authHeaders = await this.injectHeaders({ ...params, options: { ...params.options, method: 'POST' } });
 
         let clientParams = {
             ...params,
@@ -228,7 +222,7 @@ export class BshClient {
     }
 
     async put<T = unknown, R = T>(params: BshClientFnParams<T, R>): Promise<BshResponse<R> | undefined> {
-        const authHeaders = await this.injectHeaders(params);
+        const authHeaders = await this.injectHeaders({ ...params, options: { ...params.options, method: 'PUT' } });
         let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
@@ -248,7 +242,7 @@ export class BshClient {
     }
 
     async delete<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
-        const authHeaders = await this.injectHeaders(params);
+        const authHeaders = await this.injectHeaders({ ...params, options: { ...params.options, method: 'DELETE' } });
         let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
@@ -268,7 +262,7 @@ export class BshClient {
     }
 
     async patch<T = unknown>(params: BshClientFnParams<T>): Promise<BshResponse<T> | undefined> {
-        const authHeaders = await this.injectHeaders(params);
+        const authHeaders = await this.injectHeaders({ ...params, options: { ...params.options, method: 'PATCH' } });
         let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
@@ -288,12 +282,13 @@ export class BshClient {
     }
 
     async download<T = unknown>(params: BshClientFnParams<T>): Promise<Blob | undefined> {
-        const authHeaders = await this.injectHeaders(params);
+        const authHeaders = await this.injectHeaders({ ...params, options: { ...params.options, method: 'GET' } });
         let clientParams = {
             ...params,
             path: `${this.host}${params.path}`,
             options: {
                 ...params.options,
+                method: 'GET',
                 headers: {
                     ...params.options.headers,
                     ...authHeaders
