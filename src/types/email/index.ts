@@ -4,6 +4,7 @@ export type SentEmail = {
     id: string;
     subject: string;
     from: string;
+    fromName?: string;
     to: string;
     bcc: string[];
     cc: string[];
@@ -28,7 +29,10 @@ export type MailingPayload = {
     html: boolean;
     template?: string;
     data?: object;
+    fromName?: string;
 }
+
+export type EmailSenderTriggerInput = MailingPayload;
 
 export type GmailConfig = {
     email: string;
@@ -39,6 +43,7 @@ export type GmailConfig = {
     auth: boolean;
     starttls: boolean;
     from: string;
+    fromName?: string;
 }
 
 export type MailDevConfig = GmailConfig

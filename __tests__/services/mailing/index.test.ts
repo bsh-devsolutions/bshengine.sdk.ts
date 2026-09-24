@@ -63,6 +63,31 @@ describe('MailingService', () => {
             expect(result).toEqual(mockResponse);
         });
 
+        it('should forward fromName in send payload', async () => {
+            const mockPayload: MailingPayload = {
+                to: 'test@example.com',
+                subject: 'Test',
+                body: 'Body',
+                html: false,
+                fromName: 'BSH Engine',
+            };
+            mockPost.mockResolvedValue({
+                data: [mockPayload],
+                code: 200,
+                status: 'OK',
+                error: '',
+                timestamp: Date.now(),
+            });
+
+            await mailingService.send({ payload: mockPayload });
+
+            expect(mockPost).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    options: expect.objectContaining({ body: mockPayload }),
+                }),
+            );
+        });
+
         it('should handle callbacks correctly', async () => {
             const mockPayload: MailingPayload = {
                 to: 'test@example.com',
