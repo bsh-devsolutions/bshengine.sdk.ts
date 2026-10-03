@@ -1,7 +1,7 @@
 {
   "name": "@bshsolutions/sdk",
   "version": "0.0.1",
-  "description": "TypeScript SDK for integrating with BSH Engine <https://engine.bousalih.com>",
+  "description": "TypeScript SDK for integrating with BSH Engine <https://docs.bousalih.com>",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -52,7 +52,7 @@
     "type": "git",
     "url": "git+https://github.com/bsh-devsolutions/bshengine.sdk.ts.git"
   },
-  "homepage": "https://engine.bousalih.com",
+  "homepage": "https://docs.bousalih.com",
   "publishConfig": {
     "access": "public"
   },

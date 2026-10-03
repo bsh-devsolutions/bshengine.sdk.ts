@@ -1,10 +1,10 @@
 # @bshsolutions/sdk
 
-A TypeScript SDK for integrating with [BSH Engine](https://engine.bousalih.com) - a low code backend platform that allows you to create APIs for your application with minimal configuration.
+A TypeScript SDK for integrating with [BSH Engine](https://docs.bousalih.com) - a low code backend platform that allows you to create APIs for your application with minimal configuration.
 
 ## What is BSH Engine?
 
-[BSH Engine](https://engine.bousalih.com) is a backend tool that enables you to build robust APIs quickly without writing boilerplate code. It provides:
+[BSH Engine](https://docs.bousalih.com) is a backend tool that enables you to build robust APIs quickly without writing boilerplate code. It provides:
 
 - **Entity Management**: Create, read, update, and delete entities with built-in CRUD operations
 - **Search & Filtering**: Advanced search and filtering for your entities
@@ -12,7 +12,7 @@ A TypeScript SDK for integrating with [BSH Engine](https://engine.bousalih.com) 
 - **File Storage**: Upload and manage images and files
 - **Email Services**: Send emails with templates
 - **API Key Management**: Secure API key generation and management
-- Visit [https://engine.bousalih.com](https://engine.bousalih.com) for more details.
+- Visit [https://docs.bousalih.com](https://docs.bousalih.com) for more details.
 
 ## Installation
 
