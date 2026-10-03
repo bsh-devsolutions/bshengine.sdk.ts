@@ -103,6 +103,12 @@ describe('BshEngine', () => {
             expect((engine as any).refreshTokenFn).toBe(customRefreshTokenFn);
         });
 
+        it('should initialize with onTokenRefreshed handler', () => {
+            const onTokenRefreshed = vi.fn();
+            const engine = new BshEngine({ onTokenRefreshed });
+            expect(engine.getOnTokenRefreshed()).toBe(onTokenRefreshed);
+        });
+
         it('should initialize with postInterceptors array', () => {
             const postInterceptor: BshPostInterceptor = vi.fn();
             const engine = new BshEngine({ postInterceptors: [postInterceptor] });

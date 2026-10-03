@@ -41,6 +41,8 @@ export type BshAuthFn = () => Promise<AuthToken | undefined | null>;
 
 export type BshRefreshTokenFn = () => Promise<string | undefined | null>;
 
+export type BshOnTokenRefreshedFn = (accessToken: string) => void | Promise<void>;
+
 export type BshTenantFn = () => Promise<string | undefined | null>;
 
 export type BshPostInterceptor<T = any> = (response: BshResponse<T>, params?: BshClientFnParams<T>) => Promise<BshResponse<T>>;

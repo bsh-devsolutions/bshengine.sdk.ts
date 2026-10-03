@@ -61,6 +61,7 @@ export class BshClient {
             const data = await response.json();
             let result = data as BshResponse<T>;
             result.api = params.api;
+            await this.notifyTokenRefreshedIfPresent(result);
             const byPassPostInterceptors = params.bshOptions.byPass?.interceptors?.post;
             if ((byPassPostInterceptors == undefined || !byPassPostInterceptors) && this.bshEngine?.getPostInterceptors().length) {
                 for (const interceptor of this.bshEngine.getPostInterceptors()) {
@@ -82,6 +83,13 @@ export class BshClient {
             }
             else return blob;
         }
+    }
+
+    private async notifyTokenRefreshedIfPresent(result: BshResponse<unknown>) {
+        const accessToken = result.meta?.accessToken;
+        if (!accessToken) return;
+        const handler = this.bshEngine?.getOnTokenRefreshed();
+        if (handler) await handler(accessToken);
     }
 
     private getCookie(name: string): string | undefined {
@@ -112,9 +120,10 @@ export class BshClient {
 
         let authHeaders = {};
         if (auth) {
-            if (auth.type === 'JWT') authHeaders = {
-                Authorization: `Bearer ${auth.token}`,
-                'X-BSH-REFRESHTOKEN': await this.refreshTokenFn?.() || ''
+            if (auth.type === 'JWT') {
+                authHeaders = { Authorization: `Bearer ${auth.token}` };
+                const refreshToken = await this.refreshTokenFn?.();
+                if (refreshToken) authHeaders = { ...authHeaders, 'X-BSH-REFRESHTOKEN': refreshToken };
             }
             else if (auth.type === 'APIKEY') authHeaders = { Authorization: auth.token };
             else authHeaders = this.getCsrfHeaders(params);

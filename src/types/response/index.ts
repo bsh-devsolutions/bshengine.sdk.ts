@@ -9,7 +9,8 @@ export type BshResponse<T> = {
         type?: string,
         sql?: string,
         error?: string,
-        tips?: {[key: string]: string}
+        tips?: {[key: string]: string},
+        accessToken?: string,
     }
     pagination?: {
         current: number,
