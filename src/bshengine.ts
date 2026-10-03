@@ -1,4 +1,4 @@
-import { BshAuthFn, BshClient, BshClientFn, BshErrorInterceptor, BshPostInterceptor, BshPreInterceptor, BshRefreshTokenFn, BshTenantFn, fetchClientFn } from "@client";
+import { BshAuthFn, BshClient, BshClientFn, BshErrorInterceptor, BshOnTokenRefreshedFn, BshPostInterceptor, BshPreInterceptor, BshRefreshTokenFn, BshTenantFn, fetchClientFn } from "@client";
 import { ApiKeyService, AuthService, BshUtilsService, CachingService, EntityService, ImageService, MailingService, SettingsService, TenantService, UserService } from "@src/services";
 import { BshEntities, BshPolicy, BshRole, BshEmailTemplate, BshEventLogs, BshSchemas, BshTypes, BshUser, SentEmail, BshTrigger, BshTriggerInstance, BshFiles, BshConfigurations, BshPlugin, BshTenant } from "@types";
 import { PluginService } from "./services/plugins";
@@ -9,6 +9,7 @@ export class BshEngine {
     private clientFn: BshClientFn = fetchClientFn;
     private authFn?: BshAuthFn;
     private refreshTokenFn?: BshRefreshTokenFn;
+    private onTokenRefreshed?: BshOnTokenRefreshedFn;
     private tenantFn?: BshTenantFn;
     
     private postInterceptors: BshPostInterceptor<unknown>[] = [];
@@ -24,6 +25,7 @@ export class BshEngine {
         authFn?: BshAuthFn;
         tenantFn?: BshTenantFn;
         refreshTokenFn?: BshRefreshTokenFn;
+        onTokenRefreshed?: BshOnTokenRefreshedFn;
         postInterceptors?: BshPostInterceptor<unknown>[];
         preInterceptors?: BshPreInterceptor<unknown>[];
         errorInterceptors?: BshErrorInterceptor<unknown>[];
@@ -35,6 +37,7 @@ export class BshEngine {
         this.clientFn = params.clientFn || this.clientFn || fetchClientFn;
         this.authFn = params.authFn || this.authFn;
         this.refreshTokenFn = params.refreshTokenFn || this.refreshTokenFn;
+        this.onTokenRefreshed = params.onTokenRefreshed;
         this.tenantFn = params.tenantFn || this.tenantFn;
         this.postInterceptors = params.postInterceptors || [];
         this.preInterceptors = params.preInterceptors || [];
@@ -54,6 +57,11 @@ export class BshEngine {
 
     public withRefreshToken(refreshTokenFn: BshRefreshTokenFn) {
         this.refreshTokenFn = refreshTokenFn;
+        return this;
+    }
+
+    public withOnTokenRefreshed(handler: BshOnTokenRefreshedFn) {
+        this.onTokenRefreshed = handler;
         return this;
     }
 
@@ -89,6 +97,10 @@ export class BshEngine {
 
     public getErrorInterceptors() {
         return this.errorInterceptors;
+    }
+
+    public getOnTokenRefreshed() {
+        return this.onTokenRefreshed;
     }
 
     // Client

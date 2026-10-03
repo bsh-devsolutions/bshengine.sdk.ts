@@ -1,8 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BshClient } from '../../src/client/bsh-client';
-import { BshAuthFn, BshPostInterceptor, BshErrorInterceptor, BshPreInterceptor } from '../../src/client/types';
+import { BshAuthFn, BshPostInterceptor, BshErrorInterceptor, BshPreInterceptor, BshRefreshTokenFn } from '../../src/client/types';
 import { BshError, BshResponse } from '../../src/types';
 import { BshEngine } from '../../src/bshengine';
+
+const jwtWithExp = (expSeconds: number) => {
+    const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+    const payload = btoa(JSON.stringify({ exp: expSeconds }));
+    return `${header}.${payload}.signature`;
+};
 
 describe('BshClient', () => {
     let mockHttpClient: ReturnType<typeof vi.fn>;
@@ -91,7 +97,29 @@ describe('BshClient', () => {
             expect(mockAuthFn).toHaveBeenCalled();
             const callArgs = mockHttpClient.mock.calls[0][0];
             expect(callArgs.options.headers).toEqual({
-                'X-BSH-APIKEY': 'api-key-456'
+                Authorization: 'api-key-456'
+            });
+        });
+
+        it('should send X-BSH-REFRESHTOKEN with JWT when refreshTokenFn is configured', async () => {
+            const validToken = jwtWithExp(Math.floor(Date.now() / 1000) + 3600);
+            mockAuthFn = vi.fn().mockResolvedValue({ type: 'JWT', token: validToken });
+            const mockRefreshTokenFn = vi.fn().mockResolvedValue('refresh-token-789');
+            const response = new Response(JSON.stringify({ data: [] }), { status: 200 });
+            mockHttpClient = vi.fn().mockResolvedValue(response);
+            client = new BshClient('', mockHttpClient, mockAuthFn, mockRefreshTokenFn);
+
+            await client.get({
+                path: '/test',
+                options: {},
+                bshOptions: {}
+            });
+
+            expect(mockRefreshTokenFn).toHaveBeenCalled();
+            const callArgs = mockHttpClient.mock.calls[0][0];
+            expect(callArgs.options.headers).toEqual({
+                Authorization: `Bearer ${validToken}`,
+                'X-BSH-REFRESHTOKEN': 'refresh-token-789'
             });
         });
 
@@ -114,6 +142,73 @@ describe('BshClient', () => {
                 'Custom-Header': 'value',
                 Authorization: 'Bearer token'
             });
+        });
+    });
+
+    describe('onTokenRefreshed', () => {
+        it('should invoke handler when response meta contains accessToken', async () => {
+            const onTokenRefreshed = vi.fn();
+            const engine = new BshEngine({ onTokenRefreshed });
+            const mockData = {
+                data: [{ id: 1 }],
+                code: 200,
+                status: 'OK',
+                meta: { accessToken: 'new-access-token' },
+                timestamp: Date.now()
+            };
+            const response = new Response(JSON.stringify(mockData), { status: 200 });
+            mockHttpClient = vi.fn().mockResolvedValue(response);
+            client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
+
+            await client.get({
+                path: '/test',
+                options: {},
+                bshOptions: {}
+            });
+
+            expect(onTokenRefreshed).toHaveBeenCalledWith('new-access-token');
+        });
+
+        it('should not invoke handler when meta has no accessToken', async () => {
+            const onTokenRefreshed = vi.fn();
+            const engine = new BshEngine({ onTokenRefreshed });
+            const mockData = { data: [], code: 200, status: 'OK', timestamp: Date.now() };
+            const response = new Response(JSON.stringify(mockData), { status: 200 });
+            mockHttpClient = vi.fn().mockResolvedValue(response);
+            client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
+
+            await client.get({
+                path: '/test',
+                options: {},
+                bshOptions: {}
+            });
+
+            expect(onTokenRefreshed).not.toHaveBeenCalled();
+        });
+
+        it('should invoke handler when using onSuccess callback', async () => {
+            const onTokenRefreshed = vi.fn();
+            const engine = new BshEngine({ onTokenRefreshed });
+            const onSuccess = vi.fn();
+            const mockData = {
+                data: [],
+                code: 200,
+                status: 'OK',
+                meta: { accessToken: 'rotated-token' },
+                timestamp: Date.now()
+            };
+            const response = new Response(JSON.stringify(mockData), { status: 200 });
+            mockHttpClient = vi.fn().mockResolvedValue(response);
+            client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
+
+            await client.get({
+                path: '/test',
+                options: {},
+                bshOptions: { onSuccess }
+            });
+
+            expect(onTokenRefreshed).toHaveBeenCalledWith('rotated-token');
+            expect(onSuccess).toHaveBeenCalledWith(mockData);
         });
     });
 

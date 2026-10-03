@@ -61,6 +61,7 @@ export class BshClient {
             const data = await response.json();
             let result = data as BshResponse<T>;
             result.api = params.api;
+            await this.notifyTokenRefreshedIfPresent(result);
             const byPassPostInterceptors = params.bshOptions.byPass?.interceptors?.post;
             if ((byPassPostInterceptors == undefined || !byPassPostInterceptors) && this.bshEngine?.getPostInterceptors().length) {
                 for (const interceptor of this.bshEngine.getPostInterceptors()) {
@@ -84,36 +85,11 @@ export class BshClient {
         }
     }
 
-    private async refreshTokenIfNeeded(
-        auth: AuthToken,
-        refreshTokenFn?: BshRefreshTokenFn
-    ): Promise<AuthToken | undefined | null> {
-        if (!refreshTokenFn || !auth || auth.type !== 'JWT') return auth;
-        const accessToken = auth.token;
-        try {
-            const tokenPayload = JSON.parse(atob(accessToken.split('.')[1] || ''));
-            const exp = tokenPayload.exp * 1000;
-            const now = new Date().getTime();
-
-            if (exp && now < exp) return auth;
-
-            const refreshToken = await refreshTokenFn();
-            if (!refreshToken || !this.bshEngine) return auth;
-
-            const response = await this.bshEngine.auth.refreshToken({
-                payload: { refresh: refreshToken },
-                onError: () => { }
-            });
-
-            if (response) return {
-                type: 'JWT',
-                token: response.data[0].access
-            };
-
-            return auth;
-        } catch (error) {
-            return auth;
-        }
+    private async notifyTokenRefreshedIfPresent(result: BshResponse<unknown>) {
+        const accessToken = result.meta?.accessToken;
+        if (!accessToken) return;
+        const handler = this.bshEngine?.getOnTokenRefreshed();
+        if (handler) await handler(accessToken);
     }
 
     private getCookie(name: string): string | undefined {
@@ -140,13 +116,16 @@ export class BshClient {
     private async getAuthHeaders(params: BshClientFnParams<any>): Promise<Record<string, string>> {
         if (params.path.includes('/api/auth/')) return {};
 
-        let auth = this.authFn ? await this.authFn() : undefined;
-        if (auth) auth = await this.refreshTokenIfNeeded(auth, this.refreshTokenFn);
+        const auth = this.authFn ? await this.authFn() : undefined;
 
         let authHeaders = {};
         if (auth) {
-            if (auth.type === 'JWT') authHeaders = { Authorization: `Bearer ${auth.token}` };
-            else if (auth.type === 'APIKEY') authHeaders = { 'X-BSH-APIKEY': auth.token };
+            if (auth.type === 'JWT') {
+                authHeaders = { Authorization: `Bearer ${auth.token}` };
+                const refreshToken = await this.refreshTokenFn?.();
+                if (refreshToken) authHeaders = { ...authHeaders, 'X-BSH-REFRESHTOKEN': refreshToken };
+            }
+            else if (auth.type === 'APIKEY') authHeaders = { Authorization: auth.token };
             else authHeaders = this.getCsrfHeaders(params);
         } else authHeaders = this.getCsrfHeaders(params);
 
