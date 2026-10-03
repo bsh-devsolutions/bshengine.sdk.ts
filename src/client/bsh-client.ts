@@ -84,38 +84,6 @@ export class BshClient {
         }
     }
 
-    private async refreshTokenIfNeeded(
-        auth: AuthToken,
-        refreshTokenFn?: BshRefreshTokenFn
-    ): Promise<AuthToken | undefined | null> {
-        if (!refreshTokenFn || !auth || auth.type !== 'JWT') return auth;
-        const accessToken = auth.token;
-        try {
-            const tokenPayload = JSON.parse(atob(accessToken.split('.')[1] || ''));
-            const exp = tokenPayload.exp * 1000;
-            const now = new Date().getTime();
-
-            if (exp && now < exp) return auth;
-
-            const refreshToken = await refreshTokenFn();
-            if (!refreshToken || !this.bshEngine) return auth;
-
-            const response = await this.bshEngine.auth.refreshToken({
-                payload: { refresh: refreshToken },
-                onError: () => { }
-            });
-
-            if (response) return {
-                type: 'JWT',
-                token: response.data[0].access
-            };
-
-            return auth;
-        } catch (error) {
-            return auth;
-        }
-    }
-
     private getCookie(name: string): string | undefined {
         if (typeof document === 'undefined') return undefined;
 
@@ -140,12 +108,14 @@ export class BshClient {
     private async getAuthHeaders(params: BshClientFnParams<any>): Promise<Record<string, string>> {
         if (params.path.includes('/api/auth/')) return {};
 
-        let auth = this.authFn ? await this.authFn() : undefined;
-        if (auth) auth = await this.refreshTokenIfNeeded(auth, this.refreshTokenFn);
+        const auth = this.authFn ? await this.authFn() : undefined;
 
         let authHeaders = {};
         if (auth) {
-            if (auth.type === 'JWT') authHeaders = { Authorization: `Bearer ${auth.token}` };
+            if (auth.type === 'JWT') authHeaders = {
+                Authorization: `Bearer ${auth.token}`,
+                'X-BSH-REFRESHTOKEN': await this.refreshTokenFn?.() || ''
+            }
             else if (auth.type === 'APIKEY') authHeaders = { Authorization: auth.token };
             else authHeaders = this.getCsrfHeaders(params);
         } else authHeaders = this.getCsrfHeaders(params);

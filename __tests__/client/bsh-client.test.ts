@@ -1,8 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BshClient } from '../../src/client/bsh-client';
-import { BshAuthFn, BshPostInterceptor, BshErrorInterceptor, BshPreInterceptor } from '../../src/client/types';
+import { BshAuthFn, BshPostInterceptor, BshErrorInterceptor, BshPreInterceptor, BshRefreshTokenFn } from '../../src/client/types';
 import { BshError, BshResponse } from '../../src/types';
 import { BshEngine } from '../../src/bshengine';
+
+const jwtWithExp = (expSeconds: number) => {
+    const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+    const payload = btoa(JSON.stringify({ exp: expSeconds }));
+    return `${header}.${payload}.signature`;
+};
 
 describe('BshClient', () => {
     let mockHttpClient: ReturnType<typeof vi.fn>;
@@ -91,7 +97,50 @@ describe('BshClient', () => {
             expect(mockAuthFn).toHaveBeenCalled();
             const callArgs = mockHttpClient.mock.calls[0][0];
             expect(callArgs.options.headers).toEqual({
-                Authorization: 'Bearer api-key-456'
+                Authorization: 'api-key-456'
+            });
+        });
+
+        it('should not send refresh header when JWT is still valid', async () => {
+            const validToken = jwtWithExp(Math.floor(Date.now() / 1000) + 3600);
+            mockAuthFn = vi.fn().mockResolvedValue({ type: 'JWT', token: validToken });
+            const mockRefreshTokenFn = vi.fn().mockResolvedValue('refresh-token-789');
+            const response = new Response(JSON.stringify({ data: [] }), { status: 200 });
+            mockHttpClient = vi.fn().mockResolvedValue(response);
+            client = new BshClient('', mockHttpClient, mockAuthFn, mockRefreshTokenFn);
+
+            await client.get({
+                path: '/test',
+                options: {},
+                bshOptions: {}
+            });
+
+            expect(mockRefreshTokenFn).not.toHaveBeenCalled();
+            const callArgs = mockHttpClient.mock.calls[0][0];
+            expect(callArgs.options.headers).toEqual({
+                Authorization: `Bearer ${validToken}`
+            });
+        });
+
+        it('should send X-BSH-REFRESHTOKEN when JWT is expired', async () => {
+            const expiredToken = jwtWithExp(Math.floor(Date.now() / 1000) - 60);
+            mockAuthFn = vi.fn().mockResolvedValue({ type: 'JWT', token: expiredToken });
+            const mockRefreshTokenFn: BshRefreshTokenFn = vi.fn().mockResolvedValue('refresh-token-789');
+            const response = new Response(JSON.stringify({ data: [] }), { status: 200 });
+            mockHttpClient = vi.fn().mockResolvedValue(response);
+            client = new BshClient('', mockHttpClient, mockAuthFn, mockRefreshTokenFn);
+
+            await client.get({
+                path: '/test',
+                options: {},
+                bshOptions: {}
+            });
+
+            expect(mockRefreshTokenFn).toHaveBeenCalled();
+            const callArgs = mockHttpClient.mock.calls[0][0];
+            expect(callArgs.options.headers).toEqual({
+                Authorization: `Bearer ${expiredToken}`,
+                'X-BSH-REFRESHTOKEN': 'refresh-token-789'
             });
         });
 
