@@ -91,7 +91,7 @@ describe('BshClient', () => {
             expect(mockAuthFn).toHaveBeenCalled();
             const callArgs = mockHttpClient.mock.calls[0][0];
             expect(callArgs.options.headers).toEqual({
-                'X-BSH-APIKEY': 'api-key-456'
+                Authorization: 'Bearer api-key-456'
             });
         });
 

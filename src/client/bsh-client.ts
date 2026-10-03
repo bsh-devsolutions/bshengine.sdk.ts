@@ -146,7 +146,7 @@ export class BshClient {
         let authHeaders = {};
         if (auth) {
             if (auth.type === 'JWT') authHeaders = { Authorization: `Bearer ${auth.token}` };
-            else if (auth.type === 'APIKEY') authHeaders = { 'X-BSH-APIKEY': auth.token };
+            else if (auth.type === 'APIKEY') authHeaders = { Authorization: auth.token };
             else authHeaders = this.getCsrfHeaders(params);
         } else authHeaders = this.getCsrfHeaders(params);
 
