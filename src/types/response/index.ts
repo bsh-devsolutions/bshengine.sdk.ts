@@ -11,6 +11,7 @@ export type BshResponse<T> = {
         error?: string,
         tips?: {[key: string]: string},
         accessToken?: string,
+        refreshToken?: string,
     }
     pagination?: {
         current: number,

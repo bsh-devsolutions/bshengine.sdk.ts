@@ -166,7 +166,36 @@ describe('BshClient', () => {
                 bshOptions: {}
             });
 
-            expect(onTokenRefreshed).toHaveBeenCalledWith('new-access-token');
+            expect(onTokenRefreshed).toHaveBeenCalledWith({
+                accessToken: 'new-access-token',
+                refreshToken: undefined,
+            });
+        });
+
+        it('should pass refreshToken when response meta contains both tokens', async () => {
+            const onTokenRefreshed = vi.fn();
+            const engine = new BshEngine({ onTokenRefreshed });
+            const mockData = {
+                data: [{ id: 1 }],
+                code: 200,
+                status: 'OK',
+                meta: { accessToken: 'new-access-token', refreshToken: 'new-refresh-token' },
+                timestamp: Date.now()
+            };
+            const response = new Response(JSON.stringify(mockData), { status: 200 });
+            mockHttpClient = vi.fn().mockResolvedValue(response);
+            client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
+
+            await client.get({
+                path: '/test',
+                options: {},
+                bshOptions: {}
+            });
+
+            expect(onTokenRefreshed).toHaveBeenCalledWith({
+                accessToken: 'new-access-token',
+                refreshToken: 'new-refresh-token',
+            });
         });
 
         it('should not invoke handler when meta has no accessToken', async () => {
@@ -207,7 +236,10 @@ describe('BshClient', () => {
                 bshOptions: { onSuccess }
             });
 
-            expect(onTokenRefreshed).toHaveBeenCalledWith('rotated-token');
+            expect(onTokenRefreshed).toHaveBeenCalledWith({
+                accessToken: 'rotated-token',
+                refreshToken: undefined,
+            });
             expect(onSuccess).toHaveBeenCalledWith(mockData);
         });
     });

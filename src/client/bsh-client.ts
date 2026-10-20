@@ -87,9 +87,15 @@ export class BshClient {
 
     private async notifyTokenRefreshedIfPresent(result: BshResponse<unknown>) {
         const accessToken = result.meta?.accessToken;
-        if (!accessToken) return;
+        const refreshToken = result.meta?.refreshToken;
+        if (!accessToken && !refreshToken) return;
         const handler = this.bshEngine?.getOnTokenRefreshed();
-        if (handler) await handler(accessToken);
+        if (handler) {
+            await handler({
+                accessToken,
+                refreshToken,
+            });
+        }
     }
 
     private getCookie(name: string): string | undefined {
@@ -114,8 +120,6 @@ export class BshClient {
     }
 
     private async getAuthHeaders(params: BshClientFnParams<any>): Promise<Record<string, string>> {
-        if (params.path.includes('/api/auth/')) return {};
-
         const auth = this.authFn ? await this.authFn() : undefined;
 
         let authHeaders = {};
