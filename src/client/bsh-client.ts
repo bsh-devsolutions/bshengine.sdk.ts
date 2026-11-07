@@ -122,18 +122,16 @@ export class BshClient {
     private async getAuthHeaders(params: BshClientFnParams<any>): Promise<Record<string, string>> {
         const auth = this.authFn ? await this.authFn() : undefined;
 
-        let authHeaders = {};
-        if (auth) {
-            if (auth.type === 'JWT') {
-                authHeaders = { Authorization: `Bearer ${auth.token}` };
-                const refreshToken = await this.refreshTokenFn?.();
-                if (refreshToken) authHeaders = { ...authHeaders, 'X-BSH-REFRESHTOKEN': refreshToken };
-            }
-            else if (auth.type === 'APIKEY') authHeaders = { Authorization: auth.token };
-            else authHeaders = this.getCsrfHeaders(params);
-        } else authHeaders = this.getCsrfHeaders(params);
+        if (auth?.type === 'APIKEY') return { Authorization: auth.token };
 
-        return { ...authHeaders };
+        let authHeaders: Record<string, string> = auth?.type === 'JWT'
+            ? { Authorization: `Bearer ${auth.token}` }
+            : this.getCsrfHeaders(params);
+
+        const refreshToken = await this.refreshTokenFn?.();
+        if (refreshToken) authHeaders = { ...authHeaders, 'X-BSH-REFRESHTOKEN': refreshToken };
+
+        return authHeaders;
     }
 
     private async getTenantHeaders(params: BshClientFnParams<any>): Promise<Record<string, string>> {

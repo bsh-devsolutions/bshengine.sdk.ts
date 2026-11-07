@@ -32,7 +32,7 @@ export interface DatabaseDetails {
 }
 
 export interface SecretsDetails {
-    'jwt.secret': string;
+    'auth.config.secret': string;
     mailing: string;
     cloudinary: string;
     secrets?: string;

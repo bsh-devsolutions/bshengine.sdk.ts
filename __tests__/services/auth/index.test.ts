@@ -134,7 +134,7 @@ describe('AuthService', () => {
     });
 
     describe('refreshToken', () => {
-        it('should call client.post with correct parameters', async () => {
+        it('should call client.post without a body (current session only)', async () => {
             const mockResponse = {
                 data: [{ access: 'new-access-token', refresh: 'new-refresh-token' }],
                 code: 200,
@@ -145,7 +145,6 @@ describe('AuthService', () => {
             mockPost.mockResolvedValue(mockResponse);
 
             const params = {
-                payload: { refresh: 'old-refresh-token' },
                 onSuccess: vi.fn(),
                 onError: vi.fn()
             };
@@ -157,15 +156,22 @@ describe('AuthService', () => {
                 options: {
                     responseType: 'json',
                     requestFormat: 'json',
-                    body: params.payload,
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 },
                 bshOptions: params,
                 api: 'auth.refreshToken',
             });
             expect(result).toEqual(mockResponse);
+        });
+
+        it('should work without params', async () => {
+            mockPost.mockResolvedValue({ data: [], code: 200, status: 'OK', timestamp: Date.now() });
+
+            await authService.refreshToken();
+
+            expect(mockPost).toHaveBeenCalledWith(expect.objectContaining({
+                path: '/api/auth/refresh',
+                bshOptions: {},
+            }));
         });
     });
 

@@ -123,6 +123,40 @@ describe('BshClient', () => {
             });
         });
 
+        it('should send X-BSH-REFRESHTOKEN without an access token', async () => {
+            const mockRefreshTokenFn = vi.fn().mockResolvedValue('refresh-token-789');
+            const response = new Response(JSON.stringify({ data: [] }), { status: 200 });
+            mockHttpClient = vi.fn().mockResolvedValue(response);
+            client = new BshClient('', mockHttpClient, undefined, mockRefreshTokenFn);
+
+            await client.post({
+                path: '/api/auth/refresh',
+                options: {},
+                bshOptions: {}
+            });
+
+            const callArgs = mockHttpClient.mock.calls[0][0];
+            expect(callArgs.options.headers).toEqual({
+                'X-BSH-REFRESHTOKEN': 'refresh-token-789'
+            });
+        });
+
+        it('should not send X-BSH-REFRESHTOKEN with an API key', async () => {
+            mockAuthFn = vi.fn().mockResolvedValue({ type: 'APIKEY', token: 'bsh_key' });
+            const mockRefreshTokenFn = vi.fn().mockResolvedValue('refresh-token-789');
+            const response = new Response(JSON.stringify({ data: [] }), { status: 200 });
+            mockHttpClient = vi.fn().mockResolvedValue(response);
+            client = new BshClient('', mockHttpClient, mockAuthFn, mockRefreshTokenFn);
+
+            await client.get({
+                path: '/test',
+                options: {},
+                bshOptions: {}
+            });
+
+            expect(mockHttpClient.mock.calls[0][0].options.headers).toEqual({ Authorization: 'bsh_key' });
+        });
+
         it('should merge custom headers with auth headers', async () => {
             mockAuthFn = vi.fn().mockResolvedValue({ type: 'JWT', token: 'token' });
             const response = new Response(JSON.stringify({ data: [] }), { status: 200 });

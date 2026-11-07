@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { BshResponse, BshError, isOk } from '../../../src/types/response';
+import { BshResponse, BshError, isOk, isExpired } from '../../../src/types/response';
 
 describe('BshResponse', () => {
     describe('isOk', () => {
@@ -79,5 +79,24 @@ describe('BshError', () => {
         expect(error.message).toContain('500');
         expect(error.message).toContain('Internal Server Error');
     });
-});
 
+    describe('isExpired', () => {
+        const expired: BshResponse<unknown> = {
+            data: [], code: 401, status: 'UNAUTHORIZED', timestamp: Date.now(),
+            meta: { type: 'Session expired', bshError: 'JWT__SESSION_EXPIRED' },
+        };
+
+        it('should detect an expired session from a response', () => {
+            expect(isExpired(expired)).toBe(true);
+        });
+
+        it('should detect an expired session from a BshError', () => {
+            expect(isExpired(new BshError(401, '/api/test', expired))).toBe(true);
+        });
+
+        it('should return false for other errors', () => {
+            expect(isExpired({ ...expired, meta: { bshError: 'JWT__INVALID_TYP' } })).toBe(false);
+            expect(isExpired(undefined)).toBe(false);
+        });
+    });
+});

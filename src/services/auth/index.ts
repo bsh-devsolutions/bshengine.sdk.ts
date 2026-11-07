@@ -55,16 +55,12 @@ export class AuthService {
         });
     }
 
-    public async refreshToken(params: BshCallbackParamsWithPayload<{ refresh: string }, AuthTokens>): Promise<BshResponse<AuthTokens> | undefined> {
+    public async refreshToken(params: BshCallbackParams<unknown, AuthTokens> = {}): Promise<BshResponse<AuthTokens> | undefined> {
         return this.client.post<AuthTokens>({
             path: `${this.baseEndpoint}/refresh`,
             options: {
                 responseType: 'json',
                 requestFormat: 'json',
-                body: params.payload,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
             },
             bshOptions: params,
             api: 'auth.refreshToken',
