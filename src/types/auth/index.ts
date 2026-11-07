@@ -33,7 +33,7 @@ export type BshAuthSessionMetadata = {
     browserVersion?: string;
     os?: BshOS;
     device?: BshDevice;
-    /** Value of the X-Client-Name header sent at login. */
+    /** Value of the X-Bsh-Client header sent at login. */
     client?: string;
     userAgent?: string;
 };

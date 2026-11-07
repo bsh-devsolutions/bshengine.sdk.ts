@@ -11,6 +11,7 @@ export class BshEngine {
     private refreshTokenFn?: BshRefreshTokenFn;
     private onTokenRefreshed?: BshOnTokenRefreshedFn;
     private tenantFn?: BshTenantFn;
+    private clientName?: string;
     
     private postInterceptors: BshPostInterceptor<unknown>[] = [];
     private preInterceptors: BshPreInterceptor<unknown>[] = [];
@@ -26,6 +27,7 @@ export class BshEngine {
         tenantFn?: BshTenantFn;
         refreshTokenFn?: BshRefreshTokenFn;
         onTokenRefreshed?: BshOnTokenRefreshedFn;
+        clientName?: string;
         postInterceptors?: BshPostInterceptor<unknown>[];
         preInterceptors?: BshPreInterceptor<unknown>[];
         errorInterceptors?: BshErrorInterceptor<unknown>[];
@@ -39,6 +41,7 @@ export class BshEngine {
         this.refreshTokenFn = params.refreshTokenFn || this.refreshTokenFn;
         this.onTokenRefreshed = params.onTokenRefreshed;
         this.tenantFn = params.tenantFn || this.tenantFn;
+        this.clientName = params.clientName;
         this.postInterceptors = params.postInterceptors || [];
         this.preInterceptors = params.preInterceptors || [];
         this.errorInterceptors = params.errorInterceptors || [];
@@ -67,6 +70,11 @@ export class BshEngine {
 
     public withTenant(tenantFn: BshTenantFn) {
         this.tenantFn = tenantFn;
+        return this;
+    }
+
+    public withClientName(clientName: string) {
+        this.clientName = clientName;
         return this;
     }
 
@@ -101,6 +109,10 @@ export class BshEngine {
 
     public getOnTokenRefreshed() {
         return this.onTokenRefreshed;
+    }
+
+    public getClientName() {
+        return this.clientName;
     }
 
     // Client

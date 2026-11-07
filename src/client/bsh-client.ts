@@ -140,11 +140,18 @@ export class BshClient {
         return { 'X-Tenant-Id': tenant };
     }
 
+    private getClientHeaders(): Record<string, string> {
+        const clientName = this.bshEngine?.getClientName();
+        if (!clientName) return {};
+        return { 'X-Bsh-Client': clientName };
+    }
+
     private async injectHeaders(params: BshClientFnParams<any>): Promise<Record<string, string>> {
         const authHeaders = await this.getAuthHeaders(params);
         const tenantHeaders = await this.getTenantHeaders(params);
 
         return {
+            ...this.getClientHeaders(),
             ...authHeaders,
             ...tenantHeaders,
         };

@@ -157,6 +157,28 @@ describe('BshClient', () => {
             expect(mockHttpClient.mock.calls[0][0].options.headers).toEqual({ Authorization: 'bsh_key' });
         });
 
+        it('should send X-Bsh-Client when the engine has a client name', async () => {
+            const response = new Response(JSON.stringify({ data: [] }), { status: 200 });
+            mockHttpClient = vi.fn().mockResolvedValue(response);
+            const engine = new BshEngine({ clientName: 'BSH Dashboard' });
+            client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
+
+            await client.get({ path: '/test', options: {}, bshOptions: {} });
+
+            expect(mockHttpClient.mock.calls[0][0].options.headers).toEqual({ 'X-Bsh-Client': 'BSH Dashboard' });
+        });
+
+        it('should set the client name with withClientName', async () => {
+            const response = new Response(JSON.stringify({ data: [] }), { status: 200 });
+            mockHttpClient = vi.fn().mockResolvedValue(response);
+            const engine = new BshEngine().withClientName('Mobile App');
+            client = new BshClient('', mockHttpClient, undefined, undefined, undefined, engine);
+
+            await client.get({ path: '/test', options: {}, bshOptions: {} });
+
+            expect(mockHttpClient.mock.calls[0][0].options.headers).toEqual({ 'X-Bsh-Client': 'Mobile App' });
+        });
+
         it('should merge custom headers with auth headers', async () => {
             mockAuthFn = vi.fn().mockResolvedValue({ type: 'JWT', token: 'token' });
             const response = new Response(JSON.stringify({ data: [] }), { status: 200 });
