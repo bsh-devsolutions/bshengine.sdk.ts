@@ -6,6 +6,16 @@ export type BshErrorCode =
     | 'JWT__INVALID_SIGNATURE'
     | 'JWT__INVALID'
     | 'JWT__INVALID_TYP'
+
+    | 'AUTH__USER_NOT_FOUND'
+    | 'AUTH__BAD_CREDENTIALS'
+    | 'AUTH__NOT_ACTIVATED'
+    | 'AUTH__ACCOUNT_DISABLED'
+    | 'AUTH__ACCOUNT_LOCKED'
+    | 'AUTH__RESET_PASSWORD_REQUIRED'
+    | 'TENANT__BLOCKED_OR_INACTIVE'
+    | 'TENANT__ACCESS_DENIED'
+
     | 'API__NOT_FOUND'
 
 export type BshResponse<T> = {
@@ -19,7 +29,7 @@ export type BshResponse<T> = {
         type?: string,
         sql?: string,
         error?: string,
-        tips?: {[key: string]: string},
+        tips?: { [key: string]: string },
         accessToken?: string,
         refreshToken?: string,
         bshError?: BshErrorCode,
@@ -33,7 +43,7 @@ export type BshResponse<T> = {
     }
     endpoint?: string,
     api?: string,
-    validations?: {field: string, error: string}[]
+    validations?: { field: string, error: string }[]
 }
 
 export const isOk = (response: BshResponse<unknown> | undefined) => response == undefined ? false : response?.code >= 200 && response?.code < 300
