@@ -10,7 +10,7 @@ export type AuthTokens = {
     refresh: string;
 }
 
-export type BshAuthSessionStatus = 'Active' | 'Expired' | 'Revoked' | 'LoggedOut';
+export type BshAuthSessionStatus = 'Active' | 'Expired' | 'Revoked' | 'LoggedOut' | 'Blocked';
 
 export const BshSessionMetaData = {
     browsers: [
@@ -44,6 +44,7 @@ export type BshAuthSession = Omit<BshObject, 'persistenceId'> & {
     iat: BshDate;
     exp: BshDate;
     status: BshAuthSessionStatus;
+    reason?: string;
     metadata?: BshAuthSessionMetadata;
     current: boolean;
 }
