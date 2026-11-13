@@ -95,3 +95,36 @@ export type BshTenant = {
 } & BshObject;
 
 export type BshTenantPure = BshObjectPure<BshTenant>;
+
+export type BshSigningKeyStatus = 'Active' | 'Retired' | 'Expired';
+export type BshSigningKeyExpireScope = 'none' | 'previous' | 'all';
+
+export type BshSigningKey = {
+    kid: string;
+    status: BshSigningKeyStatus;
+    activatedAt: BshDate;
+    rotatesAt?: BshDate | null;
+    retiredAt?: BshDate | null;
+    verifyUntil?: BshDate | null;
+    expiredAt?: BshDate | null;
+    rotation?: 'Scheduled' | 'Manual';
+    reason?: string | null;
+    updatedBy?: string | null;
+    current?: boolean;
+}
+
+export type BshRotateSigningKey = {
+    expire?: BshSigningKeyExpireScope;
+    reason?: string;
+}
+
+export type BshExpireSigningKey = {
+    reason: string;
+}
+
+export type BshRotateSigningKeyResult = {
+    active: BshSigningKey;
+    previous?: BshSigningKey | null;
+    expired: string[];
+    sessionReissued: boolean;
+}

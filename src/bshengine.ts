@@ -1,5 +1,5 @@
 import { BshAuthFn, BshClient, BshClientFn, BshErrorInterceptor, BshOnTokenRefreshedFn, BshPostInterceptor, BshPreInterceptor, BshRefreshTokenFn, BshTenantFn, fetchClientFn } from "@client";
-import { ApiKeyService, AuthService, AuthSessionService, BshUtilsService, CachingService, EntityService, ImageService, MailingService, SettingsService, TenantService, UserService } from "@src/services";
+import { ApiKeyService, AuthService, AuthSessionService, BshUtilsService, CachingService, EntityService, ImageService, MailingService, SettingsService, SigningKeyService, TenantService, UserService } from "@src/services";
 import { BshEntities, BshPolicy, BshRole, BshEmailTemplate, BshEventLogs, BshSchemas, BshTypes, BshUser, SentEmail, BshTrigger, BshTriggerInstance, BshFiles, BshConfigurations, BshPlugin, BshTenant } from "@types";
 import { PluginService } from "./services/plugins";
 import { StatusService } from "./services/status";
@@ -161,6 +161,10 @@ export class BshEngine {
 
     public get authSessions() {
         return new AuthSessionService(this.client);
+    }
+
+    public get signingKeys() {
+        return new SigningKeyService(this.client);
     }
 
     public get users() {

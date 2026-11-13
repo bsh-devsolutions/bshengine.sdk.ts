@@ -26,6 +26,7 @@ export const CoreEntities = {
     TenantAudits: 'TenantAudits',
 
     BshAuthSessions: 'BshAuthSessions',
+    BshJWTSigningSecret: 'BshJWTSigningSecret',
 
     BshConfigurations: 'BshConfigurations',
 

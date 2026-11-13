@@ -31,3 +31,4 @@ export * from './utils';
 export * from './caching';
 export * from './api-key';
 export * from './auth-sessions';
+export * from './signing-keys';
