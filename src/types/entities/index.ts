@@ -13,6 +13,7 @@ export type BshEntities = {
     auditable?: boolean
     isPluginBased?: boolean
     isMultiTenant?: boolean
+    triggerable?: boolean
     pks: {
         key: string
         strategy: 'AutoIncrement' | 'UUID' | 'Fixed'
