@@ -1,4 +1,4 @@
-import {BshDate, BshObject, BshObjectPure} from '@types';
+import {BshDate, BshError, BshObject, BshObjectPure} from '@types';
 
 export type BshUser = {
     userId: string
@@ -120,6 +120,25 @@ export type BshRotateSigningKey = {
 
 export type BshExpireSigningKey = {
     reason: string;
+}
+
+/** Public key of a JSON Web Key Set entry (RFC 7517), as published at `/.well-known/jwks.json`. */
+export type BshJwk = {
+    kty: 'EC';
+    crv: 'P-256' | 'P-384' | 'P-521';
+    x: string;
+    y: string;
+    kid: string;
+    alg: 'ES256' | 'ES384' | 'ES512';
+    use: 'sig';
+    key_ops: ['verify'];
+}
+
+export type BshJwks = { keys: BshJwk[]; }
+
+export type BshJwksParams = {
+    onSuccess?: (jwks: BshJwks) => void;
+    onError?: (error: BshError) => void;
 }
 
 export type BshRotateSigningKeyResult = {

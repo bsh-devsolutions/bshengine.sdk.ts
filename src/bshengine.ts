@@ -1,6 +1,6 @@
 import { BshAuthFn, BshClient, BshClientFn, BshErrorInterceptor, BshOnTokenRefreshedFn, BshPostInterceptor, BshPreInterceptor, BshRefreshTokenFn, BshTenantFn, fetchClientFn } from "@client";
-import { ApiKeyService, AuthService, AuthSessionService, BshUtilsService, CachingService, EntityService, ImageService, MailingService, SettingsService, SigningKeyService, TenantService, UserService } from "@src/services";
-import { BshEntities, BshPolicy, BshRole, BshEmailTemplate, BshEventLogs, BshSchemas, BshTypes, BshUser, SentEmail, BshTrigger, BshTriggerInstance, BshFiles, BshConfigurations, BshPlugin, BshTenant } from "@types";
+import { ApiKeyService, AuthService, AuthSessionService, BshUtilsService, CachingService, EntityService, ImageService, MailingService, SettingsService, SigningKeyService, JwksService, TenantService, UserService } from "@src/services";
+import { BshEntities, BshPolicy, BshRole, BshEmailTemplate, BshEventLogs, BshSchemas, BshTypes, BshUser, SentEmail, BshTrigger, BshTriggerInstance, BshFiles, BshConfigurations, BshPlugin, BshJwks, BshJwksParams } from "@types";
 import { PluginService } from "./services/plugins";
 import { StatusService } from "./services/status";
 
@@ -12,7 +12,7 @@ export class BshEngine {
     private onTokenRefreshed?: BshOnTokenRefreshedFn;
     private tenantFn?: BshTenantFn;
     private clientName?: string;
-    
+
     private postInterceptors: BshPostInterceptor<unknown>[] = [];
     private preInterceptors: BshPreInterceptor<unknown>[] = [];
     private errorInterceptors: BshErrorInterceptor<unknown>[] = [];
@@ -118,11 +118,11 @@ export class BshEngine {
     // Client
     private get client(): BshClient {
         return new BshClient(
-            this.host, 
-            this.clientFn, 
-            this.authFn, 
-            this.refreshTokenFn, 
-            this.tenantFn, 
+            this.host,
+            this.clientFn,
+            this.authFn,
+            this.refreshTokenFn,
+            this.tenantFn,
             this
         );
     }
@@ -205,5 +205,10 @@ export class BshEngine {
 
     public get status() {
         return new StatusService(this.client);
+    }
+
+    /** Public JSON Web Key Set (`/.well-known/jwks.json`): */
+    public async jwks(params?: BshJwksParams): Promise<BshJwks | undefined> {
+        return new JwksService(this.client).load(params);
     }
 }

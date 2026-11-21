@@ -10,6 +10,7 @@ import { MailingService } from '../src/services/mailing';
 import { BshUtilsService } from '../src/services/utils';
 import { CachingService } from '../src/services/caching';
 import { ApiKeyService } from '../src/services/api-key';
+import { JwksService } from '../src/services/jwks';
 import { fetchClientFn } from '@client';
 
 vi.mock('../src/client/bsh-client', () => {
@@ -287,6 +288,20 @@ describe('BshEngine', () => {
         it('should return ApiKeyService instance', () => {
             const apiKey = engine.apiKey;
             expect(apiKey).toBeInstanceOf(ApiKeyService);
+        });
+    });
+
+    describe('jwks', () => {
+        it('should load the JWK Set through JwksService', async () => {
+            const jwks = { keys: [] };
+            const load = vi.spyOn(JwksService.prototype, 'load').mockResolvedValue(jwks);
+            const onSuccess = vi.fn();
+
+            const result = await engine.jwks({ onSuccess });
+
+            expect(load).toHaveBeenCalledWith({ onSuccess });
+            expect(result).toBe(jwks);
+            load.mockRestore();
         });
     });
 
